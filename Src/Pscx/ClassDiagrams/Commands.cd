@@ -1,0 +1,362 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Font Name="Segoe UI" Size="9" />
+  <Class Name="Pscx.Commands.UIAutomation.ClipboardCommandBase" Collapsed="true">
+    <Position X="20.5" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <FileName>Commands\Clipboard\ClipboardCommandBase.cs</FileName>
+      <HashCode>QBAAAAAAAEAAQAAgAAAAAAAQCAAQAEAAQAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.DirectoryServices.DirectoryServicesCommandBase" Collapsed="true">
+    <Position X="33.5" Y="2.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Commands\DirectoryServices\DirectoryServicesCommandBase.cs</FileName>
+      <HashCode>QAAAAAAAAAAAAAABQAAAAAAAAAAAEAAAAEIAAgIAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.Drawing.BitmapCommandBase" Collapsed="true">
+    <Position X="26" Y="2.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Commands\Drawing\BitmapCommandBase.cs</FileName>
+      <HashCode>AAAAAAAAAQAAAAQAAAgAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.Drawing.ImportBitmapCommand" Collapsed="true">
+    <Position X="45.5" Y="6.75" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Commands\Drawing\ImportBitmapCommand.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.FormatHexCommand" Collapsed="true">
+    <Position X="40.75" Y="6.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Commands\FormatHexCommand.cs</FileName>
+      <HashCode>EEAAAFIAIQQAAAAAGAAAgEQBgBAAAQhAAACiAmgAgAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.GetFileVersionInfoCommand" Collapsed="true">
+    <Position X="45.5" Y="3.75" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Commands\GetFileVersionInfoCommand.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.GetHashCommand" Collapsed="true">
+    <Position X="37.5" Y="7.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Commands\GetHashCommand.cs</FileName>
+      <HashCode>AEAAABIAAQAAAAAACAAAAAAAAAAIEAABAAAAAAQQAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.GetRandomCommand" Collapsed="true">
+    <Position X="28" Y="9" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Commands\GetRandomCommand.cs</FileName>
+      <HashCode>AAAEgCAAABCAAAAAEAAAAAQAAAAAAAAQGATIAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.StartProcessCommand" Collapsed="true">
+    <Position X="31.25" Y="9" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Commands\StartProcessCommand.cs</FileName>
+      <HashCode>wYAAAhAgAAIAAAYFAAAAAgAASGAAAAAAaEAJAoYSMCE=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.Compression.ReadArchiveCommandBase" Collapsed="true">
+    <Position X="39" Y="8.75" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>Commands\IO\Compression\ReadArchiveCommandBase.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.Compression.WriteArchiveCommandBase" Collapsed="true">
+    <Position X="40.75" Y="5.25" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Commands\IO\Compression\WriteArchiveCommandBase.cs</FileName>
+      <HashCode>AAAAABABYSAAAAAACAAAAAAAQEAAAAAIAAAgAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.GetShortPathCommand" Collapsed="true">
+    <Position X="45.5" Y="8.75" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Commands\IO\GetShortPathCommand.cs</FileName>
+      <HashCode>AAAAABAAAQAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.LinkCommandBase" Collapsed="true">
+    <Position X="9.75" Y="2.5" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Commands\IO\LinkCommandBase.cs</FileName>
+      <HashCode>CAAAAAAAAAACAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.NewLinkCommandBase" Collapsed="true">
+    <Position X="8" Y="4" Width="2" />
+    <TypeIdentifier>
+      <FileName>Commands\IO\LinkCommandBase.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAACABQAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.SetFileTimeCommand" Collapsed="true">
+    <Position X="45.5" Y="9.75" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Commands\IO\SetFileTimeCommand.cs</FileName>
+      <HashCode>IAAgERAAAQAjAAAADAAAAQQAADggIEAAAAAgCACOBQA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.Ntfs.GetMountPointCommand" Collapsed="true">
+    <Position X="28" Y="7.75" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Commands\IO\Ntfs\GetMountPointCommand.cs</FileName>
+      <HashCode>AAAAAAAAAAAAEAAAAAAAAAAQAAAAAAAAAAIIAACAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.Ntfs.GetReparsePointCommand" Collapsed="true">
+    <Position X="45.5" Y="7.75" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Commands\IO\Ntfs\GetReparsePointCommand.cs</FileName>
+      <HashCode>AAAAAAEAAAAACAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.Ntfs.RemoveMountPointCommand" Collapsed="true">
+    <Position X="31.25" Y="7.75" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Commands\IO\Ntfs\RemoveMountPointCommand.cs</FileName>
+      <HashCode>AAAAIAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAIAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.Ntfs.RemoveReparsePointCommand" Collapsed="true">
+    <Position X="10.75" Y="4" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>Commands\IO\Ntfs\RemoveReparsePointCommand.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.Net.PingHostCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="28" Y="11.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Commands\Net\PingHostCommand.cs</FileName>
+      <HashCode>gAAAABAkASAEAAAIDAAESAQAAAAAAAIEAARKAAAAQAQ=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.Net.ResolveHostCommand" Collapsed="true">
+    <Position X="31.25" Y="11.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Commands\Net\ResolveHostCommand.cs</FileName>
+      <HashCode>gAAAAIAAAQAAAAAAAAAAAAQAAAAAAAAAAAAIAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.Net.SendSmtpMailCommand" Collapsed="true">
+    <Position X="31.25" Y="6.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Commands\Net\SendSmtpMailCommand.cs</FileName>
+      <HashCode>IyAAEBgBAQIIAAAEAOBBAkKAAjAMYAIFAGIIVDJBEFg=</HashCode>
+    </TypeIdentifier>
+    <InheritanceLine Type="Pscx.Commands.Internal.PscxCmdlet" FixedToPoint="true">
+      <Path>
+        <Point X="30.75" Y="1.062" />
+        <Point X="30.75" Y="6.125" />
+        <Point X="32.375" Y="6.125" />
+        <Point X="32.375" Y="6.5" />
+      </Path>
+    </InheritanceLine>
+  </Class>
+  <Class Name="Pscx.Commands.Reflection.GetPortableExecutableCommandBase" Collapsed="true">
+    <Position X="45.5" Y="5.75" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Commands\Reflection\GetPortableExecutableCommandBase.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.SnapinHelp.GetSnapinHelpCommand" Collapsed="true">
+    <Position X="37.5" Y="6.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Commands\SnapinHelp\GetSnapinHelpCommand.cs</FileName>
+      <HashCode>KAAAABAAAQAAAAAAigAAAoBAEAAABBABAAAAAAQAAAQ=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.TabExpansion.GetTabExpansionCommand" Collapsed="true">
+    <Position X="31.25" Y="10.25" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Commands\TabExpansion\GetTabExpansionCommand.cs</FileName>
+      <HashCode>QAAAAAAAAQAAAAAAAAABQAAAAAAEAAAAAABAAAABAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.TabExpansion.StartTabExpansionCommand" Collapsed="true">
+    <Position X="28" Y="10.25" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Commands\TabExpansion\StartTabExpansionCommand.cs</FileName>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.TerminalServices.TerminalServerCommandBase" Collapsed="true">
+    <Position X="14.25" Y="2.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Commands\TerminalServices\TerminalServerCommandBase.cs</FileName>
+      <HashCode>AAAAAAgAAQABAAAAAAEAAAQAAgQAQAAAAAAIAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.TerminalServices.TerminalSessionCommandBase" Collapsed="true">
+    <Position X="14" Y="4" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>Commands\TerminalServices\TerminalSessionCommandBase.cs</FileName>
+      <HashCode>AAACAAAAAAAAAAAAAAFAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.Text.ConvertFromBase64Command" Collapsed="true">
+    <Position X="28" Y="6.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Commands\Text\ConvertFromBase64Command.cs</FileName>
+      <HashCode>AAAAABABASAAAAAAAAAAAAAAQBAAAAAIAAAoAAAACEA=</HashCode>
+    </TypeIdentifier>
+    <InheritanceLine Type="Pscx.Commands.Internal.PscxCmdlet" FixedToPoint="true">
+      <Path>
+        <Point X="30.75" Y="1.062" />
+        <Point X="30.75" Y="6.125" />
+        <Point X="29.062" Y="6.125" />
+        <Point X="29.062" Y="6.5" />
+      </Path>
+    </InheritanceLine>
+  </Class>
+  <Class Name="Pscx.Commands.Text.ConvertToBase64Command" Collapsed="true">
+    <Position X="40.75" Y="7.5" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Commands\Text\ConvertToBase64Command.cs</FileName>
+      <HashCode>AEAAABYAAQAAAAAECAAAAAAAAAAoQAAAAkAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.Text.ConvertToLineEndingBaseCommand" Collapsed="true">
+    <Position X="45.5" Y="4.75" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Commands\Text\ConvertToLineEndingBase.cs</FileName>
+      <HashCode>AABAABAAAAAAACAACAAAIQAAgEAAAAAMAAAhAIAIAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.Xml.XmlCommandBase" Collapsed="true">
+    <Position X="37.5" Y="5.25" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Commands\Xml\XmlCommandBase.cs</FileName>
+      <HashCode>AAAAABIAAAAAAAQATAAAAAAAIAAEAAABAAAAQAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.Internal.PscxInputObjectPathCommandBase" Collapsed="true">
+    <Position X="39" Y="3.75" Width="2.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Pscx.Commands.Internal.PscxPathCommandBase" Collapsed="true">
+    <Position X="43.25" Y="2.25" Width="1.75" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Pscx.Commands.Internal.PscxCmdlet" Collapsed="true">
+    <Position X="30" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Orientation="Left" Position="0.1" />
+  </Class>
+  <Class Name="Pscx.Commands.UIAutomation.GetClipboardCommand" Collapsed="true">
+    <Position X="19.25" Y="4" Width="2" />
+    <TypeIdentifier>
+      <FileName>Commands\Clipboard\GetClipboardCommand.cs</FileName>
+      <HashCode>AAAAABCAAAAAAAACAEEAAAAAcAAAVBAYAABACAIAEIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.UIAutomation.OutClipboardCommand" Collapsed="true">
+    <Position X="19.25" Y="5.25" Width="2" />
+    <TypeIdentifier>
+      <FileName>Commands\Clipboard\OutClipboardCommand.cs</FileName>
+      <HashCode>AAAAAAAAAQIIAAAgAAAIAEAAABAAAAAAAAAIAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.UIAutomation.SetClipboardCommand" Collapsed="true">
+    <Position X="21.75" Y="4" Width="2" />
+    <TypeIdentifier>
+      <FileName>Commands\Clipboard\SetClipboardCommand.cs</FileName>
+      <HashCode>ARAAAACAAQACAAAAACAAAAAAEAAARDAYAAAICCAAEIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.UIAutomation.WriteClipboardCommand" Collapsed="true">
+    <Position X="21.75" Y="5.25" Width="2" />
+    <TypeIdentifier>
+      <FileName>Commands\Clipboard\WriteClipboardCommand.cs</FileName>
+      <HashCode>AAAABAAAAQIAACAgAAAAAAABABAAABAAAAAoAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.NewShortcutCommand" Collapsed="true">
+    <Position X="6.75" Y="6.75" Width="2" />
+    <TypeIdentifier>
+      <FileName>Commands\IO\NewShortcutCommand.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.Ntfs.NewHardLinkCommand" Collapsed="true">
+    <Position X="6.75" Y="5.5" Width="2" />
+    <TypeIdentifier>
+      <FileName>Commands\IO\Ntfs\NewHardLinkCommand.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.Ntfs.NewJunctionCommand" Collapsed="true">
+    <Position X="9.25" Y="5.5" Width="2" />
+    <TypeIdentifier>
+      <FileName>Commands\IO\Ntfs\NewJunctionCommand.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.Ntfs.NewSymLinkCommand" Collapsed="true">
+    <Position X="9.25" Y="6.75" Width="2" />
+    <TypeIdentifier>
+      <FileName>Commands\IO\Ntfs\NewSymLinkCommand.cs</FileName>
+      <HashCode>AAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.TerminalServices.GetTerminalSessionCommand" Collapsed="true">
+    <Position X="13" Y="6.25" Width="2.25" />
+    <TypeIdentifier>
+      <FileName>Commands\TerminalServices\GetTerminalSessionCommand.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.TerminalServices.StopTerminalSessionCommand" Collapsed="true">
+    <Position X="15.5" Y="6.25" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>Commands\TerminalServices\StopTerminalSessionCommand.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.Drawing.ExportBitmapCommand" Collapsed="true">
+    <Position X="24.75" Y="4" Width="2" />
+    <TypeIdentifier>
+      <FileName>Commands\Drawing\ExportBitmapCommand.cs</FileName>
+      <HashCode>AAAAABAAAAAKAAZAAAAACAAQAAgAAAAAAAAAAAIEAEA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.Drawing.ResizeBitmapCommand" Collapsed="true">
+    <Position X="27.25" Y="4" Width="2" />
+    <TypeIdentifier>
+      <FileName>Commands\Drawing\ResizeBitmapCommand.cs</FileName>
+      <HashCode>AAACAAgABJCAAAQAAAAAAEBAABAAAAAAAAIACAAgAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.DirectoryServices.GetADObjectCommand" Collapsed="true">
+    <Position X="35" Y="3.75" Width="2.75" />
+    <TypeIdentifier>
+      <FileName>Commands\DirectoryServices\GetADObjectCommand.cs</FileName>
+      <HashCode>ARgIwIIAAAAAAiSAghIAAABAAhAAEMAAAAAoEAAEEFA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.DirectoryServices.GetDhcpServerCommand" Collapsed="true">
+    <Position X="33.25" Y="4.75" Width="2.75" />
+    <TypeIdentifier>
+      <FileName>Commands\DirectoryServices\GetDhcpServerCommand.cs</FileName>
+      <HashCode>AAAAAAABAAAAAAAAAAAAAABAAAAAAAAAAAAIAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.DirectoryServices.GetDomainControllerCommand" Collapsed="true">
+    <Position X="31.5" Y="3.75" Width="2.75" />
+    <TypeIdentifier>
+      <FileName>Commands\DirectoryServices\GetDomainControllerCommand.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+</ClassDiagram>

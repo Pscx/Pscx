@@ -1,0 +1,27 @@
+$releaseNotes = @'
+What's New in PSCX 3.2.1
+July 29, 2015
+
+* Updated to support PowerShell 5.0.
+
+* Fixed bug in Get-Parameter related to getting dynamic parameter info.
+
+* Updated Expand-Archive to output DirectoryInfo and FileInfo objects
+  for the extracted directories and files when using -PassThru.
+
+* Updated Get-TypeName to normally write the typename to the standard 
+  output stream.  However, if -PassThru is specified the object input
+  to the command is output and the typename is written directly to the
+  host UI.  This allows you to insert Get-TypeName -PassThru into the 
+  pipeline to observe which object types a flowing in the pipeline.
+'@
+
+$nugetApiKey = '--------------------------'
+$projectUri = 'http://pscx.codeplex.com/'
+$licenseUri = 'http://pscx.codeplex.com/license'
+$iconUri = 'http://download-codeplex.sec.s-msft.com/Download?ProjectName=pscx&DownloadId=8046&Build=20941'
+$tags = 'Utilities','Xml','Zip','Clipboard','Base64','ShortPath','PEHeader'
+
+Publish-Module -Path $home\Documents\WindowsPowerShell\Modules\Pscx -NuGetApiKey $nugetApiKey `
+               -ProjectUri $projectUri -LicenseUri $licenseUri -IconUri $iconUri -Tags $tags `
+               -ReleaseNotes $releaseNotes

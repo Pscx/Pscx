@@ -1,0 +1,472 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CAC61CE5-BD44-469A-A27E-8BC945E84019}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Pscx</RootNamespace>
+    <AssemblyName>Pscx</AssemblyName>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <BaseAddress>1755381760</BaseAddress>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-Signed|AnyCPU'">
+    <OutputPath>bin\Release-Signed\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.1.271, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Imports\SharpZipLib\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.Microsoft.Feeds.Interop, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Imports\Feeds\Interop.Microsoft.Feeds.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="PowerCollections, Version=1.0.2141.24679, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Imports\PowerCollections\PowerCollections.dll</HintPath>
+    </Reference>
+    <Reference Include="SevenZipSharp">
+      <HintPath>..\..\Imports\SevenZipSharp\SevenZipSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Management.Automation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Imports\PowerShell\System.Management.Automation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Messaging" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Trinet.Core.IO.Ntfs, Version=3.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Imports\Trinet.Core.IO.Ntfs\Bin\Trinet.Core.IO.Ntfs.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Commands\Com\GetRunningObjectCommand.cs" />
+    <Compile Include="Commands\IO\EditFileCommand.cs" />
+    <Compile Include="Commands\Text\ConvertFromBase64Command.cs" />
+    <Compile Include="Commands\Text\ConvertToBase64Command.cs" />
+    <Compile Include="Commands\Xml\ConvertXmlCommand.cs" />
+    <Compile Include="Commands\Xml\FormatXmlCommand.cs" />
+    <Compile Include="Commands\UIAutomation\GetClipboardCommand.cs" />
+    <Compile Include="Commands\UIAutomation\GetForegroundWindowCommand.cs" />
+    <Compile Include="Commands\Security\GetPrivilegeCommand.cs" />
+    <Compile Include="Commands\Text\JoinStringCommand.cs" />
+    <Compile Include="Commands\UIAutomation\OutClipboardCommand.cs" />
+    <Compile Include="Commands\UIAutomation\SetForegroundWindowCommand.cs" />
+    <Compile Include="Commands\Text\SplitStringCommand.cs" />
+    <Compile Include="Commands\Xml\TestXmlCommand.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Commands\UIAutomation\WriteClipboardCommand.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Commands\Drawing\ImportBitmapCommand.cs" />
+    <Compile Include="Commands\Reflection\GetPortableExecutableCommandBase.cs" />
+    <Compile Include="Commands\Reflection\GetPEHeaderCommand.cs" />
+    <Compile Include="Commands\Xml\XmlCommandBase.cs" />
+    <Compile Include="Commands\UIAutomation\ClipboardCommandBase.cs" />
+    <Compile Include="Commands\UIAutomation\ClipboardException.cs" />
+    <Compile Include="Commands\UIAutomation\SetClipboardCommand.cs" />
+    <Compile Include="Commands\IO\Ntfs\GetMountPointCommand.cs" />
+    <Compile Include="Commands\IO\Ntfs\GetReparsePointCommand.cs" />
+    <Compile Include="Commands\IO\GetShortPathCommand.cs" />
+    <Compile Include="Commands\IO\NewLinkCommandBase.cs" />
+    <Compile Include="Commands\IO\Ntfs\NewHardLinkCommand.cs" />
+    <Compile Include="Commands\IO\Ntfs\NewJunctionCommand.cs" />
+    <Compile Include="Commands\IO\NewShortcutCommand.cs" />
+    <Compile Include="Commands\IO\Ntfs\NewSymlinkCommand.cs" />
+    <Compile Include="Commands\IO\Ntfs\RemoveMountPointCommand.cs" />
+    <Compile Include="Commands\IO\Ntfs\RemoveReparsePointCommand.cs" />
+    <Compile Include="Commands\Reflection\TestAssemblyCommand.cs" />
+    <Compile Include="Commands\IO\SetFileTimeCommand.cs" />
+    <Compile Include="Commands\IO\SetVolumeLabelCommand.cs" />
+    <Compile Include="Commands\IO\ShortcutInfo.cs" />
+    <Compile Include="Commands\IO\ShortPathInfo.cs" />
+    <Compile Include="Commands\FormatByteCommand.cs" />
+    <Compile Include="Commands\GetFileVersionInfoCommand.cs" />
+    <Compile Include="Commands\Net\PingExecutorBase\PingExecutor.cs" />
+    <Compile Include="Commands\Net\PingExecutorBase\PingExecutor.Statistics.cs" />
+    <Compile Include="Commands\Net\PingExecutorBase\PingTaskBase.cs" />
+    <Compile Include="Commands\Net\PingExecutorImplementation\Asynchronous.cs" />
+    <Compile Include="Commands\Net\PingExecutorImplementation\Synchronous.cs" />
+    <Compile Include="Commands\Net\PingHostCommand.cs" />
+    <Compile Include="Commands\Net\ResolveHostCommand.cs" />
+    <Compile Include="Commands\Net\PingHostInfo.cs" />
+    <Compile Include="Commands\Net\PingHostStatistics.cs" />
+    <Compile Include="Commands\Security\SetPrivilegeCommand.cs" />
+    <Compile Include="Commands\Security\WindowsIdentityCommandBase.cs" />
+    <Compile Include="Commands\Text\ConvertToLineEndingBase.cs" />
+    <Compile Include="Commands\Text\ConvertToMacOs9LineEnding.cs" />
+    <Compile Include="Commands\Text\ConvertToUnixLineEnding.cs" />
+    <Compile Include="Commands\Text\ConvertToWindowsLineEndingCommand.cs" />
+    <Compile Include="Commands\FormatHexCommand.cs" />
+    <Compile Include="Commands\IO\GetHashCommand.cs" />
+    <Compile Include="Commands\Net\SendSmtpMailCommand.cs" />
+    <Compile Include="PscxVerbs.cs" />
+    <Compile Include="Commands\IO\HashInfo.cs" />
+    <Compile Include="Providers\FeedStoreProvider.cs" />
+    <Compile Include="PscxNouns.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Modules\CD\Pscx.CD.psm1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Content Include="TypeData\Pscx.Reflection.Type.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\AssemblyInfo.Shared.cs">
+      <Link>Properties\AssemblyInfo.Shared.cs</Link>
+    </Compile>
+    <Compile Include="Commands\ConvertToMetricCommand.cs" />
+    <Compile Include="Commands\Database\Ado\AdoCommandBase.cs" />
+    <Compile Include="Commands\Database\Ado\AdoConnectedCommandBase.cs" />
+    <Compile Include="Commands\Database\Ado\GetAdoConnectionCommand.cs" />
+    <Compile Include="Commands\Database\Ado\GetAdoDataProviderCommand.cs" />
+    <Compile Include="Commands\Database\Ado\InvokeAdoCommandCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Commands\DirectoryServices\DirectoryContextCommandBase.cs" />
+    <Compile Include="Commands\EnvironmentBlock\AddPathVariableCommand.cs" />
+    <Compile Include="Commands\EnvironmentBlock\GetEnvironmentBlockCommand.cs" />
+    <Compile Include="Commands\EnvironmentBlock\GetPathVariableCommand.cs" />
+    <Compile Include="Commands\EnvironmentBlock\PathVariableCommandBase.cs" />
+    <Compile Include="Commands\EnvironmentBlock\PopEnvironmentBlockCommand.cs" />
+    <Compile Include="Commands\EnvironmentBlock\PushEnvironmentBlockCommand.cs" />
+    <Compile Include="Commands\EnvironmentBlock\SetPathVariableCommand.cs" />
+    <Compile Include="Commands\IO\Ntfs\TestAlternateDataStream.cs" />
+    <Compile Include="Commands\Text\GetLoremIpsumCommand.cs" />
+    <Compile Include="Commands\GetTypeNameCommand.cs" />
+    <Compile Include="Commands\GetUptimeCommand.cs" />
+    <Compile Include="Commands\InvokeApartmentCommand.cs" />
+    <Compile Include="Commands\IO\Compression\ArchiveExtracter\PscxSevenZipExtractor.cs" />
+    <Compile Include="Commands\IO\Compression\ArchiveFormat.cs" />
+    <Compile Include="Commands\IO\Compression\ArchiveReader\ArchiveEntry.cs" />
+    <Compile Include="Commands\IO\Compression\ArchiveReader\PscxSevenZipReader.cs" />
+    <Compile Include="Commands\IO\Compression\SevenZipBase.cs" />
+    <Compile Include="Commands\IO\Compression\SevenZipLibrary.cs" />
+    <Compile Include="Commands\IO\Compression\ArchiveWriter\Zip\SingleArchiveZipUpdater.cs" />
+    <Compile Include="Commands\IO\GetDriveInfoCommand.cs" />
+    <Compile Include="Commands\IO\ImageMastering\OpticalDriveInfo.cs" />
+    <Compile Include="Commands\IO\ImageMastering\GetOpticalDriveInfoCommand.cs" />
+    <Compile Include="Commands\IO\ImageMastering\Imapi2CommandBase.cs" />
+    <Compile Include="Commands\IO\ImageMastering\ImapiProfileTypeMappings.cs" />
+    <Compile Include="Commands\IO\GetFileTailCommand.cs" />
+    <Compile Include="Commands\LastBootUpTimeInfo.cs" />
+    <Compile Include="Commands\Messaging\ClearMSMQueue.cs" />
+    <Compile Include="Commands\Messaging\GetMSMQueue.cs" />
+    <Compile Include="Commands\Messaging\MessageQueueCmdlet.cs" />
+    <Compile Include="Commands\Messaging\MessageQueueInfo.cs" />
+    <Compile Include="Commands\Messaging\NewMSMQueue.cs" />
+    <Compile Include="Commands\Messaging\ReceiveMSMQueue.cs" />
+    <Compile Include="Commands\Messaging\SendMSMQueue.cs" />
+    <Compile Include="Commands\Messaging\TestMSMQueue.cs" />
+    <Compile Include="Commands\Net\GetHttpResource.cs" />
+    <Compile Include="Commands\Net\HttpResourceCommandBase.cs" />
+    <Compile Include="Commands\Net\HttpResourceContentCommandBase.cs" />
+    <Compile Include="Commands\Net\RemoveHttpResourceCommand.cs" />
+    <Compile Include="Commands\Net\SetHttpResource.cs" />
+    <Compile Include="Commands\Security\TestUserGroupMembershipCommand.cs" />
+    <Compile Include="Commands\SkipObjectCommand.cs" />
+    <Compile Include="Commands\DirectoryServices\DhcpServerInfo.cs" />
+    <Compile Include="Commands\DirectoryServices\DirectoryServicesCommandBase.cs" />
+    <Compile Include="Commands\DirectoryServices\GetADObjectCommand.cs" />
+    <Compile Include="Commands\DirectoryServices\GetDhcpServerCommand.cs" />
+    <Compile Include="Commands\DirectoryServices\GetDomainControllerCommand.cs" />
+    <Compile Include="Commands\Drawing\BitmapCommandBase.cs" />
+    <Compile Include="Commands\Drawing\ExportBitmapCommand.cs" />
+    <Compile Include="Commands\Drawing\SetBitmapSizeCommand.cs" />
+    <Compile Include="Commands\IO\Compression\ArchiveWriter\BZip2\BZip2Writer.cs" />
+    <Compile Include="Commands\IO\Compression\ArchiveWriter\GZip\GZipWriter.cs" />
+    <Compile Include="Commands\IO\Compression\ArchiveWriter\IArchiveWriter.cs" />
+    <Compile Include="Commands\IO\Compression\ArchiveWriter\MultipleArchiveWriter.cs" />
+    <Compile Include="Commands\IO\Compression\ArchiveWriter\SingleArchiveWriter.cs" />
+    <Compile Include="Commands\IO\Compression\ArchiveWriter\Tar\TarWriter.cs" />
+    <Compile Include="Commands\IO\Compression\ArchiveWriter\WriterBase.cs" />
+    <Compile Include="Commands\IO\Compression\ArchiveWriter\Zip\MultipleArchiveZipWriter.cs" />
+    <Compile Include="Commands\IO\Compression\ArchiveWriter\Zip\SingleArchiveZipWriter.cs" />
+    <Compile Include="Commands\IO\Compression\ExpandArchiveCommand.cs" />
+    <Compile Include="Commands\IO\Compression\ReadArchiveCommand.cs" />
+    <Compile Include="Commands\IO\Compression\WriteArchiveCommandBase.cs" />
+    <Compile Include="Commands\IO\Compression\WriteBZip2Command.cs" />
+    <Compile Include="Commands\IO\Compression\WriteGZipCommand.cs" />
+    <Compile Include="Commands\IO\Compression\WriteTarCommand.cs" />
+    <Compile Include="Commands\IO\Compression\WriteZipCommand.cs" />
+    <Compile Include="Commands\Reflection\GetExportedTypeCommand.cs" />
+    <Compile Include="Commands\SnapinHelp\CmdletInfo.cs" />
+    <Compile Include="Commands\SnapinHelp\GetSnapinHelpCommand.cs" />
+    <Compile Include="Commands\SnapinHelp\GetSnapinHelpCommand.Visitor.cs" />
+    <Compile Include="Commands\SnapinHelp\ParameterInfo.cs" />
+    <Compile Include="Commands\TerminalServices\DisconnectTerminalSessionCommand.cs" />
+    <Compile Include="Commands\TerminalServices\GetTerminalSessionCommand.cs" />
+    <Compile Include="Commands\TerminalServices\StopTerminalSessionCommand.cs" />
+    <Compile Include="Commands\TerminalServices\TerminalServerCommandBase.cs" />
+    <Compile Include="Commands\TerminalServices\TerminalSessionCommandBase.cs" />
+    <Compile Include="Commands\TestScriptCommand.cs" />
+    <Compile Include="Commands\PartitionObjectCommandBase.cs" />
+    <Compile Include="Commands\UIAutomation\OutClipboardCommand.VirtualFile.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Providers\AssemblyCache\AssemblyCacheProvider.cs" />
+    <Compile Include="Providers\AssemblyCache\AssemblyNameCache.cs" />
+    <Compile Include="Providers\DirectoryServices\DirectoryServiceDriveInfo.cs" />
+    <Compile Include="Providers\DirectoryServices\DirectoryEntryInfo.cs" />
+    <Compile Include="Providers\DirectoryServices\DirectoryServiceProvider.cs" />
+    <Compile Include="Providers\PscxSettingsProvider.cs" />
+    <Compile Include="PscxProviders.cs" />
+    <Compile Include="TypeAccelerators\Hex.cs" />
+    <Compile Include="TypeAccelerators\WmiTimeSpan.cs" />
+    <Compile Include="TypeAccelerators\WmiDateTime.cs" />
+    <Compile Include="TypeConverters\HashtableObjectInitializerTypeConverter.cs" />
+    <Compile Include="TypeConverters\WmiDateTimeTypeConverter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Modules\Net\Pscx.Net.Type.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Modules\FileSystem\Pscx.FileSystem.Format.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FormatData\Pscx.Format.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Pscx.Core\Pscx.Core.csproj">
+      <Project>{2527CA26-82B6-4E2C-8199-25E5986A8AA2}</Project>
+      <Name>Pscx.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TypeData\Pscx.Wmi.Type.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagrams\Commands.cd" />
+    <None Include="ClassDiagrams\CompressionCommands.cd" />
+    <Content Include="FormatData\Pscx.Archive.Format.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Pscx.psd1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FormatData\Pscx.SIUnits.Format.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Vhd\Pscx.Vhd.psm1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FormatData\Pscx.FeedStore.Format.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Wmi\Pscx.Wmi.psm1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\FileSystem\Pscx.FileSystem.psm1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\GetHelp\Pscx.GetHelp.psm1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FormatData\Pscx.Environment.Format.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Utility\Pscx.Utility.psm1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FormatData\Pscx.Security.Format.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Prompt\Pscx.Prompt.psm1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Prompt\Themes\Modern.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Pscx.UserPreferences.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Prompt\Themes\Jachym.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Prompt\Themes\WinXP.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\DirectoryServices\Pscx.DirectoryServices.psd1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\DirectoryServices\Pscx.DirectoryServices.Type.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\FileSystem\Pscx.FileSystem.psd1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Net\Pscx.Net.Format.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Net\Pscx.Net.psd1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\CD\Messages.psd1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\TranscribeSession\Pscx.TranscribeSession.psm1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Utility\Pscx.Utility.Format.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Utility\Pscx.Utility.psd1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\FileSystem\Pscx.FileSystem.Format.5.0.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Pscx.psm1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="TypeData\Pscx.FeedStore.Type.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TypeData\Pscx.SIUnits.Type.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TypeData\Pscx.Archive.Type.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\FileSystem\Pscx.FileSystem.Type.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\DirectoryServices\Pscx.DirectoryServices.Format.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FormatData\Pscx.TerminalServices.Format.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TypeData\Pscx.TerminalServices.Type.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>if "$(ConfigurationName)" == "Release-Signed" (
+    @echo "C:\Program Files (x86)\Windows Kits\8.0\bin\x86\signtool.exe" sign /t http://timestamp.digicert.com /sha1 2BE1DA66486C6EE58D5EA3BC692F86EEE413D35C "$(TargetPath)"
+    "C:\Program Files (x86)\Windows Kits\8.0\bin\x86\signtool.exe" sign /t http://timestamp.digicert.com /sha1 2BE1DA66486C6EE58D5EA3BC692F86EEE413D35C "$(TargetPath)"
+    @echo PowerShell.exe -NoProfile -ExecutionPolicy Bypass -File "$(SolutionDir)..\Tools\SignScripts.ps1" $(TargetDir)
+    PowerShell.exe -NoProfile -ExecutionPolicy Bypass -File "$(SolutionDir)..\Tools\SignScripts.ps1" $(TargetDir)
+)
+
+if not exist "$(TargetDir)Apps" (
+  @echo "Creating $(TargetDir)Apps"
+  mkdir "$(TargetDir)Apps"
+)
+xcopy "$(SolutionDir)..\Imports\Less-394\*.*" "$(TargetDir)Apps" /R /Y /F
+
+</PostBuildEvent>
+    <PreBuildEvent>xcopy "$(SolutionDir)ReleaseNotes.txt" "$(TargetDir)" /D /R /Y
+xcopy "$(SolutionDir)..\Imports\SevenZip\7z.dll" "$(TargetDir)" /D /R /Y
+xcopy "$(SolutionDir)..\Imports\SevenZip\7z64.dll" "$(TargetDir)" /D /R /Y
+</PreBuildEvent>
+  </PropertyGroup>
+</Project>

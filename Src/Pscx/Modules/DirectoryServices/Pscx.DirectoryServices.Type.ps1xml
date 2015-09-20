@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Types>
+
+  <Type>
+    <Name>System.DirectoryServices.ActiveDirectory.DomainController</Name>
+    <Members>
+      <ScriptProperty>
+        <Name>DomainName</Name>
+        <GetScriptBlock>
+          $domain = $this.Domain
+          $domain.Name
+          $domain.Dispose()
+        </GetScriptBlock>
+      </ScriptProperty>
+
+      <ScriptProperty>
+        <Name>ForestName</Name>
+        <GetScriptBlock>
+          $forest = $this.Forest
+          $forest.Name
+          $forest.Dispose()
+        </GetScriptBlock>
+      </ScriptProperty>
+
+      <MemberSet>
+        <Name>PSStandardMembers</Name>
+        <Members>
+          <PropertySet>
+            <Name>DefaultDisplayPropertySet</Name>
+            <ReferencedProperties>
+              <Name>ForestName</Name>
+              <Name>DomainName</Name>
+              <Name>SiteName</Name>
+              <Name>Name</Name>
+              <Name>IPAddress</Name>
+              <Name>OSVersion</Name>
+              <Name>CurrentTime</Name>
+            </ReferencedProperties>
+          </PropertySet>
+        </Members>
+      </MemberSet>
+    </Members>
+
+  </Type>
+
+  <Type>
+    <Name>Pscx.Providers.DirectoryServices.DirectoryEntryInfo</Name>
+    <Members>
+      <ScriptProperty>
+        <Name>Type</Name>
+        <GetScriptBlock>
+          $this.Types.MostDerivedType
+        </GetScriptBlock>
+      </ScriptProperty>
+
+      <MemberSet>
+        <Name>PSStandardMembers</Name>
+        <Members>
+          <PropertySet>
+            <Name>DefaultDisplayPropertySet</Name>
+            <ReferencedProperties>
+              <Name>Name</Name>
+              <Name>Type</Name>
+              <Name>LastWriteTime</Name>
+            </ReferencedProperties>
+          </PropertySet>
+        </Members>
+      </MemberSet>
+    </Members>
+  </Type>
+</Types>

@@ -1,0 +1,6 @@
+﻿MSI - This is done by the PscxSetup project's post-build event.
+signtool sign /t http://timestamp.digicert.com /sha1 C32F6C34C7B557B7DAB321FD802E5422B0171B1B "$pwd\Pscx-3.0.0.msi"
+
+PowerShell Scripts - this is done by the Pscx project's post build event (invokes SignScripts.ps1).
+$cert = Get-ChildItem Cert:\CurrentUser\My\2BE1DA66486C6EE58D5EA3BC692F86EEE413D35C
+Set-AuthenticodeSignature -Certificate $cert -TimestampServer http://timestamp.digicert.com .\foo.ps1

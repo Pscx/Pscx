@@ -1,0 +1,87 @@
+﻿<?xml version='1.0' ?>
+<Cmdlet FullName='Pscx.Commands.EnvironmentBlock.GetPathVariableCommand'>
+  <Description>
+    Gets the specified path-oriented environment variable.
+  </Description>
+  <DetailedDescription>
+    Gets the specified path-oriented environment variable and outputs an array of strings.  One string for each path.  The environment variable string is split a semi-colon and you can option specify that empty paths be removed and unnecessary quotes be removed from each path.
+  </DetailedDescription>
+  <Parameters>
+    <Parameter Name='Name'>
+      <Description>
+        The name of the environment variable to get.  Typically either Path, Lib, Include, etc.
+      </Description>
+      <DefaultValue>
+
+      </DefaultValue>
+    </Parameter>
+
+    <Parameter Name='RemoveEmptyPaths'>
+      <Description>
+        Empty paths, as represented by back-to-back semi-colons will be removed from the output.
+      </Description>
+      <DefaultValue>
+        False
+      </DefaultValue>
+    </Parameter>
+
+    <Parameter Name='StripQuotes'>
+      <Description>
+        Removes unnecessary quotes from each path. Most path-oriented environments variables do not require quotes around paths (even those paths with spaces in them).  Since the semi-colon is not a valid path character it is sufficient to mark the beginning and ending of a path.
+      </Description>
+      <DefaultValue>
+        False
+      </DefaultValue>
+    </Parameter>
+
+    <Parameter Name='Target'>
+      <Description>
+        Specifies which target scope to get: Process (default), User or Machine.
+      </Description>
+      <DefaultValue>
+        Process
+      </DefaultValue>
+    </Parameter>
+  </Parameters>
+
+  <InputTypes>
+    <InputType>
+      <Name></Name>
+      <Description>
+        <p></p>
+      </Description>
+    </InputType>
+  </InputTypes>
+
+  <ReturnTypes>
+    <ReturnType>
+      <Name></Name>
+      <Description>
+        <p></p>
+      </Description>
+    </ReturnType>
+  </ReturnTypes>
+
+  <Examples>
+    <Example Number="1">
+      <Code>Get-PathVariable Path</Code>
+      <Remarks>
+        <p>Gets the Path environment variable from the Process scope as an array of strings.</p>
+      </Remarks>
+    </Example>
+    <Example Number="2">
+      <Code>Get-PathVariable Path -Target User</Code>
+      <Remarks>
+        <p>Gets the Path environment variable as it is configured in the User scope.</p>
+      </Remarks>
+    </Example>
+
+    <Example Number="3">
+      <Code>Get-PathVariable Path -RemoveEmptyPaths -StripQuotes -Target Machine | Set-PathVariable Path -Target Machine</Code>
+      <Remarks>
+        <p>Gets the Machine scope Path environment variable while removing unnecessary quotes and empty paths and then sets it to the updated value. This enviornment variable will be persisted across PowerShell sessions.</p>
+      </Remarks>
+    </Example>
+
+  </Examples>
+</Cmdlet>

@@ -1,0 +1,110 @@
+﻿<Configuration>
+  <ViewDefinitions>
+    <View>
+      <Name>Pscx.EnvironmentBlock.EnvironmentFrame</Name>
+      <ViewSelectedBy>
+        <TypeName>Pscx.EnvironmentBlock.EnvironmentFrame</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Timestamp</Label>
+            <Width>25</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Description</Label>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Timestamp</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Description</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>Pscx.EnvironmentBlock.EnvironmentFrame</Name>
+      <ViewSelectedBy>
+        <TypeName>Pscx.EnvironmentBlock.EnvironmentFrame</TypeName>
+      </ViewSelectedBy>
+      <Controls>
+        <Control>
+          <Name>EnvironmentVariableEntry</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+                  <ExpressionBinding>
+                    <ScriptBlock>"{0,-30}" -f $_.Key</ScriptBlock>
+                  </ExpressionBinding>
+                  <ExpressionBinding>
+                    <!--<PropertyName>Value</PropertyName>-->
+                    <ScriptBlock>
+                      $value = $_.Value
+                      $scrWidth = $host.UI.RawUI.BufferSize.Width
+                      $firstColWidth = 30
+                      $ndx = $scrWidth - 1 - $firstColWidth
+                      for ($col = $scrWidth - 1; $ndx -lt $value.length; $col++,$ndx++) {
+                        if ($col % ($scrWidth - 1) -eq 0) {
+                          $value = $value.Insert($ndx, (" " * $firstColWidth))
+                          $col += $firstColWidth
+                          $ndx += $firstColWidth
+                        }
+                      }
+                      $value
+                    </ScriptBlock>
+                  </ExpressionBinding>
+                  <NewLine/>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+      </Controls>
+      
+      <CustomControl>
+        <CustomEntries>
+          <CustomEntry>
+            <CustomItem>
+              <Frame>
+                <CustomItem>
+                  <Text>Description: </Text>
+                  <ExpressionBinding>
+                    <PropertyName>Description</PropertyName>
+                  </ExpressionBinding>
+                  <NewLine/>
+
+                  <Text>Timestamp:   </Text>
+                  <ExpressionBinding>
+                    <PropertyName>Timestamp</PropertyName>
+                  </ExpressionBinding>
+                  <NewLine/>
+                  <NewLine/>
+
+                  <Text>Variables =</Text><NewLine/><NewLine/>
+                  <Text>Name                          Value</Text><NewLine/>
+                  <Text>----                          -----</Text><NewLine/>
+                  <ExpressionBinding>
+                    <PropertyName>Variables</PropertyName>
+                    <EnumerateCollection/>
+                    <CustomControlName>EnvironmentVariableEntry</CustomControlName>
+                  </ExpressionBinding>
+                  <NewLine/>
+                </CustomItem>
+              </Frame>
+            </CustomItem>
+          </CustomEntry>
+        </CustomEntries>
+      </CustomControl>
+    </View>
+  </ViewDefinitions>
+</Configuration>

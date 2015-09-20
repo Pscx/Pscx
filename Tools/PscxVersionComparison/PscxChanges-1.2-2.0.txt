@@ -1,0 +1,88 @@
+NEW CMDLETS
+    Get-AlternateDataStream
+    Test-AlternateDataStream
+    Remove-AlternateDataStream
+    Set-BitmapSize   - renamed from Resize-Bitmap
+    Unblock-File
+    Get-FileTail (tail) - renamed to use approved verb
+    Get-LoremIpsum (lorem)
+    ConvertTo-Metric
+    Send-MSMQueue    - renamed from Send-MSMQMessage
+    Receive-MSMQueue - renamed from Receive-MSMQMessage
+    Test-Script
+    Get-TypeName (gtn)
+    Get-Uptime
+
+NEW FUNCTIONS
+    Dismount-VHD
+    Enable-OpenPowerShellHere
+    Invoke-BatchFile
+    Invoke-Elevated (su)
+    Invoke-GC
+    Invoke-Method (call)
+    Mount-VHD
+    Out-Speech
+    Resolve-ErrorRecord (rver)
+    Resolve-HResult (rvhr)
+    Resolve-WindowsError (rvwer)
+    Show-Tree
+
+UPDATED AND SHORTENED LIST OF ALIASES
+    ?:            Invoke-Ternary
+    ??            Invoke-NullCoalescing
+    call          Invoke-Method
+    cvxml         Convert-Xml
+    e             Edit-File
+    ehp           Edit-HostProfile
+    ep            Edit-Profile
+    fhex          Format-Hex
+    fxml          Format-Xml
+    gcb           Get-Clipboard
+    gpv           Get-PropertyValue
+    gtn           Get-TypeName
+    ln            New-HardLink
+    lorem         Get-LoremIpsum
+    nho           New-HashObject
+    ocb           Out-Clipboard
+    ql            QuoteList
+    qs            QuoteString
+    Resize-Bitmap Set-BitmapSize
+    rver          Resolve-ErrorRecord
+    rvhr          Resolve-HResult
+    rvwer         Resolve-WindowsError
+    skip          Skip-Object
+    sls           Select-String
+    sro           Set-ReadOnly
+    srts          Search-Transcript
+    su            Invoke-Elevated
+    swr           Set-Writable
+    tail          Get-FileTail
+    touch         Set-FileTime
+    
+REMOVED STUFF:
+    Get-Random, Select-Xml and Start-Process have been moved to the module Pscx.Deprecated.  If you require these versions instead of the ones now built-in PowerShell, import the Pscx.Deprecated module.
+    Connect-VirtualServer
+    Get-HelpMatch   - Get-Help now searches within topic content.
+    Get-Manager
+    Get-Url         - use Get-HttpResource.
+    Get-WebService  - use New-WebServiceProxy.
+    Import-Assembly - use Add-Type.
+    Export-History
+    Import-History
+    Select-History
+    Import-VisualStudioVars.ps1 - this file has been replaced by the more generic Invoke-BatchFile e.g.:
+        Invoke-BatchFile "$env:VS90COMNTOOLS\..\..\vc\vcvarsall.bat"
+    New-GenericObject - use New-Object which handles generics better in 2.0.
+    Scroll-Table
+    Scroll-Text
+    Test-Scroll
+        
+MISC UPDATES:
+    cd       - supports unquoted paths with spaces unless special PowerShell characters are in path. cd c:\program files is valid while cd c:\program files(x86).
+    Test-Xml - added EnableDtd to allow testing of XML files using doc type definitions.
+    Get-Help - added -Object and -Member parameters for looking up help on .NET types and members.
+    
+    Pscx.UserPreferences.ps1 is how PSCX user preferences are specified during import of the PSCX module.  If you don't specify a path to this file, PSCX will load with default preferences.  The state of the Pscx.UserPreferences.ps1 as deployed with PSCX indicates the default state.  To change these preferences, copy this file to your home dir (or other location), edit it as necessary and then pass the path to it into the Import-Module cmdlet like so:
+    
+    Import-Module Pscx -arg ~\Pscx.UserPreferences.ps1
+    

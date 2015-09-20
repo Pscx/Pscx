@@ -1,0 +1,206 @@
+<providerHelp>
+  <Name>
+    DirectoryServices
+  </Name>
+  <Drives>
+    <Para>Europe:</Para>
+  </Drives>
+  <Synopsis>
+    PSCX Provider: Provides access to LDAP servers like Active Directory or AD Lightweight Directory Services.
+  </Synopsis>
+  <DetailedDescription>
+    <para>The PSCX DirectoryServices provider lets you get, add, and change objects on LDAP directory services.  
+
+The PSCX DirectoryServices provider automatically creates a drive for the Active Directory domain the machine is joined to. You can create drives using the New-PSDrive command. The root of the drive should be a valid LDAP path to the root object.
+
+You can get and change object attributes using the Get-ItemProperty and Set-ItemProperty commands. The current version of the provider supports user and group object types. Objects of other types can be retrieved and modified too, at least to some degree. You need to specify the -Raw attribute to get or change the real attribute of an object.  
+</para>
+  </DetailedDescription>
+  <Capabilities>
+    <para></para>
+  </Capabilities>
+  <Filters>
+    <para></para>
+  </Filters>
+  <Notes></Notes>
+  <Tasks>
+    <Task>
+      <Title>
+            Creating a DirectoryServices drive
+        </Title>
+      <Description>
+        <para></para>
+      </Description>
+      <Examples>
+        <Example>
+          <Title>-------------------------- EXAMPLE 1 --------------------------</Title>
+          <Introduction>
+            <para>This command connects to an AD LDS application partition  running on some port on the mijavm machine.</para>
+          </Introduction>
+          <Code>New-PSDrive Adam DirectoryServices 'LDAP://mijavm:389/CN=Partition, DC=mijavm, DC=com'</Code>
+          <Remarks>
+            <para></para>
+          </Remarks>
+        </Example>
+      </Examples>
+    </Task>
+    <Task>
+      <Title>Creating a DirectoryServices drive using specified credentials.</Title>
+      <Description>
+        <para></para>
+      </Description>
+      <Examples>
+        <Example>
+          <Title>-------------------------- EXAMPLE 1 --------------------------</Title>
+          <Introduction>
+            <para>This command connects to a naming context on a remote Active Directory LDAP server using specified credentials.</para>
+          </Introduction>
+          <Code>$credential = Get-Credential
+New-PSDrive Litware DirectoryServices 'LDAP://157.58.88.61/DC=litwareinc, DC=com' -Credential $credential
+                </Code>
+          <Remarks>
+            <para></para>
+          </Remarks>
+        </Example>
+      </Examples>
+    </Task>
+        
+   <Task>
+      <Title>Retrieving group members.</Title>        
+      <Description>
+        <para></para>
+      </Description>
+      <Examples>        
+        <Example>
+          <Title>-------------------------- EXAMPLE 1 --------------------------</Title>
+          <Introduction>
+            <para>This command gets members of a specified Active Directory group. </para>
+          </Introduction>
+          <Code>Get-ItemProperty 'Litware:\Users\Litware FTE' Member</Code>
+          <Remarks>
+            <para>Specify the -Raw parameter when retrieving or changing the  raw LDAP attributes.</para>
+          </Remarks>
+        </Example>
+       </Examples>
+    </Task>   
+    <Task>
+      <Title>Creating users.</Title>
+      <Description>
+        <para></para>
+      </Description>
+      <Examples>
+       <Example>
+          <Title>-------------------------- EXAMPLE 1 --------------------------</Title>
+          <Introduction>
+            <para>This command creates a new user in the current organization unit and sets the manager property.</para>
+          </Introduction>
+          <Code>cd Litware:\Users
+new-item NewUser -Type user
+Set-ItemProperty newuser manager '.\Dianne Tibbot'</Code>
+          <Remarks>
+            <para></para>
+          </Remarks>
+        </Example>
+      </Examples>
+    </Task>
+    
+    
+    <Task>
+      <Title>Getting group members.</Title>
+      <Description>
+        <para>The group members are stored in the Member property of the object.</para>
+      </Description>
+      <Examples>
+        <Example>
+          <Title>-------------------------- EXAMPLE 1 --------------------------</Title>
+          <Introduction>
+            <para>This command returns members of the Litware FTE group.</para>
+          </Introduction>
+          <Code>(get-itemproperty 'Litware FTE').Member</Code>
+          <Remarks>
+            <para></para>
+          </Remarks>
+        </Example>
+      </Examples>
+    </Task>
+  
+    <Task>
+      <Title>Modifying multi-valued properties.</Title>
+      <Description>
+        <para>Some item properties can have more values. To add and remove values, use the Add and Remove dynamic parameters.</para>
+      </Description>
+      
+      <Examples>
+        <Example>
+          <Title>-------------------------- EXAMPLE 1 --------------------------</Title>
+          <Introduction>
+            <para>This command adds a member to the Litware FTE group.</para>
+          </Introduction>
+          <Code>set-itemproperty 'Litware FTE' Member TestUser -Add</Code>
+          <Remarks>
+            <para></para>
+          </Remarks>
+        </Example>
+        <Example>
+          <Title>-------------------------- EXAMPLE 2 --------------------------</Title>
+          <Introduction>
+            <para>This command removes a member from the Litware FTE group.</para>
+          </Introduction>
+          <Code>set-itemproperty 'Litware FTE' Member TestUser -Remove</Code>
+          <Remarks>
+            <para></para>
+          </Remarks>
+        </Example>
+      </Examples>
+    </Task>
+  </Tasks>  
+  
+  
+  
+  <DynamicParameters>
+    <DynamicParameter>
+      <Name>Raw</Name>
+      <CmdletSupported>Get-ItemProperty, Set-ItemProperty</CmdletSupported>
+      <Type>
+        <Name>System.Management.Automation.SwitchParameter</Name>
+      </Type>
+      <Description>Returns or modifies the native values of LDAP attributes instead of provider-adapted objects.</Description>
+      <PossibleValues>
+      </PossibleValues>
+    </DynamicParameter>
+  
+    <DynamicParameter>
+      <Name>Add</Name>
+      <CmdletSupported>Set-ItemProperty</CmdletSupported>
+      <Type>
+        <Name>System.Management.Automation.SwitchParameter</Name>
+      </Type>
+      <Description>Adds the specified value to the multi-valued property.</Description>
+      <PossibleValues>
+      </PossibleValues>
+    </DynamicParameter>  
+
+    <DynamicParameter>
+      <Name>Remove</Name>
+      <CmdletSupported>Set-ItemProperty</CmdletSupported>
+      <Type>
+        <Name>System.Management.Automation.SwitchParameter</Name>
+      </Type>
+      <Description>Removes the specified value from the multi-valued property.</Description>
+      <PossibleValues>
+      </PossibleValues>
+    </DynamicParameter>  
+
+
+  </DynamicParameters>
+  
+  
+  
+  
+  <RelatedLinks>
+    Get-ADObject
+    Get-DhcpServer
+    Get-DomainController
+    about_provider
+</RelatedLinks>
+</providerHelp>

@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Pscx.Commands.IO.Compression.WriteArchiveCommandBase" Collapsed="true">
+    <Position X="4" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABABYSAEAAAACAAAAAAAQEAAAAAIAAAgAAAAAIA=</HashCode>
+      <FileName>Commands\IO\Compression\WriteArchiveCommandBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.Compression.ReadArchiveCommand" Collapsed="true">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAABAAACAAAAAACAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Commands\IO\Compression\ReadArchiveCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.Compression.ExpandArchiveCommand" Collapsed="true">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAABABAAAAAAAACAAAAAKAQAAEAAACUAAAAAAAAAA=</HashCode>
+      <FileName>Commands\IO\Compression\ExpandArchiveCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.Compression.WriteBZip2Command" Collapsed="true">
+    <Position X="7.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABIAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\IO\Compression\WriteBZip2Command.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.Compression.WriteGZipCommand" Collapsed="true">
+    <Position X="0.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABIAIAAAAAAACAAAAQAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\IO\Compression\WriteGZipCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.Compression.WriteTarCommand" Collapsed="true">
+    <Position X="3" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\IO\Compression\WriteTarCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.Compression.WriteZipCommand" Collapsed="true">
+    <Position X="5.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAIAIAAAAAAAAAAQAACAAAAAABQCAEACAAAAQ=</HashCode>
+      <FileName>Commands\IO\Compression\WriteZipCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.Compression.ArchiveExpander.ZipExpander" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAEAAAAAAAACAAAAAAgAKAAAAIAAACAAAAAAAAAIA=</HashCode>
+      <FileName>Commands\IO\Compression\ArchiveExpander\Zip\ZipExpander.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Pscx.Commands.IO.Compression.ArchiveReader.ReaderBase" Collapsed="true">
+    <Position X="15.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAACgAAAAAAAAAhBAAAAAAAAAAAAAAABAAABA=</HashCode>
+      <FileName>Commands\IO\Compression\ArchiveReader\ReaderBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.Compression.ArchiveReader.ReaderFactory" Collapsed="true">
+    <Position X="12.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\IO\Compression\ArchiveReader\ReaderFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.Compression.ArchiveReader.ZipRecord" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAgAgAIAAAAAgAQDAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\IO\Compression\ArchiveReader\Zip\ZipRecord.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Pscx.Commands.IO.Compression.ArchiveWriter.BZip2Writer" Collapsed="true">
+    <Position X="7.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAKAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\IO\Compression\ArchiveWriter\BZip2\BZip2Writer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.Compression.ArchiveWriter.GZipWriter" Collapsed="true">
+    <Position X="9.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAKAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\IO\Compression\ArchiveWriter\GZip\GZipWriter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.Compression.ArchiveWriter.MultipleArchiveWriter&lt;TCommand, TStream&gt;" Collapsed="true">
+    <Position X="7.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAgAAAAAAAAAAACAAAAAAAAAgAAAAAAAAQEAAAAA=</HashCode>
+      <FileName>Commands\IO\Compression\ArchiveWriter\MultipleArchiveWriter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.Compression.ArchiveWriter.SingleArchiveWriter&lt;TCommand, TStream&gt;" Collapsed="true">
+    <Position X="2" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EIAAAhAAISQAAAAAACAAgAAAAAAAACAAAAAAQAABAAA=</HashCode>
+      <FileName>Commands\IO\Compression\ArchiveWriter\SingleArchiveWriter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.Compression.ArchiveWriter.TarWriter" Collapsed="true">
+    <Position X="0.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAADAAAAEAAKAAAAAAEAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>Commands\IO\Compression\ArchiveWriter\Tar\TarWriter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.Compression.ArchiveWriter.WriterBase&lt;TCommand, TStream&gt;" Collapsed="true">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BBAAApAAASTEAAAECDKMBABAAkgAAAAABAAwQBAgAAA=</HashCode>
+      <FileName>Commands\IO\Compression\ArchiveWriter\WriterBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Pscx.Commands.IO.Compression.ArchiveWriter.WriteEventArgs" Collapsed="true">
+    <Position X="14" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAABAAAAAACAAgAgA=</HashCode>
+      <FileName>Commands\IO\Compression\ArchiveWriter\WriterBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.Compression.ArchiveWriter.MultipleArchiveZipWriter" Collapsed="true">
+    <Position X="5.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAKAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\IO\Compression\ArchiveWriter\Zip\MultipleArchiveZipWriter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pscx.Commands.IO.Compression.ArchiveWriter.SingleArchiveZipWriter" Collapsed="true">
+    <Position X="3" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAABAAAgAAAKAAAAAAEAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>Commands\IO\Compression\ArchiveWriter\Zip\SingleArchiveZipWriter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Pscx.Commands.IO.Compression.ArchiveExpander.IArchiveExpander" Collapsed="true">
+    <Position X="12.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAACAAAAAAAAAIA=</HashCode>
+      <FileName>Commands\IO\Compression\ArchiveExpander\IArchiveExpander.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Pscx.Commands.IO.Compression.ArchiveReader.IArchiveReader" Collapsed="true">
+    <Position X="14" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\IO\Compression\ArchiveReader\IArchiveReader.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Pscx.Commands.IO.Compression.ArchiveReader.IArchiveRecord" Collapsed="true">
+    <Position X="15.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAgAgAIAAAAAAAQCAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\IO\Compression\ArchiveReader\IArchiveRecord.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Pscx.Commands.IO.Compression.ArchiveWriter.IArchiveWriter" Collapsed="true">
+    <Position X="12.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAQAEAAAACACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\IO\Compression\ArchiveWriter\IArchiveWriter.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

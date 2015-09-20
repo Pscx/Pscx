@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Types>
+  <Type>
+    <Name>System.IO.FileSystemInfo</Name>
+    <Members>
+      <ScriptProperty>
+        <Name>ReparsePoint</Name>
+        <GetScriptBlock>
+          if($this.Attributes -band [IO.FileAttributes]::ReparsePoint) {
+          (Get-ReparsePoint $this.FullName)
+          }
+        </GetScriptBlock>
+      </ScriptProperty>
+    </Members>
+  </Type>
+
+  <Type>
+    <Name>System.IO.DriveInfo</Name>
+    <Members>
+      <AliasProperty>
+        <Name>FreeSpace</Name>
+        <ReferencedMemberName>AvailableFreeSpace</ReferencedMemberName>
+      </AliasProperty>
+      <ScriptProperty>
+        <Name>UsedSpace</Name>
+        <GetScriptBlock>
+          $this.TotalSize - $this.FreeSpace
+        </GetScriptBlock>
+      </ScriptProperty>
+    </Members>
+  </Type>
+
+</Types>

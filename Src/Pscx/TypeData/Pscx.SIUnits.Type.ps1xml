@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Types>
+
+  <Type>
+    <Name>Pscx.SIUnits.Energy</Name>
+    <Members>
+      <ScriptProperty>
+        <Name>Energy</Name>
+        <GetScriptBlock>
+          $this.ToString()
+        </GetScriptBlock>
+      </ScriptProperty>
+    </Members>
+  </Type>
+
+  <Type>
+    <Name>Pscx.SIUnits.Length</Name>
+    <Members>
+      <ScriptProperty>
+        <Name>Length</Name>
+        <GetScriptBlock>
+          $this.ToString()
+        </GetScriptBlock>
+      </ScriptProperty>
+    </Members>
+  </Type>
+
+  <Type>
+    <Name>Pscx.SIUnits.Mass</Name>
+    <Members>
+      <ScriptProperty>
+        <Name>Mass</Name>
+        <GetScriptBlock>
+          $this.ToString()
+        </GetScriptBlock>
+      </ScriptProperty>
+    </Members>
+  </Type>
+
+  <Type>
+    <Name>Pscx.SIUnits.Pressure</Name>
+    <Members>
+      <ScriptProperty>
+        <Name>Pressure</Name>
+        <GetScriptBlock>
+          $this.ToString()
+        </GetScriptBlock>
+      </ScriptProperty>
+    </Members>
+  </Type>
+  
+</Types>
