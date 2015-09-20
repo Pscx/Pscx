@@ -48,8 +48,8 @@
   <Import Project="$(WixTargetsPath)" />
   <PropertyGroup>
     <PostBuildEvent>if "$(ConfigurationName)" == "Release-Signed" (
-    %40echo "C:\Program Files (x86)\Windows Kits\8.0\bin\x86\signtool.exe" sign /t http://timestamp.digicert.com /sha1 C32F6C34C7B557B7DAB321FD802E5422B0171B1B /d "$(TargetFileName)" "$(TargetPath)" 
-    "C:\Program Files (x86)\Windows Kits\8.0\bin\x86\signtool.exe" sign /t http://timestamp.digicert.com /sha1 C32F6C34C7B557B7DAB321FD802E5422B0171B1B /d "$(TargetFileName)" "$(TargetPath)"
+    %40echo "C:\Program Files (x86)\Windows Kits\8.1\bin\x86\signtool.exe" sign /t http://timestamp.digicert.com /sha1 C32F6C34C7B557B7DAB321FD802E5422B0171B1B /d "$(TargetFileName)" "$(TargetPath)" 
+    "C:\Program Files (x86)\Windows Kits\8.1\bin\x86\signtool.exe" sign /t http://timestamp.digicert.com /sha1 C32F6C34C7B557B7DAB321FD802E5422B0171B1B /d "$(TargetFileName)" "$(TargetPath)"
 )</PostBuildEvent>
   </PropertyGroup>
   <!--
