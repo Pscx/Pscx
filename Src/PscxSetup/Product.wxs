@@ -16,7 +16,7 @@
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
     <Media Id="1" Cabinet="Pscx.cab" EmbedCab="yes" />
 
-    <WixVariable Id="WixUILicenseRtf" Value="..\EULA.rtf" />
+    <WixVariable Id="WixUILicenseRtf" Value="EULA.rtf" />
     <UIRef Id="WixUI_Minimal" />
 
     <Feature Id="ProductFeature" Title="Pscx Module" Level="1">
@@ -112,7 +112,7 @@
       </Component>
       <Component Id="MiscFilesComp" Guid="D2A4FAAF-F1AB-47D2-B065-F67C492F7D49">
         <File Id="PscxUserPreferencesPS1" Name="Pscx.UserPreferences.ps1" Source="..\Pscx\Pscx.UserPreferences.ps1" KeyPath="yes"/>
-        <File Id="ReleaseNotesTXT" Name="ReleaseNotes.txt" Source="..\ReleaseNotes.txt"/>
+        <File Id="ReleaseNotesTXT" Name="ReleaseNotes.txt" Source="..\..\ReleaseNotes.txt"/>
         <File Id="AboutPscxTXT" Name="about_Pscx.help.txt" Source="..\Pscx\bin\Release-Signed\about_Pscx.help.txt"/>
         <File Id="PscxHelpXML" Name="Pscx.dll-Help.xml" Source="..\Pscx\bin\Release-Signed\Pscx.dll-Help.xml"/>
       </Component>

@@ -62,4 +62,4 @@ gci $providerHelpPath\Provider*.xml | ? {$_.Name -notmatch 'Provider_template'} 
 
 $helpfile += $providerHelp
 $helpfile += '</helpItems>'
-$helpfile | Out-Fle $PscxHelpPath -Encoding Utf8
+$helpfile | Out-File $PscxHelpPath -Encoding Utf8

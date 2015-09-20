@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DBBB5217-D71C-4C39-9310-3D21BE72D241}"
 	ProjectSection(SolutionItems) = preProject
@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Pscx.ico = Pscx.ico
 		PscxIcon.psd = PscxIcon.psd
 		PSGalleryPublishInstructions.txt = PSGalleryPublishInstructions.txt
-		ReleaseNotes.txt = ReleaseNotes.txt
+		..\ReleaseNotes.txt = ..\ReleaseNotes.txt
 		SignScripts.ps1 = SignScripts.ps1
 	EndProjectSection
 EndProject
@@ -38,33 +38,6 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "PscxSetup", "PscxSetup\Pscx
 	EndProjectSection
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs01
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = PscxHelp\\PscxHelp.csproj
-		SccProjectName1 = PscxHelp
-		SccLocalPath1 = PscxHelp
-		SccProjectUniqueName2 = Pscx.UnitTests\\Pscx.UnitTests.csproj
-		SccProjectName2 = Pscx.UnitTests
-		SccLocalPath2 = Pscx.UnitTests
-		SccProjectUniqueName3 = EchoArgs\\EchoArgs.csproj
-		SccProjectName3 = EchoArgs
-		SccLocalPath3 = EchoArgs
-		SccProjectUniqueName4 = Pscx.Core\\Pscx.Core.csproj
-		SccProjectName4 = Pscx.Core
-		SccLocalPath4 = Pscx.Core
-		SccProjectUniqueName5 = Pscx\\Pscx.csproj
-		SccProjectName5 = Pscx
-		SccLocalPath5 = Pscx
-		SccProjectUniqueName6 = Pscx.Deprecated\\Pscx.Deprecated.csproj
-		SccProjectName6 = Pscx.Deprecated
-		SccLocalPath6 = Pscx.Deprecated
-		SccProjectUniqueName7 = PscxSetup\\PscxSetup.wixproj
-		SccProjectName7 = PscxSetup
-		SccLocalPath7 = PscxSetup
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms

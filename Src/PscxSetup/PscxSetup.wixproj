@@ -36,6 +36,7 @@
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Eula.rtf" />
     <Content Include="SigningInstructions.txt" />
   </ItemGroup>
   <ItemGroup>
