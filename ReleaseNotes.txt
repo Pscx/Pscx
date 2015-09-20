@@ -1,6 +1,11 @@
 PowerShell Community Extensions Release Notes
 
-What's New in PSCX 3.2.1
+What's New in PSCX 3.2.2
+September 20, 2015
+
+* Added better support for VS 2015 to Import-VisualStudioVars
+
+3.2.1 Release Notes:
 July 29, 2015
 
 * Updated to support PowerShell 5.0.

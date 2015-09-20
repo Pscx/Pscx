@@ -2169,59 +2169,94 @@ function Get-Parameter {
 .PARAMETER Architecure
     Selects the desired architecture to configure the environment for. 
     Defaults to x86 if running in 32-bit PowerShell, otherwise defaults to 
-    amd64.  Other valid values are: arm, x86_arm, x86_amd64
+    amd64.  Other valid values are: arm, x86_arm, x86_amd64, amd64_x86.
 .EXAMPLE
-    C:\PS> Import-VisualStudioVars 2010
+    C:\PS> Import-VisualStudioVars 2015
 
-    Sets up the environment variables to use the VS 2010 compilers. Defaults 
+    Sets up the environment variables to use the VS 2015 compilers. Defaults 
     to x86 if running in 32-bit PowerShell, otherwise defaults to amd64.
 .EXAMPLE
-    C:\PS> Import-VisualStudioVars 2012 arm
+    C:\PS> Import-VisualStudioVars 2013 arm
 
-    Sets up the environment variables for the VS 2012 arm compiler.
+    Sets up the environment variables for the VS 2013 ARM compiler.
 #>
 function Import-VisualStudioVars
 {
     param
     (
-        [Parameter(Mandatory = $true, Position = 0)]
-        [ValidateSet('90', '2008', '100', '2010', '110', '2012', '120', '2013', '140')]
+        [Parameter(Position = 0)]
+        [ValidateSet('90', '2008', '100', '2010', '110', '2012', '120', '2013', '140', '2015')]
         [string]
         $VisualStudioVersion,
 
         [Parameter(Position = 1)]
         [string]
-        $Architecture = $(if ($Pscx:Is64BitProcess) {'amd64'} else {'x86'})
+        $Architecture
     )
+
+    begin {
+        $ArchSpecified = $true
+        if (!$Architecture) {
+            $ArchSpecified = $false
+            $Architecture = $(if ($Pscx:Is64BitProcess) {'amd64'} else {'x86'})
+        }
+    }
  
-    End
+    end
     {
         switch -regex ($VisualStudioVersion)
         {
             '90|2008' {
                 Push-EnvironmentBlock -Description "Before importing VS 2008 $Architecture environment variables"
+                Write-Verbose "Invoking ${env:VS90COMNTOOLS}..\..\VC\vcvarsall.bat $Architecture"
                 Invoke-BatchFile "${env:VS90COMNTOOLS}..\..\VC\vcvarsall.bat" $Architecture
             }
       
             '100|2010' {
                 Push-EnvironmentBlock -Description "Before importing VS 2010 $Architecture environment variables"
+                Write-Verbose "Invoking ${env:VS100COMNTOOLS}..\..\VC\vcvarsall.bat $Architecture"
                 Invoke-BatchFile "${env:VS100COMNTOOLS}..\..\VC\vcvarsall.bat" $Architecture
             }
  
             '110|2012' {
                 Push-EnvironmentBlock -Description "Before importing VS 2012 $Architecture environment variables"
+                Write-Verbose "Invoking ${env:VS110COMNTOOLS}..\..\VC\vcvarsall.bat $Architecture"
                 Invoke-BatchFile "${env:VS110COMNTOOLS}..\..\VC\vcvarsall.bat" $Architecture
             }
  
             '120|2013' {
                 Push-EnvironmentBlock -Description "Before importing VS 2013 $Architecture environment variables"
+                Write-Verbose "Invoking ${env:VS120COMNTOOLS}..\..\VC\vcvarsall.bat $Architecture"
                 Invoke-BatchFile "${env:VS120COMNTOOLS}..\..\VC\vcvarsall.bat" $Architecture
             }
 
+            '140|2015' {
+                Push-EnvironmentBlock -Description "Before importing VS 2015 $Architecture environment variables"
+                if (!$ArchSpecified) {
+                    Write-Verbose "Invoking ${env:VS140COMNTOOLS}VsDevCmd.bat"
+                    Invoke-BatchFile "${env:VS140COMNTOOLS}VsDevCmd.bat"
+                }
+                else {
+                    Write-Verbose "Invoking ${env:VS140COMNTOOLS}..\..\VC\vcvarsall.bat $Architecture"
+                    Invoke-BatchFile "${env:VS140COMNTOOLS}..\..\VC\vcvarsall.bat" $Architecture
+                }
+            }
+
             default {
-                Push-EnvironmentBlock -Description "Before importing $VisualStudioVersion $Architecture environment variables"
-                $envVarName = "VS${VisualStudioVersion}COMNTOOLS"
-                Invoke-BatchFile (Join-Path (Get-Item env:\$envVarName).Value "..\..\VC\vcvarsall.bat") $Architecture
+                $envvar = Get-Item Env:\vs*comntools
+                if ($envvar) {
+                    $ver = ''
+                    if ($envvar.Name -match 'vs(.*?)comntools') {
+                        $ver = $matches[1]
+                    }
+
+                    Push-EnvironmentBlock -Description "Before importing $ver $Architecture environment variables"
+
+                    $vscomntoolspath = $envvar.Value
+                    $vcvarsallPath = Join-Path $vscomntoolspath "..\..\VC\vcvarsall.bat"
+                    Write-Verbose "Invoking default path $vcvarsallPath $Architecture"
+                    Invoke-BatchFile $vcvarsallPath $Architecture
+                }
             }
         }
     }
