@@ -1709,20 +1709,20 @@ function Show-Tree
             VerticalBar   = '|'
         }
         
-        $cp437Chars = @{
+        $unicodeChars = @{
             EndCap        = '└'
             Junction      = '├'
             HorizontalBar = '─'
             VerticalBar   = '│'
         }
         
-        if (($Host.CurrentCulture.TextInfo.OEMCodePage -eq 437) -and !$UseAsciiLineArt)
+        if ($UseAsciiLineArt)
         {
-            $lineChars = $cp437Chars
+            $lineChars = $asciiChars
         }
         else
         {
-            $lineChars = $asciiChars
+            $lineChars = $unicodeChars
         }
                
         function GetIndentString([bool[]]$IsLast)
