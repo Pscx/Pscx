@@ -2185,7 +2185,7 @@ function Import-VisualStudioVars
     param
     (
         [Parameter(Mandatory = $true, Position = 0)]
-        [ValidateSet('90', '2008', '100', '2010', '110', '2012', '120', '2013', '140')]
+        [ValidateSet('90', '2008', '100', '2010', '110', '2012', '120', '2013', '140', '2015')]
         [string]
         $VisualStudioVersion,
 
@@ -2216,6 +2216,11 @@ function Import-VisualStudioVars
             '120|2013' {
                 Push-EnvironmentBlock -Description "Before importing VS 2013 $Architecture environment variables"
                 Invoke-BatchFile "${env:VS120COMNTOOLS}..\..\VC\vcvarsall.bat" $Architecture
+            }
+            
+            '140|2015' {
+                Push-EnvironmentBlock -Description "Before importing VS 2015 $Architecture environment variables"
+                Invoke-BatchFile "${env:VS140COMNTOOLS}vsvars32.bat" $Architecture
             }
 
             default {
