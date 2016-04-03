@@ -446,9 +446,6 @@ function Edit-HostProfile {
 .DESCRIPTION
     Runs the specified command in an elevated context.  This is useful on Windows Vista
     and Windows 7 when you run with a standard user token but can elevate to Admin when needed.
-.PARAMETER AutoExit
-    Invoke-Elevated normally leaves the new PowerShell window open.  If you specify the AutoExit switch
-    parameter, the new PowerShell window will exit automatically when it is finished executing.
 .EXAMPLE
     C:\PS> Invoke-Elevated
     Opens a new PowerShell instance as admin.
@@ -466,7 +463,7 @@ function Edit-HostProfile {
     Aliases:  su
     Author:   Keith Hill
 #>
-function Invoke-Elevated([switch]$AutoExit)
+function Invoke-Elevated()
 {
     Write-Debug "`$MyInvocation:`n$($MyInvocation | Out-String)"
  
@@ -527,10 +524,6 @@ function Invoke-Elevated([switch]$AutoExit)
             $startProcessArgs['ArgumentList'] = "-NoExit", "-Command", "& {Set-Location '$pwd'; $poshCmd $cmdArgs}"
             Write-Debug "  Starting PowerShell command $poshCmd with args: $cmdArgs"
         }
-    }
-
-    if ($AutoExit) {
-        $startProcessArgs['ArgumentList'] = $startProcessArgs['ArgumentList'] | Where {$_ -ne '-NoExit'}
     }
  
     Write-Debug "  Invoking Start-Process with args: $($startProcessArgs | Format-List | Out-String)" 
