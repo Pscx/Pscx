@@ -13,7 +13,7 @@ $backwardStack = new-object System.Collections.ArrayList
 $forewardStack = new-object System.Collections.ArrayList
 
 # We are going to replace the PowerShell default "cd" alias with the CD function defined below.
-Set-Alias cd Set-LocationEx -Force -Scope Global -Option AllScope -Description "PSCX alias"
+Set-Alias cd Pscx\Set-LocationEx -Force -Scope Global -Option AllScope -Description "PSCX alias"
 
 <#
 .SYNOPSIS

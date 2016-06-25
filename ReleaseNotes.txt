@@ -1,9 +1,21 @@
 PowerShell Community Extensions Release Notes
 
 What's New in PSCX 3.2.2
-September 20, 2015
+June 25, 2016
 
 * Added better support for VS 2015 to Import-VisualStudioVars
+  If you do not specify an architecture than VsDevCmd.bat is called
+  otherwise vcvarsall.bat with the specified architecture is called.
+  This function will now output messages output the batch file.  This
+  is useful if you specify an architecture, say ARM, which you haven't
+  installed support for.  You will now see that message from the batch
+  file. Also added support for VS '15' using version number '150'.
+
+* Use Unicode chars for Show-Tree for all code pages.  User can always 
+  fall back to using ASCII chars with -UseAsciiLineArt
+
+* Updated aliases to prefix all associated commands with the PSCX module
+  prefix.
 
 3.2.1 Release Notes:
 July 29, 2015
