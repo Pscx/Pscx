@@ -132,7 +132,7 @@ Set-Alias tail  Pscx\Get-FileTail    -Description "PSCX alias"
 Set-Alias skip  Pscx\Skip-Object     -Description "PSCX alias"
 
 # Compatibility alias
-Set-Alias Resize-Bitmap Set-BitmapSize -Description "PSCX alias"
+Set-Alias Resize-Bitmap Pscx\Set-BitmapSize -Description "PSCX alias"
 
 # -----------------------------------------------------------------------
 # Load nested modules selected by user

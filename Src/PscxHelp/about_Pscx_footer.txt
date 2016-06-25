@@ -76,28 +76,12 @@ MISCELLANOUS FEATURES
     PS> Enable-OpenPowerShellHere
 
 FEEDBACK
-    Please submit any feedback, including defects and enhancement requests, 
-    to either the discussions forums at:
+    Please submit any feedback, including defects and enhancement requests at: 
 
-    http://pscx.codeplex.com/Thread/List.aspx
+    https://github.com/Pscx/Pscx/issues
 
-    or via the Issue Tracker at:
-
-    http://pscx.codeplex.com/WorkItem/List.aspx
-
-    We are also interested in suggestions you may have for cmdlets.  Over
-    time, we hope to be able to add some custom providers but that greatly
-    depends on recruiting some more developers for the PSCX project.
-
-CONTRIBUTING TO PSCX
-    If you are:
-    
-    A) A software developer with experience programming in C# 
-    B) Passionate about Windows PowerShell 
-    C) Interested in contributing your coding talents to the project, please
-       drop me an email at:
-    
-       r_keith_hill@hotmail.com.
+    We are also interested in suggestions you may have for generap purpose 
+	cmdlets.
 
 CREDITS
     This is a list of people and/or groups who have directly or indirectly

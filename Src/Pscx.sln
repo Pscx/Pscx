@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DBBB5217-D71C-4C39-9310-3D21BE72D241}"
 	ProjectSection(SolutionItems) = preProject
@@ -10,7 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		PscxIcon.psd = PscxIcon.psd
 		PSGalleryPublishInstructions.txt = PSGalleryPublishInstructions.txt
 		..\ReleaseNotes.txt = ..\ReleaseNotes.txt
-		SignScripts.ps1 = SignScripts.ps1
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PscxHelp", "PscxHelp\PscxHelp.csproj", "{5FC267A9-D477-41B9-B2AA-BF4A1A029940}"

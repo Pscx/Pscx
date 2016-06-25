@@ -17,6 +17,9 @@ June 25, 2016
 * Updated aliases to prefix all associated commands with the PSCX module
   prefix.
 
+* PSCX has moved to GitHub for further development:
+  https://github.com/Pscx/Pscx
+
 3.2.1 Release Notes:
 July 29, 2015
 
