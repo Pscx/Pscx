@@ -2200,6 +2200,18 @@ function Import-VisualStudioVars
             $ArchSpecified = $false
             $Architecture = $(if ($Pscx:Is64BitProcess) {'amd64'} else {'x86'})
         }
+
+        function FindAndLoadBatchFile($ComnTools, $ArchSpecified) {
+            if (!$ArchSpecified) {
+                $batchFilePath = Join-Path $ComnTools VsDevCmd.bat
+            }
+            else {
+                $batchFilePath = Join-Path $ComnTools ..\..\VC\vcvarsall.bat
+            }
+
+            Write-Verbose "Invoking $batchFilePath"
+            Invoke-BatchFile $batchFilePath
+        }
     }
 
     end
@@ -2220,38 +2232,22 @@ function Import-VisualStudioVars
 
             '110|2012' {
                 Push-EnvironmentBlock -Description "Before importing VS 2012 $Architecture environment variables"
-                Write-Verbose "Invoking ${env:VS110COMNTOOLS}..\..\VC\vcvarsall.bat $Architecture"
-                Invoke-BatchFile "${env:VS110COMNTOOLS}..\..\VC\vcvarsall.bat" $Architecture
+                FindAndLoadBatchFile $env:VS110COMNTOOLS $ArchSpecified
             }
 
             '120|2013' {
                 Push-EnvironmentBlock -Description "Before importing VS 2013 $Architecture environment variables"
-                Write-Verbose "Invoking ${env:VS120COMNTOOLS}..\..\VC\vcvarsall.bat $Architecture"
-                Invoke-BatchFile "${env:VS120COMNTOOLS}..\..\VC\vcvarsall.bat" $Architecture
+                FindAndLoadBatchFile $env:VS120COMNTOOLS $ArchSpecified
             }
 
             '140|2015' {
                 Push-EnvironmentBlock -Description "Before importing VS 2015 $Architecture environment variables"
-                if (!$ArchSpecified) {
-                    Write-Verbose "Invoking ${env:VS140COMNTOOLS}VsDevCmd.bat"
-                    Invoke-BatchFile "${env:VS140COMNTOOLS}VsDevCmd.bat"
-                }
-                else {
-                    Write-Verbose "Invoking ${env:VS140COMNTOOLS}..\..\VC\vcvarsall.bat $Architecture"
-                    Invoke-BatchFile "${env:VS140COMNTOOLS}..\..\VC\vcvarsall.bat" $Architecture
-                }
+                FindAndLoadBatchFile $env:VS140COMNTOOLS $ArchSpecified
             }
 
             '150' {
                 Push-EnvironmentBlock -Description "Before importing VS '15' $Architecture environment variables"
-                if (!$ArchSpecified) {
-                    Write-Verbose "Invoking ${env:VS150COMNTOOLS}VsDevCmd.bat"
-                    Invoke-BatchFile "${env:VS150COMNTOOLS}VsDevCmd.bat"
-                }
-                else {
-                    Write-Verbose "Invoking ${env:VS150COMNTOOLS}..\..\VC\vcvarsall.bat $Architecture"
-                    Invoke-BatchFile "${env:VS150COMNTOOLS}..\..\VC\vcvarsall.bat" $Architecture
-                }
+                FindAndLoadBatchFile $env:VS150COMNTOOLS $ArchSpecified
             }
 
             default {
