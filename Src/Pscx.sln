@@ -149,7 +149,6 @@ Global
 		{823FD062-FD09-40B8-B998-2E1DCFAAE944}.Release|x86.Build.0 = Release|x86
 		{823FD062-FD09-40B8-B998-2E1DCFAAE944}.Release-Signed|Any CPU.ActiveCfg = Release|x86
 		{823FD062-FD09-40B8-B998-2E1DCFAAE944}.Release-Signed|Mixed Platforms.ActiveCfg = Release-Signed|x86
-		{823FD062-FD09-40B8-B998-2E1DCFAAE944}.Release-Signed|Mixed Platforms.Build.0 = Release-Signed|x86
 		{823FD062-FD09-40B8-B998-2E1DCFAAE944}.Release-Signed|x86.ActiveCfg = Release|x86
 		{823FD062-FD09-40B8-B998-2E1DCFAAE944}.Release-Signed|x86.Build.0 = Release|x86
 	EndGlobalSection
