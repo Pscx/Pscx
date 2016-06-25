@@ -14,7 +14,7 @@ LONG DESCRIPTION
     create some of those cmdlets and make them available to the community.
         
 POWERSHELL COMPATIBILITY
-    PSCX 3.2 is compiled against .NET 4.0 and consequently works only in 
+    PSCX 3.x is compiled against .NET 4 and consequently works only in 
     Windows PowerShell 3.0 and above. If you need Windows PowerShell 2.0 
     support, download PSCX 2.1.  If you need Windows PowerShell 1.0 support, 
     download PSCX 1.2.
@@ -44,7 +44,7 @@ PREFERENCE VARIABLES
                                    # Mutually exclusive with 
                                    # CD_EchoNewLocation.
                                    
-    CD_EchoNewLocation = $true     # Display new provider location after using 
+    CD_EchoNewLocation = $false    # Display new provider location after using 
                                    # cd (Set-LocationEx).
                                    # Mutually exclusive with CD_GetChildItem.
     

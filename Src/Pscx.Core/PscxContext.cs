@@ -61,15 +61,15 @@ namespace Pscx
 
             var modulesToImport = new Hashtable(StringComparer.OrdinalIgnoreCase);
             modulesToImport["CD"] = true;
-            modulesToImport["DirectoryServices"] = true;
-            modulesToImport["FileSystem"]        = true;
+            modulesToImport["DirectoryServices"] = false;
+            modulesToImport["FileSystem"]        = false;
             modulesToImport["GetHelp"]           = false;
-            modulesToImport["Net"]               = true;
+            modulesToImport["Net"]               = false;
             modulesToImport["Prompt"]            = false;
             modulesToImport["TranscribeSession"] = false;
             modulesToImport["Utility"]           = true;
-            modulesToImport["Vhd"]               = true;
-            modulesToImport["Wmi"]               = true;
+            modulesToImport["Vhd"]               = false;
+            modulesToImport["Wmi"]               = false;
             this.Preferences["ModulesToImport"]  = modulesToImport;
         }
 

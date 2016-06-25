@@ -1,26 +1,30 @@
 $releaseNotes = @'
-What's New in PSCX 3.2.1
-July 29, 2015
+What's New in PSCX 3.2.2
+June 25, 2016
 
-* Updated to support PowerShell 5.0.
+* Added better support for VS 2015 to Import-VisualStudioVars
+  If you do not specify an architecture than VsDevCmd.bat is called
+  otherwise vcvarsall.bat with the specified architecture is called.
+  This function will now output messages output the batch file.  This
+  is useful if you specify an architecture, say ARM, which you haven't
+  installed support for.  You will now see that message from the batch
+  file. Also added support for VS '15' using version number '150'.
 
-* Fixed bug in Get-Parameter related to getting dynamic parameter info.
+* Use Unicode chars for Show-Tree for all code pages.  User can always 
+  fall back to using ASCII chars with -UseAsciiLineArt
 
-* Updated Expand-Archive to output DirectoryInfo and FileInfo objects
-  for the extracted directories and files when using -PassThru.
+* Updated aliases to prefix all associated commands with the PSCX module
+  prefix.
 
-* Updated Get-TypeName to normally write the typename to the standard 
-  output stream.  However, if -PassThru is specified the object input
-  to the command is output and the typename is written directly to the
-  host UI.  This allows you to insert Get-TypeName -PassThru into the 
-  pipeline to observe which object types a flowing in the pipeline.
+* PSCX has moved to GitHub for further development:
+  https://github.com/Pscx/Pscx
 '@
 
 $nugetApiKey = '--------------------------'
 $projectUri = 'http://pscx.codeplex.com/'
 $licenseUri = 'http://pscx.codeplex.com/license'
 $iconUri = 'http://download-codeplex.sec.s-msft.com/Download?ProjectName=pscx&DownloadId=8046&Build=20941'
-$tags = 'Utilities','Xml','Zip','Clipboard','Base64','ShortPath','PEHeader'
+$tags = 'Utilities','Xml','Zip','Clipboard','Base64','ShortPath','PEHeader','CD'
 
 Publish-Module -Path $home\Documents\WindowsPowerShell\Modules\Pscx -NuGetApiKey $nugetApiKey `
                -ProjectUri $projectUri -LicenseUri $licenseUri -IconUri $iconUri -Tags $tags `
