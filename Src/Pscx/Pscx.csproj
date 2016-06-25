@@ -477,11 +477,4 @@ xcopy "$(SolutionDir)..\Imports\SevenZip\7z.dll" "$(TargetDir)" /D /R /Y
 xcopy "$(SolutionDir)..\Imports\SevenZip\7z64.dll" "$(TargetDir)" /D /R /Y
 </PreBuildEvent>
   </PropertyGroup>
-  <Import Project="..\packages\SevenZipSharp.Interop.9.38.1\build\SevenZipSharp.Interop.targets" Condition="Exists('..\packages\SevenZipSharp.Interop.9.38.1\build\SevenZipSharp.Interop.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\SevenZipSharp.Interop.9.38.1\build\SevenZipSharp.Interop.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SevenZipSharp.Interop.9.38.1\build\SevenZipSharp.Interop.targets'))" />
-  </Target>
 </Project>
