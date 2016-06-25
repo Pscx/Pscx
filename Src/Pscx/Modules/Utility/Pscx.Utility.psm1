@@ -755,9 +755,11 @@ function Invoke-BatchFile
     ## Go through the environment variables in the temp file.
     ## For each of them, set the variable in our local environment.
     Get-Content $tempFile | Foreach-Object {
-        if ($_ -match "^(.*?)=(.*)$")
-        {
+        if ($_ -match "^(.*?)=(.*)$") {
             Set-Content "env:\$($matches[1])" $matches[2]
+        }
+        else {
+            $_
         }
     }
 
@@ -2166,7 +2168,7 @@ function Get-Parameter {
 .PARAMETER VisualStudioVersion
     The version of Visual Studio to import environment variables for. Valid
     values are 2008, 2010, 2012 and 2013
-.PARAMETER Architecure
+.PARAMETER Architecture
     Selects the desired architecture to configure the environment for.
     Defaults to x86 if running in 32-bit PowerShell, otherwise defaults to
     amd64.  Other valid values are: arm, x86_arm, x86_amd64, amd64_x86.
@@ -2203,14 +2205,15 @@ function Import-VisualStudioVars
 
         function FindAndLoadBatchFile($ComnTools, $ArchSpecified) {
             if (!$ArchSpecified) {
-                $batchFilePath = Join-Path $ComnTools VsDevCmd.bat
+                $batchFilePath = Convert-Path (Join-Path $ComnTools VsDevCmd.bat)
+                Write-Verbose "Invoking '$batchFilePath'"
+                Invoke-BatchFile $batchFilePath
             }
             else {
-                $batchFilePath = Join-Path $ComnTools ..\..\VC\vcvarsall.bat
+                $batchFilePath = Convert-Path (Join-Path $ComnTools ..\..\VC\vcvarsall.bat)
+                Write-Verbose "Invoking '$batchFilePath' $Architecture"
+                Invoke-BatchFile $batchFilePath $Architecture
             }
-
-            Write-Verbose "Invoking $batchFilePath"
-            Invoke-BatchFile $batchFilePath
         }
     }
 
