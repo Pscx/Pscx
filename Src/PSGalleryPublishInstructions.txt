@@ -10,7 +10,7 @@ June 25, 2016
   installed support for.  You will now see that message from the batch
   file. Also added support for VS '15' using version number '150'.
 
-* Use Unicode chars for Show-Tree for all code pages.  User can always 
+* Use Unicode chars for Show-Tree for all code pages.  User can always
   fall back to using ASCII chars with -UseAsciiLineArt
 
 * Updated aliases to prefix all associated commands with the PSCX module
@@ -21,9 +21,9 @@ June 25, 2016
 '@
 
 $nugetApiKey = '--------------------------'
-$projectUri = 'http://pscx.codeplex.com/'
-$licenseUri = 'http://pscx.codeplex.com/license'
-$iconUri = 'http://download-codeplex.sec.s-msft.com/Download?ProjectName=pscx&DownloadId=8046&Build=20941'
+$projectUri = 'https://github.com/Pscx/Pscx'
+$licenseUri = 'https://github.com/Pscx/Pscx/blob/master/LICENSE'
+$iconUri = 'https://github.com/Pscx/Pscx/blob/master/Src/Pscx.ico?raw=true'
 $tags = 'Utilities','Xml','Zip','Clipboard','Base64','ShortPath','PEHeader','CD'
 
 Publish-Module -Path $home\Documents\WindowsPowerShell\Modules\Pscx -NuGetApiKey $nugetApiKey `
