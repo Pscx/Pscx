@@ -12,6 +12,15 @@ Set-StrictMode -Version Latest
 $backwardStack = new-object System.Collections.ArrayList
 $forewardStack = new-object System.Collections.ArrayList
 
+# When the module removed, set the cd alias back to something reasonable.
+# We could use the original cd alias but most of the time it's going to be set to Set-Location.
+# And you may have loaded another module in between stashing the "original" cd alias that
+# modifies the cd alias.  So setting it back to the "original" may not be the right thing to
+# do anyway.
+$ExecutionContext.SessionState.Module.OnRemove = {
+    Set-Alias cd Set-Location -Scope Global -Option AllScope -Force
+}.GetNewClosure()
+
 # We are going to replace the PowerShell default "cd" alias with the CD function defined below.
 Set-Alias cd Pscx\Set-LocationEx -Force -Scope Global -Option AllScope -Description "PSCX alias"
 
