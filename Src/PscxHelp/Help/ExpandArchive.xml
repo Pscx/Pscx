@@ -31,10 +31,6 @@
       <Description>Output a FileInfo or DirectoryInfo for each file or directory expanded, respectively.</Description>
       <DefaultValue></DefaultValue>
     </Parameter>
-    <Parameter Name='Format'>
-      <Description>Specify the format of the archive file being processed if it has an unrecognized or missing file extension. An example is specifying ZIP when expanding files from a self-extracting archive in an EXE.</Description>
-      <DefaultValue></DefaultValue>
-    </Parameter>
     <Parameter Name='ShowProgress'>
       <Description>Show the PowerShell progress bar while performing expansion and scanning operations.</Description>
       <DefaultValue></DefaultValue>
@@ -85,7 +81,7 @@
       </Remarks>
     </Example>
     <Example Number="2">
-      <Code>Expand-Archive -Path setup.exe -EntryPath en-us\readme.htm -format Zip</Code>
+      <Code>Expand-Archive -Path setup.exe -EntryPath en-us\readme.htm</Code>
       <Remarks>
         <p>Search a self-expanding zip file named setup.exe in the current directory for a file named "readme.htm" in a subdirectory named "en-us," and expand it to the current directory.</p>
       </Remarks>
