@@ -1224,9 +1224,6 @@ function Get-ScreenCss
 .PARAMETER Count
     The number of lines of the host buffer to create a screen shot from.
 .EXAMPLE
-    C:\PS> Stop-RemoteProcess server1 notepad.exe
-    Stops all processes named notepad.exe on the remote computer server1.
-.EXAMPLE
     C:\PS> Get-ScreenHtml > screen.html
     Generates an HTML representation of the host's screen buffer and saves it to file.
 .EXAMPLE
@@ -2187,7 +2184,7 @@ function Import-VisualStudioVars
     param
     (
         [Parameter(Position = 0)]
-        [ValidateSet('90', '2008', '100', '2010', '110', '2012', '120', '2013', '140', '2015', '150')]
+        [ValidateSet('90', '2008', '100', '2010', '110', '2012', '120', '2013', '140', '2015', '150', '2017')]
         [string]
         $VisualStudioVersion,
 
@@ -2248,7 +2245,7 @@ function Import-VisualStudioVars
                 FindAndLoadBatchFile $env:VS140COMNTOOLS $ArchSpecified
             }
 
-            '150' {
+            '150|2017' {
                 Push-EnvironmentBlock -Description "Before importing VS '15' $Architecture environment variables"
                 FindAndLoadBatchFile $env:VS150COMNTOOLS $ArchSpecified
             }
