@@ -2164,7 +2164,7 @@ function Get-Parameter {
     Pop-EnvironmentBlock.
 .PARAMETER VisualStudioVersion
     The version of Visual Studio to import environment variables for. Valid
-    values are 2008, 2010, 2012 and 2013
+    values are 2008, 2010, 2012, 2013, 2015 and 2017.
 .PARAMETER Architecture
     Selects the desired architecture to configure the environment for.
     Defaults to x86 if running in 32-bit PowerShell, otherwise defaults to
@@ -2246,7 +2246,15 @@ function Import-VisualStudioVars
             }
 
             '150|2017' {
-                Push-EnvironmentBlock -Description "Before importing VS '15' $Architecture environment variables"
+				# Due to an issue with the VS2017 RC installer, the VS150COMNTOOLS environment variable
+				# isn't set. Add a check here to advise users of the issue.
+				if (!(Test-Path Env:\vs150COMNTOOLS)) {
+					Write-Warning "This cmdlet expects the 'VS150COMNTOOLS' environment variable to be correctly set."
+					Write-Warning "Please set this environment variable manually in order to be able to run this command."
+					return
+				}
+
+                Push-EnvironmentBlock -Description "Before importing VS 2017 $Architecture environment variables"
                 FindAndLoadBatchFile $env:VS150COMNTOOLS $ArchSpecified
             }
 
