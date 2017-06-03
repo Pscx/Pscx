@@ -27,6 +27,7 @@ namespace Pscx.Commands.Xml
         private XslCompiledTransform _xslTransform;
         private SwitchParameter _enableScript;
         private ConformanceLevel _conformanceLevel = ConformanceLevel.Auto;
+        private SwitchParameter _enableDocumentFunction;
 
         [Parameter(Position = 1, Mandatory = true)]
         [PscxPath(NoGlobbing = true, ShouldExist = true)]
@@ -53,6 +54,13 @@ namespace Pscx.Commands.Xml
             set { _conformanceLevel = value; }
         }
 
+        [Parameter]
+        public SwitchParameter EnableDocumentFunction
+        {
+            get { return _enableDocumentFunction; }
+            set { _enableDocumentFunction = value; }
+        }
+
         protected override XmlReaderSettings XmlReaderSettings
         {
             get
@@ -77,7 +85,7 @@ namespace Pscx.Commands.Xml
 
         protected virtual XsltSettings XsltSettings
         {
-            get { return new XsltSettings(false, _enableScript); }
+            get { return new XsltSettings(_enableDocumentFunction, _enableScript); }
         }
 
         protected override void BeginProcessing()
