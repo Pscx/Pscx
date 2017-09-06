@@ -1224,9 +1224,6 @@ function Get-ScreenCss
 .PARAMETER Count
     The number of lines of the host buffer to create a screen shot from.
 .EXAMPLE
-    C:\PS> Stop-RemoteProcess server1 notepad.exe
-    Stops all processes named notepad.exe on the remote computer server1.
-.EXAMPLE
     C:\PS> Get-ScreenHtml > screen.html
     Generates an HTML representation of the host's screen buffer and saves it to file.
 .EXAMPLE
