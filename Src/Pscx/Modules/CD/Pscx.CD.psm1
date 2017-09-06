@@ -1,6 +1,6 @@
 #---------------------------------------------------------------------------
 # Author: Keith Hill
-# Desc:   Module that replaces the regular CD function with one that handles 
+# Desc:   Module that replaces the regular CD function with one that handles
 #         history and backward/forward navigation using - and +.
 #         as ..[.]*.
 # Date:   Nov 18, 2006
@@ -29,13 +29,13 @@ Set-Alias cd Pscx\Set-LocationEx -Force -Scope Global -Option AllScope -Descript
     CD function that tracks location history allowing easy navigation to previous locations.
 .DESCRIPTION
     CD function that tracks location history allowing easy navigation to previous locations.
-    CD maintains a backward and forward stack mechanism that can be navigated using "cd -" 
-    to go backwards in the stack and "cd +" to go forwards in the stack.  Executing "cd" 
+    CD maintains a backward and forward stack mechanism that can be navigated using "cd -"
+    to go backwards in the stack and "cd +" to go forwards in the stack.  Executing "cd"
     without any parameters will display the current stack history. By default, the new location
     is echo'd to the host.  If you want to suppress this set the preference variable in your
     profile e.g. $Pscx:Preferences['CD_EchoNewLocation'] = $false
 .PARAMETER Path
-    The path to change location to.     
+    The path to change location to.
 .PARAMETER LiteralPath
     The literal path to change location to.  This path can contain wildcard characters that
     do not need to be escaped.
@@ -46,15 +46,16 @@ Set-Alias cd Pscx\Set-LocationEx -Force -Scope Global -Option AllScope -Descript
     This parameter accumulates all the additional arguments and concatenates them to the Path
     or LiteralPath parameter using a space separator.  This allows you to cd to some paths containing
     spaces without having to quote the path e.g. 'cd c:\program files'.  Note that this doesn't always
-    work.  For example, this following won't work: 'cd c:\program files (x86)'.  This fails because 
+    work.  For example, this following won't work: 'cd c:\program files (x86)'.  This fails because
     PowerShell tries to evaluate the contents of the expression '(x86)' which isn't a valid command name.
 .PARAMETER UseTransaction
-    Includes the command in the active transaction. This parameter is valid only when a transaction 
-    is in progress. For more information, see about_Transactions.
+    Includes the command in the active transaction. This parameter is valid only when a transaction
+    is in progress. For more information, see about_Transactions.  This parameter is not supported
+    in PowerShell Core.
 .EXAMPLE
     C:\PS> cd $pshome; cd -; cd +
     This example changes location to the PowerShell install dir, then back to the original
-    location, than forward again to the PowerShell install dir. 
+    location, than forward again to the PowerShell install dir.
 .EXAMPLE
     C:\PS> cd ....
     This example changes location up two levels from the current path.  You can use an arbitrary
@@ -80,46 +81,52 @@ function Set-LocationEx
     param(
         [Parameter(Position=0, ParameterSetName='Path', ValueFromPipeline=$true, ValueFromPipelineByPropertyName=$true)]
         [string]
-        $Path, 
-        
+        $Path,
+
         [Parameter(Position=0, ParameterSetName='LiteralPath', ValueFromPipelineByPropertyName=$true)]
         [Alias("PSPath")]
         [string]
-        $LiteralPath, 
-        
+        $LiteralPath,
+
         [Parameter(ValueFromRemainingArguments=$true)]
         [string[]]
         $UnboundArguments,
-                
+
         [Parameter()]
         [switch]
         $PassThru,
-        
+
         [Parameter()]
         [switch]
-        $UseTransaction        
+        $UseTransaction
     )
-    
-    Begin 
+
+    Begin
     {
         Set-StrictMode -Version Latest
-        
+
         # String resources
         Import-LocalizedData -BindingVariable msgTbl -FileName Messages
-                      
+
+        $ExtraArgs = @{}
+        if (($PSVersionTable.PSVersion.Major -lt 6) -or ($PSVersionTable.PSEdition -eq 'Desktop'))
+        {
+            $ExtraArgs['UseTransaction'] = $UseTransaction
+        }
+
         function SetLocationImpl($path, [switch]$IsLiteralPath)
         {
             if ($pscmdlet.ParameterSetName -eq 'LiteralPath' -or $IsLiteralPath)
             {
-                Write-Debug   "Setting location to literal path: '$path'"
-                Set-Location -LiteralPath $path -UseTransaction:$UseTransaction
+                Write-Debug "Setting location to literal path: '$path'"
+                Set-Location -LiteralPath $path @ExtraArgs
             }
             else
             {
-                Write-Debug   "Setting location to path: '$path'"
-                Set-Location $path -UseTransaction:$UseTransaction
+                Write-Debug "Setting location to path: '$path'"
+                Set-Location $path @ExtraArgs
             }
-            
+
             if ($PassThru)
             {
                 Write-Output $ExecutionContext.SessionState.Path.CurrentLocation
@@ -130,7 +137,7 @@ function Set-LocationEx
                 if ($Pscx:Preferences['CD_GetChildItem'])
                 {
                     Get-ChildItem
-                } 
+                }
                 elseif ($Pscx:Preferences['CD_EchoNewLocation'])
                 {
                     Write-Host $ExecutionContext.SessionState.Path.CurrentLocation
@@ -138,8 +145,8 @@ function Set-LocationEx
             }
         }
     }
-        
-    Process 
+
+    Process
     {
         if ($pscmdlet.ParameterSetName -eq 'Path')
         {
@@ -151,65 +158,65 @@ function Set-LocationEx
             Write-Debug "LiteralPath parameter received: '$LiteralPath'"
             $aPath = $LiteralPath
         }
-        
+
         if ($UnboundArguments -and $UnboundArguments.Count -gt 0)
-        {	
+        {
             $OFS=','
             Write-Debug "Appending unbound arguments to path: '$UnboundArguments'"
             $aPath = $aPath + " " + ($UnboundArguments -join ' ')
         }
-                
+
         # If no input, dump contents of backward and foreward stacks
-        if (!$aPath) 
+        if (!$aPath)
         {
             # Command to dump the backward & foreward stacks
             ""
             "     # Directory Stack:"
             "   --- ----------------"
-            if ($backwardStack.Count -ge 0) 
+            if ($backwardStack.Count -ge 0)
             {
-                for ($i = 0; $i -lt $backwardStack.Count; $i++) 
-                { 
+                for ($i = 0; $i -lt $backwardStack.Count; $i++)
+                {
                     "   {0,3} {1}" -f $i, $backwardStack[$i]
-                } 
+                }
             }
 
             "-> {0,3} {1}" -f $i++,$ExecutionContext.SessionState.Path.CurrentLocation
 
-            if ($forewardStack.Count -ge 0) 
+            if ($forewardStack.Count -ge 0)
             {
                 $ndx = $i
-                for ($i = 0; $i -lt $forewardStack.Count; $i++) 
-                { 
+                for ($i = 0; $i -lt $forewardStack.Count; $i++)
+                {
                     "   {0,3} {1}" -f ($ndx+$i), $forewardStack[$i]
-                } 
+                }
             }
             ""
             return
         }
-        
+
         Write-Debug "Processing arg: '$aPath'"
-        
+
         $currentPathInfo = $ExecutionContext.SessionState.Path.CurrentLocation
-        
+
         # Expand ..[.]+ out to ..\..[\..]+
-        if ($aPath -like "*...*") 
+        if ($aPath -like "*...*")
         {
             $regex = [regex]"\.\.\."
-            while ($regex.IsMatch($aPath)) 
+            while ($regex.IsMatch($aPath))
             {
-                $aPath = $regex.Replace($aPath, "..\..")
+                $aPath = $regex.Replace($aPath, "..$([System.IO.Path]::DirectorySeparatorChar)..")
             }
         }
 
-        if ($aPath -eq "-") 
+        if ($aPath -eq "-")
         {
-            if ($backwardStack.Count -eq 0) 
+            if ($backwardStack.Count -eq 0)
             {
                 Write-Warning $msgTbl.BackStackEmpty
             }
-            else 
-            {        
+            else
+            {
                 $lastNdx = $backwardStack.Count - 1
                 $prevPath = $backwardStack[$lastNdx]
                 SetLocationImpl $prevPath -IsLiteralPath
@@ -217,16 +224,16 @@ function Set-LocationEx
                 $backwardStack.RemoveAt($lastNdx)
             }
         }
-        elseif ($aPath -eq "+") 
+        elseif ($aPath -eq "+")
         {
-            if ($forewardStack.Count -eq 0) 
+            if ($forewardStack.Count -eq 0)
             {
                 Write-Warning $msgTbl.ForeStackEmpty
             }
-            else 
+            else
             {
                 $nextPath = $forewardStack[0]
-                SetLocationImpl $nextPath -IsLiteralPath        
+                SetLocationImpl $nextPath -IsLiteralPath
                 [void]$backwardStack.Add($currentPathInfo.Path)
                 $forewardStack.RemoveAt(0)
             }
@@ -236,43 +243,43 @@ function Set-LocationEx
             [int]$num = $aPath.replace("-","")
             $backstackSize = $backwardStack.Count
             $forestackSize = $forewardStack.Count
-            if ($num -eq $backstackSize) 
+            if ($num -eq $backstackSize)
             {
                 Write-Host "`n$($msgTbl.GoingToTheSameDir)`n"
             }
-            elseif ($num -lt $backstackSize) 
+            elseif ($num -lt $backstackSize)
             {
                 $selectedPath = $backwardStack[$num]
                 SetLocationImpl $selectedPath -IsLiteralPath
                 [void]$forewardStack.Insert(0, $currentPathInfo.Path)
                 $backwardStack.RemoveAt($num)
-                
+
                 [int]$ndx = $num
                 [int]$count = $backwardStack.Count - $ndx
-                if ($count -gt 0) 
+                if ($count -gt 0)
                 {
                     $itemsToMove = $backwardStack.GetRange($ndx, $count)
                     $forewardStack.InsertRange(0, $itemsToMove)
                     $backwardStack.RemoveRange($ndx, $count)
                 }
             }
-            elseif (($num -gt $backstackSize) -and ($num -lt ($backstackSize + 1 + $forestackSize))) 
+            elseif (($num -gt $backstackSize) -and ($num -lt ($backstackSize + 1 + $forestackSize)))
             {
                 [int]$ndx = $num - ($backstackSize + 1)
                 $selectedPath = $forewardStack[$ndx]
                 SetLocationImpl $selectedPath -IsLiteralPath
                 [void]$backwardStack.Add($currentPathInfo.Path)
                 $forewardStack.RemoveAt($ndx)
-                
+
                 [int]$count = $ndx
-                if ($count -gt 0) 
+                if ($count -gt 0)
                 {
                     $itemsToMove = $forewardStack.GetRange(0, $count)
                     $backwardStack.InsertRange(($backwardStack.Count), $itemsToMove)
                     $forewardStack.RemoveRange(0, $count)
                 }
             }
-            else 
+            else
             {
                 Write-Warning ($msgTbl.NumOutOfRangeF1 -f $num)
             }
@@ -281,23 +288,23 @@ function Set-LocationEx
         {
             $driveName = ''
             if ($ExecutionContext.SessionState.Path.IsPSAbsolute($aPath, [ref]$driveName) -and
-                !(Test-Path -LiteralPath $aPath -PathType Container)) 
+                !(Test-Path -LiteralPath $aPath -PathType Container))
             {
                 # File or a non-existant path - handle the case of "cd $profile" when the profile script doesn't exist
                 $aPath = Split-Path $aPath -Parent
                 Write-Debug "Path is not a container, attempting to set location to parent: '$aPath'"
             }
 
-            SetLocationImpl $aPath                                  
-                                   
+            SetLocationImpl $aPath
+
             $forewardStack.Clear()
-            
+
             # Don't add the same path twice in a row
-            if ($backwardStack.Count -gt 0) 
+            if ($backwardStack.Count -gt 0)
             {
                 $newPathInfo = $ExecutionContext.SessionState.Path.CurrentLocation
                 if (($currentPathInfo.Provider     -eq $newPathInfo.Provider) -and
-                    ($currentPathInfo.ProviderPath -eq $newPathInfo.ProviderPath)) 
+                    ($currentPathInfo.ProviderPath -eq $newPathInfo.ProviderPath))
                 {
                     return
                 }
