@@ -179,6 +179,8 @@ September 5, 2017
 
 * Fix issues with CD functionality not working on PowerShell Core.
 
+* Updated Import-VisualStudioVars to support Visual Studio 2017.
+
 What's New in PSCX 3.2.2
 June 25, 2016
 
