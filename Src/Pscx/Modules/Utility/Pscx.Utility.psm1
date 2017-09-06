@@ -2210,12 +2210,12 @@ function Import-VisualStudioVars
                 Invoke-BatchFile $batchFilePath
             }
             else {
-				if ($IsAppxInstall) {
-					$batchFilePath = Convert-Path (Join-Path $ComnTools ..\..\VC\Auxiliary\Build\vcvarsall.bat)
-				}
-				else {
-					$batchFilePath = Convert-Path (Join-Path $ComnTools ..\..\VC\vcvarsall.bat)
-				}
+                if ($IsAppxInstall) {
+                    $batchFilePath = Convert-Path (Join-Path $ComnTools ..\..\VC\Auxiliary\Build\vcvarsall.bat)
+                }
+                else {
+                    $batchFilePath = Convert-Path (Join-Path $ComnTools ..\..\VC\vcvarsall.bat)
+                }
                 Write-Verbose "Invoking '$batchFilePath' $Architecture"
                 Invoke-BatchFile $batchFilePath $Architecture
             }
