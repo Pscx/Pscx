@@ -459,8 +459,8 @@
   -->
   <PropertyGroup>
     <PostBuildEvent>if "$(ConfigurationName)" == "Release-Signed" (
-    @echo "C:\Program Files (x86)\Windows Kits\8.0\bin\x86\signtool.exe" sign /t http://timestamp.digicert.com /sha1 2BE1DA66486C6EE58D5EA3BC692F86EEE413D35C "$(TargetPath)"
-    "C:\Program Files (x86)\Windows Kits\8.0\bin\x86\signtool.exe" sign /t http://timestamp.digicert.com /sha1 2BE1DA66486C6EE58D5EA3BC692F86EEE413D35C "$(TargetPath)"
+    @echo "C:\Program Files (x86)\Windows Kits\8.0\bin\x86\signtool.exe" sign /t http://timestamp.digicert.com /sha1 BB25149CDAF879A29DB6A011F6FC874AF32CBF51 "$(TargetPath)"
+    "C:\Program Files (x86)\Windows Kits\8.0\bin\x86\signtool.exe" sign /t http://timestamp.digicert.com /sha1 BB25149CDAF879A29DB6A011F6FC874AF32CBF51 "$(TargetPath)"
     @echo PowerShell.exe -NoProfile -ExecutionPolicy Bypass -File "$(SolutionDir)..\Tools\SignScripts.ps1" $(TargetDir)
     PowerShell.exe -NoProfile -ExecutionPolicy Bypass -File "$(SolutionDir)..\Tools\SignScripts.ps1" $(TargetDir)
 )
