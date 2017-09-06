@@ -2260,7 +2260,8 @@ function Import-VisualStudioVars
 				    throw "VSSetup module not installed, unable to import Visual Studio environment variables."
 				}
 				Import-Module VSSetup -ErrorAction Stop
-				$installPath = Get-VSSetupInstance | Select-VSSetupInstance -Latest -Require Microsoft.VisualStudio.Component.VC.Tools.x86.x64 | 
+				$installPath = Get-VSSetupInstance | 
+				               Select-VSSetupInstance -Version '[15.0,16.0)' -Require Microsoft.VisualStudio.Component.VC.Tools.x86.x64 | 
 				               Select-Object -First 1 | ForEach-Object InstallationPath
                 Push-EnvironmentBlock -Description "Before importing VS 2017 $Architecture environment variables"
                 FindAndLoadBatchFile "$installPath/Common7/Tools" $ArchSpecified -IsAppxInstall
