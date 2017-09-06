@@ -21,11 +21,6 @@ June 25, 2016
 '@
 
 $nugetApiKey = '--------------------------'
-$projectUri = 'https://github.com/Pscx/Pscx'
-$licenseUri = 'https://github.com/Pscx/Pscx/blob/master/LICENSE'
-$iconUri = 'https://github.com/Pscx/Pscx/blob/master/Src/Pscx.ico?raw=true'
-$tags = 'Utilities','Xml','Zip','Clipboard','Base64','ShortPath','PEHeader','CD'
 
 Publish-Module -Path $home\Documents\WindowsPowerShell\Modules\Pscx -NuGetApiKey $nugetApiKey `
-               -ProjectUri $projectUri -LicenseUri $licenseUri -IconUri $iconUri -Tags $tags `
                -ReleaseNotes $releaseNotes
