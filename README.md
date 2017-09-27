@@ -14,10 +14,6 @@ See [ReleaseNotes.txt](ReleaseNotes.txt).
  - [Keith Hill](https://github.com/rkeithhill) - [@r_keith_hill](http://twitter.com/r_keith_hill)
  - [Oisin Grehan](https://github.com/oising) - [@oising](http://twitter.com/oising)
 
-## Commands
-
-As always, you can get full Powershell help including examples using `get-help [command]`
-
 ### `Add-DirectoryLength`
 
 Calculates the sizes of the specified directory and adds that size
@@ -30,10 +26,6 @@ Adds the specified paths to the end of the named, path-oriented environment vari
 ### `Add-ShortPath`
 
 Adds the file or directory's short path as a "ShortPath" NoteProperty to each input object.
-
-### `call`
-
-Function to call a single method on an incoming stream of piped objects.
 
 ### `Clear-MSMQueue`
 
@@ -67,10 +59,6 @@ Converts the line endings in the specified file to Windows line endings "\r\n".
 
 Performs XSLT transforms on the specified XML file or XmlDocument.
 
-### `cvxml`
-
-Performs XSLT transforms on the specified XML file or XmlDocument.
-
 ### `Disconnect-TerminalSession`
 
 Disconnects a specific remote desktop session on a system running Terminal Services/Remote Desktop
@@ -78,10 +66,6 @@ Disconnects a specific remote desktop session on a system running Terminal Servi
 ### `Dismount-VHD`
 
 Dismounts a Virtual Hard Drive (VHD) file.
-
-### `e`
-
-Edits a file using a regex pattern to find text to be replaced by a specified replacement string.
 
 ### `Edit-File`
 
@@ -95,18 +79,10 @@ Opens the current user's profile for the current host in a text editor.
 
 Opens the current user's "all hosts" profile in a text editor.
 
-### `ehp`
-
-Opens the current user's profile for the current host in a text editor.
-
 ### `Enable-OpenPowerShellHere`
 
 Creates the registry entries required to create Windows Explorer context
 menu "Open PowerShell Here" for both Directories and Drives
-
-### `ep`
-
-Opens the current user's "all hosts" profile in a text editor.
 
 ### `Expand-Archive`
 
@@ -115,16 +91,6 @@ Expands a compressed archive file, or ArchiveEntry object, to its constituent fi
 ### `Export-Bitmap`
 
 Exports bitmap objects to various formats.
-
-### `fhex`
-
-
-Format-Hex [-Path] <string[]> [<CommonParameters>]
-
-Format-Hex -LiteralPath <string[]> [<CommonParameters>]
-
-Format-Hex -InputObject <Object> [-Encoding <string>] [-Raw] [<CommonParameters>]
-
 
 ### `Format-Byte`
 
@@ -137,14 +103,6 @@ System.Object[]
 ### `Format-Xml`
 
 Pretty print for XML files and XmlDocument objects.
-
-### `fxml`
-
-Pretty print for XML files and XmlDocument objects.
-
-### `gcb`
-
-Gets data from the clipboard.
 
 ### `Get-ADObject`
 
@@ -275,22 +233,6 @@ Gets the operating system's uptime and last bootup time.
 
 Gets the possible alternate views for the specified object.
 
-### `gpar`
-
-Enumerates the parameters of one or more commands.
-
-### `gtn`
-
-Get-TypeName displays the typename of the input object.
-
-### `help`
-
-Displays information about Windows PowerShell commands and concepts.
-
-### `igc`
-
-Invokes the .NET garbage collector to clean up garbage objects.
-
 ### `Import-Bitmap`
 
 Loads bitmap files.
@@ -335,18 +277,6 @@ Similar to the C# ? : operator e.g. name = (value != null) ? String.Empty : valu
 
 Joins an array of strings into a single string.
 
-### `less`
-
-Less provides better paging of output from cmdlets.
-
-### `ln`
-
-Creates filesystem hard links. The hardlink and the target must reside on the same NTFS volume.
-
-### `lorem`
-
-PSCX Cmdlet:
-
 ### `Mount-VHD`
 
 Mounts a Virtual Hard Drive (VHD) file.
@@ -375,14 +305,6 @@ Creates shell shortcuts.
 
 Creates filesystem symbolic links. Requires Microsoft Windows Vista or later.
 
-### `nho`
-
-Create a PSObject from a dictionary such as a hashtable.
-
-### `ocb`
-
-Formats text via Out-String before placing in clipboard. Can also place string in clipboard as a file.
-
 ### `Out-Clipboard`
 
 Formats text via Out-String before placing in clipboard. Can also place string in clipboard as a file.
@@ -402,14 +324,6 @@ Pops the topmost environment block.
 ### `Push-EnvironmentBlock`
 
 Pushes the current environment onto the environment block stack.
-
-### `ql`
-
-Convenience function for creating an array of strings without requiring quotes or commas.
-
-### `qs`
-
-Creates a string from each parameter by concatenating each item using $OFS as the separator.
 
 ### `QuoteList`
 
@@ -452,18 +366,6 @@ Resolves host names to IP addresses.
 Resolves the hresult error code to a textual description of the error.
 
 ### `Resolve-WindowsError`
-
-Resolves a Windows error number a textual description of the error.
-
-### `rver`
-
-Resolves the PowerShell error code to a textual description of the error.
-
-### `rvhr`
-
-Resolves the hresult error code to a textual description of the error.
-
-### `rvwer`
 
 Resolves a Windows error number a textual description of the error.
 
@@ -519,10 +421,6 @@ Sets a file's read only status to false making it writable.
 
 Shows the specified path as a tree.
 
-### `skip`
-
-Skips the specified objects in the pipeline.
-
 ### `Skip-Object`
 
 Skips the specified objects in the pipeline.
@@ -530,10 +428,6 @@ Skips the specified objects in the pipeline.
 ### `Split-String`
 
 Splits a single string into an array of strings.
-
-### `sro`
-
-Sets a file's read only status to true making it read only.
 
 ### `Start-PowerShell`
 
@@ -546,18 +440,6 @@ Stops a process on a remote machine.
 ### `Stop-TerminalSession`
 
 Logs off a specific remote desktop session on a system running Terminal Services/Remote Desktop
-
-### `su`
-
-Runs the specified command in an elevated context.
-
-### `swr`
-
-Sets a file's read only status to false making it writable.
-
-### `tail`
-
-Tails the contents of a file - optionally waiting on new content.
 
 ### `Test-AlternateDataStream`
 
@@ -582,10 +464,6 @@ Tests whether or not a user (current user by default) is a member of the specifi
 ### `Test-Xml`
 
 Tests for well formedness and optionally validates against XML Schema.
-
-### `touch`
-
-Sets a file or folder's created and last accessed/write times.
 
 ### `Write-BZip2`
 
