@@ -233,6 +233,10 @@ Gets the operating system's uptime and last bootup time.
 
 Gets the possible alternate views for the specified object.
 
+### `help`
+
+Displays information about Windows PowerShell commands and concepts.
+
 ### `Import-Bitmap`
 
 Loads bitmap files.
@@ -276,6 +280,10 @@ Similar to the C# ? : operator e.g. name = (value != null) ? String.Empty : valu
 ### `Join-String`
 
 Joins an array of strings into a single string.
+
+### `less`
+
+Less provides better paging of output from cmdlets.
 
 ### `Mount-VHD`
 
@@ -348,10 +356,6 @@ Removes a mount point, dismounting the current media if any. If used against the
 ### `Remove-ReparsePoint`
 
 Removes NTFS reparse junctions and symbolic links.
-
-### `Resize-Bitmap`
-
-Sets the size of the specified bitmap.
 
 ### `Resolve-ErrorRecord`
 
