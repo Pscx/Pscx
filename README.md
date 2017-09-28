@@ -14,6 +14,10 @@ See [ReleaseNotes.txt](ReleaseNotes.txt).
  - [Keith Hill](https://github.com/rkeithhill) - [@r_keith_hill](http://twitter.com/r_keith_hill)
  - [Oisin Grehan](https://github.com/oising) - [@oising](http://twitter.com/oising)
 
+## Included cmdlets and functions
+
+As always, you can get full Powershell help including examples using `get-help [command]`
+
 ### `Add-DirectoryLength`
 
 Calculates the sizes of the specified directory and adds that size
