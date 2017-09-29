@@ -38,7 +38,7 @@ foreach ( $cmdLet in ($cmdLetsAndFunctions) ) {
 foreach($item in $nounsAndCommands.GetEnumerator() | Sort Name) {
   $noun = $item.Name
   $output = @'
-### `{0}`
+### {0}
 
 
 '@ -f $noun

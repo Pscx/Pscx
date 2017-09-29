@@ -16,37 +16,37 @@ See [ReleaseNotes.txt](ReleaseNotes.txt).
 
 ## Included cmdlets and functions
 
-As always, you can get full Powershell help including examples using `get-help [command]`
+Cmdlets and functions below are sorted by noun. As always, you can get full Powershell help including examples using `get-help [command]`
 
-### `ADObject`
+### ADObject
 
 #### `Get-ADObject`
 
 Search for objects in the Active Directory/Global Catalog.
 
 
-### `AdoConnection`
+### AdoConnection
 
 #### `Get-AdoConnection`
 
 Create an ADO connection to any database supported by .NET on the current machine. You can enumerate available ADO.NET Data Providers with the Get-AdoDataProvider Cmdlet.
 
 
-### `AdoDataProvider`
+### AdoDataProvider
 
 #### `Get-AdoDataProvider`
 
 List all registered ADO.NET Data Providers on the current machine.
 
 
-### `Archive`
+### Archive
 
 #### `Expand-Archive`
 
 Expands a compressed archive file, or ArchiveEntry object, to its constituent file(s).
 
 
-### `Base64`
+### Base64
 
 #### `ConvertFrom-Base64`
 
@@ -57,35 +57,35 @@ Converts base64 encoded string to byte array.
 Converts byte array or specified file contents to base64 string.
 
 
-### `Bitmap`
+### Bitmap
 
 #### `Export-Bitmap`
 
 Exports bitmap objects to various formats.
 
 
-### `Byte`
+### Byte
 
 #### `Format-Byte`
 
 Displays numbers in multiples of byte units.
 
 
-### `Clipboard`
+### Clipboard
 
 #### `Get-Clipboard`
 
 Gets data from the clipboard.
 
 
-### `DhcpServer`
+### DhcpServer
 
 #### `Get-DhcpServer`
 
 Gets a list of authorized DHCP servers.
 
 
-### `DirectoryLength`
+### DirectoryLength
 
 #### `Add-DirectoryLength`
 
@@ -93,28 +93,28 @@ Calculates the sizes of the specified directory and adds that size
 as a "Length" NoteProperty to the input DirectoryInfo object.
 
 
-### `DomainController`
+### DomainController
 
 #### `Get-DomainController`
 
 Gets domain controllers.
 
 
-### `DriveInfo`
+### DriveInfo
 
 #### `Get-DriveInfo`
 
 Gets disk usage information on the system's disk drives.
 
 
-### `EnvironmentBlock`
+### EnvironmentBlock
 
 #### `Get-EnvironmentBlock`
 
 Lists the environment blocks stored on the environment block stack.
 
 
-### `ExecutionTime`
+### ExecutionTime
 
 #### `Get-ExecutionTime`
 
@@ -122,91 +122,91 @@ Gets the execution time for the specified Id of a command in the current
 session history.
 
 
-### `File`
+### File
 
 #### `Edit-File`
 
 Edits a file using a regex pattern to find text to be replaced by a specified replacement string.
 
 
-### `FileTail`
+### FileTail
 
 #### `Get-FileTail`
 
 Tails the contents of a file - optionally waiting on new content.
 
 
-### `FileVersionInfo`
+### FileVersionInfo
 
 #### `Get-FileVersionInfo`
 
 Gets a FileVersionInfo object for the specified path.
 
 
-### `ForegroundWindow`
+### ForegroundWindow
 
 #### `Get-ForegroundWindow`
 
 Returns the hWnd or handle of the window in the foreground on the current desktop. See also Set-ForegroundWindow.
 
 
-### `Hash`
+### Hash
 
 #### `Get-Hash`
 
 Gets the hash value for the specified file or byte array via the pipeline.
 
 
-### `Hex`
+### Hex
 
 #### `Format-Hex`
 
 System.Object[]
 
 
-### `HostProfile`
+### HostProfile
 
 #### `Edit-HostProfile`
 
 Opens the current user's profile for the current host in a text editor.
 
 
-### `HttpResource`
+### HttpResource
 
 #### `Get-HttpResource`
 
 Gets an HTTP resource or optionally the headers associated with the resource.
 
 
-### `LoremIpsum`
+### LoremIpsum
 
 #### `Get-LoremIpsum`
 
 PSCX Cmdlet:
 
 
-### `MacOs9LineEnding`
+### MacOs9LineEnding
 
 #### `ConvertTo-MacOs9LineEnding`
 
 Converts the line endings in the specified file to Mac OS9 and earlier style line endings "\r".
 
 
-### `Metric`
+### Metric
 
 #### `ConvertTo-Metric`
 
 PSCX Cmdlet:
 
 
-### `MountPoint`
+### MountPoint
 
 #### `Get-MountPoint`
 
 Returns all mount points defined for a specific root path.
 
 
-### `MSMQueue`
+### MSMQueue
 
 #### `Clear-MSMQueue`
 
@@ -217,7 +217,7 @@ Purges all messages from a queue
 Returns a list of all queues matching the filter parameters
 
 
-### `OpenPowerShellHere`
+### OpenPowerShellHere
 
 #### `Enable-OpenPowerShellHere`
 
@@ -225,21 +225,21 @@ Creates the registry entries required to create Windows Explorer context
 menu "Open PowerShell Here" for both Directories and Drives
 
 
-### `OpticalDriveInfo`
+### OpticalDriveInfo
 
 #### `Get-OpticalDriveInfo`
 
 Get information on optical drive capabilities on the local machine.
 
 
-### `Parameter`
+### Parameter
 
 #### `Get-Parameter`
 
 Enumerates the parameters of one or more commands.
 
 
-### `PathVariable`
+### PathVariable
 
 #### `Add-PathVariable`
 
@@ -250,63 +250,63 @@ Adds the specified paths to the end of the named, path-oriented environment vari
 Gets the specified path-oriented environment variable.
 
 
-### `PEHeader`
+### PEHeader
 
 #### `Get-PEHeader`
 
 Gets the Portable Header information from an executable file.
 
 
-### `Privilege`
+### Privilege
 
 #### `Get-Privilege`
 
 Lists privileges held by the session and their current status.
 
 
-### `Profile`
+### Profile
 
 #### `Edit-Profile`
 
 Opens the current user's "all hosts" profile in a text editor.
 
 
-### `PSSnapinHelp`
+### PSSnapinHelp
 
 #### `Get-PSSnapinHelp`
 
 Generates a XML file containing all documentation data.
 
 
-### `ReparsePoint`
+### ReparsePoint
 
 #### `Get-ReparsePoint`
 
 Gets NTFS reparse point data.
 
 
-### `RunningObject`
+### RunningObject
 
 #### `Get-RunningObject`
 
 PSCX Cmdlet:
 
 
-### `ScreenCss`
+### ScreenCss
 
 #### `Get-ScreenCss`
 
 Generate CSS header for HTML "screen shot" of the host buffer.
 
 
-### `ScreenHtml`
+### ScreenHtml
 
 #### `Get-ScreenHtml`
 
 Functions to generate HTML "screen shot" of the host buffer.
 
 
-### `ShortPath`
+### ShortPath
 
 #### `Add-ShortPath`
 
@@ -317,7 +317,7 @@ Adds the file or directory's short path as a "ShortPath" NoteProperty to each in
 Gets the short, 8.3 name for the given path.
 
 
-### `TerminalSession`
+### TerminalSession
 
 #### `Disconnect-TerminalSession`
 
@@ -328,49 +328,49 @@ Disconnects a specific remote desktop session on a system running Terminal Servi
 Gets information on terminal services sessions.
 
 
-### `TypeName`
+### TypeName
 
 #### `Get-TypeName`
 
 Get-TypeName displays the typename of the input object.
 
 
-### `UnixLineEnding`
+### UnixLineEnding
 
 #### `ConvertTo-UnixLineEnding`
 
 Converts the line endings in the specified file to Unix line endings "\n".
 
 
-### `Uptime`
+### Uptime
 
 #### `Get-Uptime`
 
 Gets the operating system's uptime and last bootup time.
 
 
-### `VHD`
+### VHD
 
 #### `Dismount-VHD`
 
 Dismounts a Virtual Hard Drive (VHD) file.
 
 
-### `ViewDefinition`
+### ViewDefinition
 
 #### `Get-ViewDefinition`
 
 Gets the possible alternate views for the specified object.
 
 
-### `WindowsLineEnding`
+### WindowsLineEnding
 
 #### `ConvertTo-WindowsLineEnding`
 
 Converts the line endings in the specified file to Windows line endings "\r\n".
 
 
-### `Xml`
+### Xml
 
 #### `Convert-Xml`
 
