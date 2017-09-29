@@ -13,20 +13,19 @@ foreach ( $cmdLet in ($cmdLetsAndFunctions) ) {
   }
 
   $description = (get-help $cmdLet).synopsis.replace('PSCX Cmdlet: ','')
-  $output = @'
-#### `{0}`
 
-{1}
+  # {
+  #   tar: [
+  #     {
+  #       name: 'get-tar'
+  #       description: 'this command does'
+  #     },
+  #     ....
+  #   ],
+  #   ...
+  # }
 
-
-'@ -f $cmdLet, $description
-
-  # tar
-  #   get-tar
-  #   this command does
-
-  $helpEntry = @{'name' = $cmdLet; 'output' = $output;}
-
+  $helpEntry = @{'name' = $cmdLet; 'description' = $description;}
 
   if ( ! $nounsAndCommands.ContainsKey($noun) ) {
     $nounsAndCommands[$noun] = @()
@@ -34,20 +33,25 @@ foreach ( $cmdLet in ($cmdLetsAndFunctions) ) {
   $nounsAndCommands[$noun] += $helpEntry
 }
 
-# OK now sort by
+$output = ''
+
+# Now sort by the nouns and spit out the headings and documentation
 foreach($item in $nounsAndCommands.GetEnumerator() | Sort Name) {
   $noun = $item.Name
-  $output = @'
+  $output += @'
 ### {0}
 
 
 '@ -f $noun
-
-
   foreach ($commandNameAndDescription in $nounsAndCommands[$noun]) {
-    $output += $commandNameAndDescription.output;
+    $output += @'
+#### `{0}`
+
+{1}
+
+
+'@ -f $commandNameAndDescription.name, $commandNameAndDescription.description
   }
-
-  echo $output
-
 }
+
+echo $output

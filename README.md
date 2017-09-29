@@ -24,13 +24,11 @@ Cmdlets and functions below are sorted by noun. As always, you can get full Powe
 
 Search for objects in the Active Directory/Global Catalog.
 
-
 ### AdoConnection
 
 #### `Get-AdoConnection`
 
 Create an ADO connection to any database supported by .NET on the current machine. You can enumerate available ADO.NET Data Providers with the Get-AdoDataProvider Cmdlet.
-
 
 ### AdoDataProvider
 
@@ -38,13 +36,11 @@ Create an ADO connection to any database supported by .NET on the current machin
 
 List all registered ADO.NET Data Providers on the current machine.
 
-
 ### Archive
 
 #### `Expand-Archive`
 
 Expands a compressed archive file, or ArchiveEntry object, to its constituent file(s).
-
 
 ### Base64
 
@@ -56,13 +52,11 @@ Converts base64 encoded string to byte array.
 
 Converts byte array or specified file contents to base64 string.
 
-
 ### Bitmap
 
 #### `Export-Bitmap`
 
 Exports bitmap objects to various formats.
-
 
 ### Byte
 
@@ -70,20 +64,17 @@ Exports bitmap objects to various formats.
 
 Displays numbers in multiples of byte units.
 
-
 ### Clipboard
 
 #### `Get-Clipboard`
 
 Gets data from the clipboard.
 
-
 ### DhcpServer
 
 #### `Get-DhcpServer`
 
 Gets a list of authorized DHCP servers.
-
 
 ### DirectoryLength
 
@@ -92,13 +83,11 @@ Gets a list of authorized DHCP servers.
 Calculates the sizes of the specified directory and adds that size
 as a "Length" NoteProperty to the input DirectoryInfo object.
 
-
 ### DomainController
 
 #### `Get-DomainController`
 
 Gets domain controllers.
-
 
 ### DriveInfo
 
@@ -106,13 +95,11 @@ Gets domain controllers.
 
 Gets disk usage information on the system's disk drives.
 
-
 ### EnvironmentBlock
 
 #### `Get-EnvironmentBlock`
 
 Lists the environment blocks stored on the environment block stack.
-
 
 ### ExecutionTime
 
@@ -121,13 +108,11 @@ Lists the environment blocks stored on the environment block stack.
 Gets the execution time for the specified Id of a command in the current
 session history.
 
-
 ### File
 
 #### `Edit-File`
 
 Edits a file using a regex pattern to find text to be replaced by a specified replacement string.
-
 
 ### FileTail
 
@@ -135,13 +120,11 @@ Edits a file using a regex pattern to find text to be replaced by a specified re
 
 Tails the contents of a file - optionally waiting on new content.
 
-
 ### FileVersionInfo
 
 #### `Get-FileVersionInfo`
 
 Gets a FileVersionInfo object for the specified path.
-
 
 ### ForegroundWindow
 
@@ -149,13 +132,11 @@ Gets a FileVersionInfo object for the specified path.
 
 Returns the hWnd or handle of the window in the foreground on the current desktop. See also Set-ForegroundWindow.
 
-
 ### Hash
 
 #### `Get-Hash`
 
 Gets the hash value for the specified file or byte array via the pipeline.
-
 
 ### Hex
 
@@ -163,13 +144,11 @@ Gets the hash value for the specified file or byte array via the pipeline.
 
 System.Object[]
 
-
 ### HostProfile
 
 #### `Edit-HostProfile`
 
 Opens the current user's profile for the current host in a text editor.
-
 
 ### HttpResource
 
@@ -177,13 +156,11 @@ Opens the current user's profile for the current host in a text editor.
 
 Gets an HTTP resource or optionally the headers associated with the resource.
 
-
 ### LoremIpsum
 
 #### `Get-LoremIpsum`
 
 PSCX Cmdlet:
-
 
 ### MacOs9LineEnding
 
@@ -191,20 +168,17 @@ PSCX Cmdlet:
 
 Converts the line endings in the specified file to Mac OS9 and earlier style line endings "\r".
 
-
 ### Metric
 
 #### `ConvertTo-Metric`
 
 PSCX Cmdlet:
 
-
 ### MountPoint
 
 #### `Get-MountPoint`
 
 Returns all mount points defined for a specific root path.
-
 
 ### MSMQueue
 
@@ -216,7 +190,6 @@ Purges all messages from a queue
 
 Returns a list of all queues matching the filter parameters
 
-
 ### OpenPowerShellHere
 
 #### `Enable-OpenPowerShellHere`
@@ -224,20 +197,17 @@ Returns a list of all queues matching the filter parameters
 Creates the registry entries required to create Windows Explorer context
 menu "Open PowerShell Here" for both Directories and Drives
 
-
 ### OpticalDriveInfo
 
 #### `Get-OpticalDriveInfo`
 
 Get information on optical drive capabilities on the local machine.
 
-
 ### Parameter
 
 #### `Get-Parameter`
 
 Enumerates the parameters of one or more commands.
-
 
 ### PathVariable
 
@@ -249,13 +219,11 @@ Adds the specified paths to the end of the named, path-oriented environment vari
 
 Gets the specified path-oriented environment variable.
 
-
 ### PEHeader
 
 #### `Get-PEHeader`
 
 Gets the Portable Header information from an executable file.
-
 
 ### Privilege
 
@@ -263,13 +231,11 @@ Gets the Portable Header information from an executable file.
 
 Lists privileges held by the session and their current status.
 
-
 ### Profile
 
 #### `Edit-Profile`
 
 Opens the current user's "all hosts" profile in a text editor.
-
 
 ### PSSnapinHelp
 
@@ -277,13 +243,11 @@ Opens the current user's "all hosts" profile in a text editor.
 
 Generates a XML file containing all documentation data.
 
-
 ### ReparsePoint
 
 #### `Get-ReparsePoint`
 
 Gets NTFS reparse point data.
-
 
 ### RunningObject
 
@@ -291,20 +255,17 @@ Gets NTFS reparse point data.
 
 PSCX Cmdlet:
 
-
 ### ScreenCss
 
 #### `Get-ScreenCss`
 
 Generate CSS header for HTML "screen shot" of the host buffer.
 
-
 ### ScreenHtml
 
 #### `Get-ScreenHtml`
 
 Functions to generate HTML "screen shot" of the host buffer.
-
 
 ### ShortPath
 
@@ -316,7 +277,6 @@ Adds the file or directory's short path as a "ShortPath" NoteProperty to each in
 
 Gets the short, 8.3 name for the given path.
 
-
 ### TerminalSession
 
 #### `Disconnect-TerminalSession`
@@ -327,13 +287,11 @@ Disconnects a specific remote desktop session on a system running Terminal Servi
 
 Gets information on terminal services sessions.
 
-
 ### TypeName
 
 #### `Get-TypeName`
 
 Get-TypeName displays the typename of the input object.
-
 
 ### UnixLineEnding
 
@@ -341,13 +299,11 @@ Get-TypeName displays the typename of the input object.
 
 Converts the line endings in the specified file to Unix line endings "\n".
 
-
 ### Uptime
 
 #### `Get-Uptime`
 
 Gets the operating system's uptime and last bootup time.
-
 
 ### VHD
 
@@ -355,20 +311,17 @@ Gets the operating system's uptime and last bootup time.
 
 Dismounts a Virtual Hard Drive (VHD) file.
 
-
 ### ViewDefinition
 
 #### `Get-ViewDefinition`
 
 Gets the possible alternate views for the specified object.
 
-
 ### WindowsLineEnding
 
 #### `ConvertTo-WindowsLineEnding`
 
 Converts the line endings in the specified file to Windows line endings "\r\n".
-
 
 ### Xml
 
