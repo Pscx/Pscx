@@ -2258,8 +2258,8 @@ function Import-VisualStudioVars
                 }
                 Import-Module VSSetup -ErrorAction Stop
                 $installPath = Get-VSSetupInstance | 
-                               Select-VSSetupInstance -Version '[15.0,16.0)' -Require Microsoft.VisualStudio.Component.VC.Tools.x86.x64 | 
-                               Select-Object -First 1 | ForEach-Object InstallationPath
+                               Select-VSSetupInstance -Version '[15.0,16.0)' -Require Microsoft.Component.MSBuild | 
+                               Select-Object -First 1 -ExpandProperty InstallationPath
                 Push-EnvironmentBlock -Description "Before importing VS 2017 $Architecture environment variables"
                 FindAndLoadBatchFile "$installPath/Common7/Tools" $ArchSpecified -IsAppxInstall
             }
