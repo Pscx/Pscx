@@ -2164,11 +2164,18 @@ function Get-Parameter {
     Pop-EnvironmentBlock.
 .PARAMETER VisualStudioVersion
     The version of Visual Studio to import environment variables for. Valid
-    values are 2008, 2010, 2012 and 2013
+    values are 2008, 2010, 2012, 2013, 2015 and 2017.
 .PARAMETER Architecture
     Selects the desired architecture to configure the environment for.
     Defaults to x86 if running in 32-bit PowerShell, otherwise defaults to
     amd64.  Other valid values are: arm, x86_arm, x86_amd64, amd64_x86.
+.PARAMETER RequireWorkload
+    This parameter applies to Visual Studio 2017 and higher.  It allows you 
+    to specify which workloads are required for the environment you desire to
+    import.  This can be used when you have multiple versions of Visual Studio
+    2017 installed and different versions support different workloads e.g.
+    perhaps only the "Preview" version supports the 
+    Microsoft.VisualStudio.Component.VC.Tools.x86.x64 (default) workload.
 .EXAMPLE
     C:\PS> Import-VisualStudioVars 2015
 
@@ -2190,7 +2197,11 @@ function Import-VisualStudioVars
 
         [Parameter(Position = 1)]
         [string]
-        $Architecture
+        $Architecture,
+
+        [Parameter()]
+        [string[]]
+        $RequireWorkload = 'Microsoft.VisualStudio.Component.VC.Tools.x86.x64'
     )
 
     begin {
@@ -2201,17 +2212,17 @@ function Import-VisualStudioVars
         }
 
         function FindAndLoadBatchFile($ComnTools, $ArchSpecified, [switch]$IsAppxInstall) {
-            if (!$ArchSpecified) {
-                $batchFilePath = Convert-Path (Join-Path $ComnTools VsDevCmd.bat)
+            $batchFilePath = Join-Path $ComnTools VsDevCmd.bat
+            if (!$ArchSpecified -and (Test-Path -LiteralPath $batchFilePath)) {
                 Write-Verbose "Invoking '$batchFilePath'"
                 Invoke-BatchFile $batchFilePath
             }
             else {
                 if ($IsAppxInstall) {
-                    $batchFilePath = Convert-Path (Join-Path $ComnTools ..\..\VC\Auxiliary\Build\vcvarsall.bat)
+                    $batchFilePath = Join-Path $ComnTools ..\..\VC\Auxiliary\Build\vcvarsall.bat
                 }
                 else {
-                    $batchFilePath = Convert-Path (Join-Path $ComnTools ..\..\VC\vcvarsall.bat)
+                    $batchFilePath = Join-Path $ComnTools ..\..\VC\vcvarsall.bat
                 }
                 Write-Verbose "Invoking '$batchFilePath' $Architecture"
                 Invoke-BatchFile $batchFilePath $Architecture
@@ -2258,26 +2269,25 @@ function Import-VisualStudioVars
                 }
                 Import-Module VSSetup -ErrorAction Stop
                 $installPath = Get-VSSetupInstance | 
-                               Select-VSSetupInstance -Version '[15.0,16.0)' -Require Microsoft.VisualStudio.Component.VC.Tools.x86.x64 | 
+                               Select-VSSetupInstance -Product * -Version '[15.0,16.0)' -Require $RequireWorkload | 
                                Select-Object -First 1 | ForEach-Object InstallationPath
                 Push-EnvironmentBlock -Description "Before importing VS 2017 $Architecture environment variables"
                 FindAndLoadBatchFile "$installPath/Common7/Tools" $ArchSpecified -IsAppxInstall
             }
 
             default {
-                $envvar = Get-Item Env:\vs*comntools
-                if ($envvar) {
-                    $ver = ''
-                    if ($envvar.Name -match 'vs(.*?)comntools') {
-                        $ver = $matches[1]
+                $vsInstance = @(Get-VSSetupInstance | Select-VSSetupInstance -Product * -Latest -Require $RequireWorkload)[0]
+                if ($vsInstance) {
+                    Push-EnvironmentBlock -Description "Before importing $($vsInstance.DisplayName) $Architecture environment variables"
+                    $installPath = $vsInstance.InstallationPath
+                    FindAndLoadBatchFile "$installPath/Common7/Tools" $ArchSpecified -IsAppxInstall
+                }
+                else {
+                    $envvar = @(Get-Item Env:\vs*comntools | Sort-Object { $_.Name -replace '(?<=VS)(\d)(0)','0$1$2'} -Descending)[0]
+                    if ($envvar) {
+                        Push-EnvironmentBlock -Description "Before importing $($envvar.Name) $Architecture environment variables"
+                        FindAndLoadBatchFile ($envvar.Value) $ArchSpecified
                     }
-
-                    Push-EnvironmentBlock -Description "Before importing $ver $Architecture environment variables"
-
-                    $vscomntoolspath = $envvar.Value
-                    $vcvarsallPath = Join-Path $vscomntoolspath "..\..\VC\vcvarsall.bat"
-                    Write-Verbose "Invoking default path $vcvarsallPath $Architecture"
-                    Invoke-BatchFile $vcvarsallPath $Architecture
                 }
             }
         }
