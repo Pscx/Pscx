@@ -9,7 +9,7 @@ foreach ( $cmdLet in ($cmdLetsAndFunctions) ) {
   $noun = $cmdLet.split('-')[1]
 
   if ( ! $noun ) {
-    break
+    continue
   }
 
   $description = (get-help $cmdLet).synopsis.replace('PSCX Cmdlet: ','')
