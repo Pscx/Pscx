@@ -2167,8 +2167,11 @@ function Get-Parameter {
     values are 2008, 2010, 2012, 2013, 2015 and 2017.
 .PARAMETER Architecture
     Selects the desired architecture to configure the environment for.
-    Defaults to x86 if running in 32-bit PowerShell, otherwise defaults to
-    amd64.  Other valid values are: arm, x86_arm, x86_amd64, amd64_x86.
+    If this parameter isn't specified, the command will attempt to locate and
+    use VsDevCmd.bat.  If VsDevCmd.bat can't be found (not installed) then the
+    command will use vcvarsall.bat with either the argument x86 if running in
+    32-bit PowerShell or amd64 if running in 64-bit PowerShell. Other valid
+    values are: arm, x86_arm, x86_amd64, amd64_x86.
 .PARAMETER RequireWorkload
     This parameter applies to Visual Studio 2017 and higher.  It allows you 
     to specify which workloads are required for the environment you desire to
@@ -2200,8 +2203,9 @@ function Import-VisualStudioVars
         $Architecture,
 
         [Parameter()]
+        [ValidateNotNullOrEmpty()]
         [string[]]
-        $RequireWorkload = 'Microsoft.VisualStudio.Component.VC.Tools.x86.x64'
+        $RequireWorkload
     )
 
     begin {
@@ -2211,20 +2215,75 @@ function Import-VisualStudioVars
             $Architecture = $(if ($Pscx:Is64BitProcess) {'amd64'} else {'x86'})
         }
 
+        function GetSpecifiedVSSetupInstance($Version, [switch]$Latest, [switch]$FailOnMissingVSSetup) {
+            if ((Get-Module -Name VSSetup -ListAvailable) -eq $null) {
+                Write-Warning "You must install the VSSetup module to import Visual Studio variables for Visual Studio 2017 or higher."
+                Write-Warning "Install the VSSetup module with the command: Install-Module VSSetup -Scope CurrentUser"
+
+                if ($FailOnMissingVSSetup) {
+                    throw "VSSetup module is not installed, unable to import Visual Studio 2017 (or higher) environment variables."
+                }
+                else {
+                    # For the default (no VS version specified) case, we can look for earlier versions of VS.
+                    return $null
+                }
+            }
+
+            Import-Module VSSetup -ErrorAction Stop
+
+            $selectArgs = @{
+                Product = '*'
+            }
+
+            if ($Latest) {
+                $selectArgs['Latest'] = $true
+            }
+            elseif ($Version) {
+                $selectArgs['Version'] = $Version
+            }
+
+            if ($RequireWorkload -or $ArchSpecified) {
+                if (!$RequireWorkload) {
+                    # We get here when the architecture was specified but no worload, most likely these users want the C++ workload
+                    $RequireWorkload = 'Microsoft.VisualStudio.Component.VC.Tools.x86.x64'
+                }
+
+                $selectArgs['Require'] = $RequireWorkload
+            }
+
+            Write-Verbose "$($MyInvocation.MyCommand.Name) Select-VSSetupInstance args:"
+            Write-Verbose "$(($selectArgs | Out-String) -split "`n")"
+            $vsInstance = Get-VSSetupInstance | Select-VSSetupInstance @selectArgs | Select-Object -First 1
+            $vsInstance
+        } 
+
         function FindAndLoadBatchFile($ComnTools, $ArchSpecified, [switch]$IsAppxInstall) {
             $batchFilePath = Join-Path $ComnTools VsDevCmd.bat
             if (!$ArchSpecified -and (Test-Path -LiteralPath $batchFilePath)) {
-                Write-Verbose "Invoking '$batchFilePath'"
+                if ($IsAppxInstall) {
+                    # The newer batch files spit out a header that tells you which environment was loaded
+                    # so only write out the below message when -Verbose is specified.
+                    Write-Verbose "Invoking '$batchFilePath'"
+                }
+                else {
+                    "Invoking '$batchFilePath'"
+                }
+
                 Invoke-BatchFile $batchFilePath
             }
             else {
                 if ($IsAppxInstall) {
                     $batchFilePath = Join-Path $ComnTools ..\..\VC\Auxiliary\Build\vcvarsall.bat
+
+                    # The newer batch files spit out a header that tells you which environment was loaded
+                    # so only write out the below message when -Verbose is specified.
+                    Write-Verbose "Invoking '$batchFilePath' $Architecture"
                 }
                 else {
                     $batchFilePath = Join-Path $ComnTools ..\..\VC\vcvarsall.bat
+                    "Invoking '$batchFilePath' $Architecture"
                 }
-                Write-Verbose "Invoking '$batchFilePath' $Architecture"
+
                 Invoke-BatchFile $batchFilePath $Architecture
             }
         }
@@ -2262,21 +2321,18 @@ function Import-VisualStudioVars
             }
 
             '150|2017' {
-                if ((Get-Module -Name VSSetup -ListAvailable) -eq $null) {
-                    Write-Warning "You must install the VSSetup module to import Visual Studio variables for this version of Visual Studio."
-                    Write-Warning "Install this PowerShell module with the command: Install-Module VSSetup -Scope CurrentUser"
-                    throw "VSSetup module not installed, unable to import Visual Studio environment variables."
+                $vsInstance = GetSpecifiedVSSetupInstance -Version '[15.0,16.0)' -FailOnMissingVSSetup
+                if (!$vsInstance) {
+                    throw "No instances of Visual Studio 2017 found$(if ($RequireWorkload) {" for the required workload: $RequireWorkload"})."
                 }
-                Import-Module VSSetup -ErrorAction Stop
-                $installPath = Get-VSSetupInstance | 
-                               Select-VSSetupInstance -Product * -Version '[15.0,16.0)' -Require $RequireWorkload | 
-                               Select-Object -First 1 | ForEach-Object InstallationPath
+
                 Push-EnvironmentBlock -Description "Before importing VS 2017 $Architecture environment variables"
+                $installPath = $vsInstance.InstallationPath
                 FindAndLoadBatchFile "$installPath/Common7/Tools" $ArchSpecified -IsAppxInstall
             }
 
             default {
-                $vsInstance = @(Get-VSSetupInstance | Select-VSSetupInstance -Product * -Latest -Require $RequireWorkload)[0]
+                $vsInstance = GetSpecifiedVSSetupInstance -Latest
                 if ($vsInstance) {
                     Push-EnvironmentBlock -Description "Before importing $($vsInstance.DisplayName) $Architecture environment variables"
                     $installPath = $vsInstance.InstallationPath
@@ -2284,10 +2340,12 @@ function Import-VisualStudioVars
                 }
                 else {
                     $envvar = @(Get-Item Env:\vs*comntools | Sort-Object { $_.Name -replace '(?<=VS)(\d)(0)','0$1$2'} -Descending)[0]
-                    if ($envvar) {
-                        Push-EnvironmentBlock -Description "Before importing $($envvar.Name) $Architecture environment variables"
-                        FindAndLoadBatchFile ($envvar.Value) $ArchSpecified
+                    if (!$envvar) {
+                        throw "No versions of Visual Studio found."
                     }
+
+                    Push-EnvironmentBlock -Description "Before importing $($envvar.Name) $Architecture environment variables"
+                    FindAndLoadBatchFile ($envvar.Value) $ArchSpecified
                 }
             }
         }
