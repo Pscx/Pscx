@@ -9,6 +9,18 @@ scripts for PowerShell that members of the community have expressed interest in.
 
 See [ReleaseNotes.txt](ReleaseNotes.txt).
 
+## Install Pscx
+Pscx is hosted on the PowerShell Gallery.  You can install Pscx with the following command:
+```
+Install-Module Pscx -Scope CurrentUser
+```
+You may be prompted to trust the PSGallery.  Respond with a 'y' (for yes) to proceed with the install.
+
+If you already have installed Pscx from the PowerShell Gallery, you can update Pscx with the command:
+```
+Update-Module Pscx
+```
+
 ## Maintainers
 
  - [Keith Hill](https://github.com/rkeithhill) - [@r_keith_hill](http://twitter.com/r_keith_hill)

@@ -1,6 +1,21 @@
 PowerShell Community Extensions Release Notes
 
-What's New in PSCX 3.2.2
+
+What's New in PSCX 3.3.1
+October 12, 2017
+
+* Fix Import-VisualStudioVars - Select-VSSetupInstance ignores VS 2017 Build Tools by default [#36](https://github.com/Pscx/Pscx/issues/36)
+# Fix Import-VisualStudioVars - VS 2015 Build Tools don't have VsDevCmd.bat [#37](https://github.com/Pscx/Pscx/issues/37)
+# Fix Import-VisualStudioVars fails when workload for VC isn't installed [#41](https://github.com/Pscx/Pscx/issues/41)
+
+3.3.0 Release Notes:
+September 5, 2017
+
+* Fix issues with CD functionality not working on PowerShell Core.
+
+* Updated Import-VisualStudioVars to support Visual Studio 2017.
+
+3.2.2 Release Notes:
 June 25, 2016
 
 * Added better support for VS 2015 to Import-VisualStudioVars
