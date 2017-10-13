@@ -2178,16 +2178,25 @@ function Get-Parameter {
     import.  This can be used when you have multiple versions of Visual Studio
     2017 installed and different versions support different workloads e.g.
     perhaps only the "Preview" version supports the 
-    Microsoft.VisualStudio.Component.VC.Tools.x86.x64 (default) workload.
+    Microsoft.VisualStudio.Component.VC.Tools.x86.x64 workload.
 .EXAMPLE
     C:\PS> Import-VisualStudioVars 2015
 
-    Sets up the environment variables to use the VS 2015 compilers. Defaults
-    to x86 if running in 32-bit PowerShell, otherwise defaults to amd64.
+    Sets up the environment variables to use the VS 2015 tools. If 
+    VsDevCmd.bat is found then it will use that. Otherwise, vcvarsall.bat will
+    be used with an architecture of either x86 for 32-bit Powershell, or amd64
+    for 64-bit Powershell.
 .EXAMPLE
     C:\PS> Import-VisualStudioVars 2013 arm
 
-    Sets up the environment variables for the VS 2013 ARM compiler.
+    Sets up the environment variables for the VS 2013 ARM tools.
+.EXAMPLE
+    C:\PS> Import-VisualStudioVars 2017 -Architecture amd64 -RequireWorkload Microsoft.VisualStudio.Component.VC.Tools.x86.x64
+
+    Finds an instance of VS 2017 that has the required workload and sets up
+    the environment variables to use that instance of the VS 2017 tools. 
+    To see a full list of available workloads, execute:
+    Get-VSSetupInstance | Foreach-Object Packages | Foreach-Object Id | Sort-Object
 #>
 function Import-VisualStudioVars
 {
