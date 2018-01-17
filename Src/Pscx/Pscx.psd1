@@ -2,11 +2,11 @@
     GUID               = '0fab0d39-2f29-4e79-ab9a-fd750c66e6c5'
     Author             = 'PowerShell Community Developers'
     CompanyName        = 'http://pscx.codeplex.com/'
-    Copyright          = 'Copyright PowerShell Community Developers 2006 - 2017.'
+    Copyright          = 'Copyright PowerShell Community Developers 2006 - 2018.'
     Description        = 'PowerShell Community Extensions (PSCX) base module which implements a general purpose set of Cmdlets.'
     PowerShellVersion  = '3.0'
     CLRVersion         = '4.0'
-    ModuleVersion      = '3.3.1'
+    ModuleVersion      = '3.3.2'
     RequiredAssemblies = 'Pscx.dll' # needed for [pscxmodules] type (does not import cmdlets/providers)
     RootModule         = 'Pscx.psm1'
     NestedModules      = 'Pscx.dll'
@@ -171,6 +171,25 @@
 
             # A URL to an icon representing this module.
             IconUri = 'https://github.com/Pscx/Pscx/blob/master/PscxIcon.png?raw=true'
+
+            # Release notes
+            ReleaseNotes = @'
+3.3.2 - January 16, 2018
+
+* Fix Edit-File does not respect TextEditor property [#48](https://github.com/Pscx/Pscx/issues/48)
+
+3.3.1 - October 12, 2017
+
+* Fix Import-VisualStudioVars - Select-VSSetupInstance ignores VS 2017 Build Tools by default [#36](https://github.com/Pscx/Pscx/issues/36)
+# Fix Import-VisualStudioVars - VS 2015 Build Tools do not have VsDevCmd.bat [#37](https://github.com/Pscx/Pscx/issues/37)
+# Fix Import-VisualStudioVars fails when workload for VC is not installed [#41](https://github.com/Pscx/Pscx/issues/41)
+
+3.3.0 - September 5, 2017
+
+* Fix issues with CD functionality not working on PowerShell Core.
+
+* Updated Import-VisualStudioVars to support Visual Studio 2017.
+'@
         } # End of PSData hashtable
     } # End of PrivateData hashtable
 }
