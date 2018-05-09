@@ -1,0 +1,328 @@
+<Configuration>
+
+  <SelectionSets>
+    <SelectionSet>
+      <Name>FileSystemTypes</Name>
+      <Types>
+        <TypeName>System.IO.DirectoryInfo</TypeName>
+        <TypeName>System.IO.FileInfo</TypeName>
+        <TypeName>Deserialized.System.IO.DirectoryInfo</TypeName>
+        <TypeName>Deserialized.System.IO.FileInfo</TypeName>
+      </Types>
+    </SelectionSet>
+  </SelectionSets>
+
+  <Controls>
+    <Control>
+      <Name>FileSystemTypes-GroupingFormat</Name>
+      <CustomControl>
+        <CustomEntries>
+          <CustomEntry>
+            <CustomItem>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <Text AssemblyName="System.Management.Automation" BaseName="FileSystemProviderStrings" ResourceId="DirectoryDisplayGrouping"/>
+                  <ExpressionBinding>
+                    <ScriptBlock>$ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($_.PSParentPath)</ScriptBlock>
+                  </ExpressionBinding>
+                  <NewLine/>
+                </CustomItem>
+              </Frame>
+            </CustomItem>
+          </CustomEntry>
+        </CustomEntries>
+      </CustomControl>
+    </Control>
+    
+    <Control>
+      <Name>HashInfo-GroupingFormat</Name>
+      <CustomControl>
+        <CustomEntries>
+          <CustomEntry>
+            <CustomItem>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <Text>Algorithm: </Text>
+                  <ExpressionBinding>
+                    <ScriptBlock>$_.Algorithm</ScriptBlock>
+                  </ExpressionBinding>
+                </CustomItem>
+              </Frame>
+            </CustomItem>
+          </CustomEntry>
+        </CustomEntries>
+      </CustomControl>
+    </Control>
+  </Controls>
+
+  <ViewDefinitions>	
+    <View>
+      <Name>FileSystemTypes-View</Name>
+      <ViewSelectedBy>
+        <SelectionSetName>FileSystemTypes</SelectionSetName>
+      </ViewSelectedBy>
+      <GroupBy>
+        <PropertyName>PSParentPath</PropertyName>
+        <CustomControlName>FileSystemTypes-GroupingFormat</CustomControlName>
+      </GroupBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Mode</Label>
+            <Width>5</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>LastWriteTime</Label>
+            <Width>22</Width>
+            <Alignment>right</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Length</Label>
+            <Width>12</Width>
+            <Alignment>right</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+        	  <Label>Name</Label>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <Wrap/>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Mode</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                  '{0,10} {1,8}' -f $_.LastWriteTime.ToString('d'), $_.LastWriteTime.ToString('t')
+                </ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                  $reparse = $_.ReparsePoint
+
+                  if ($reparse) {
+                      switch($reparse.ReparsePointTag) {
+                          'MountPoint'   { return '&lt;JUNCTION&gt;' }
+                          'SymbolicLink' {
+                              if((get-item $reparse.Target).PSIsContainer) { 
+								                  return '&lt;SYMLINKD&gt;' 
+                              }  
+    							            
+                              return '&lt;SYMLINK&gt;'
+                          }
+                          
+                          'HierarchicalStorage'   { return '&lt;HSM&gt;' }
+                          'SingleInstanceStore'   { return '&lt;SIS&gt;' }
+                          'DistributedFileSystem' { return '&lt;DFS&gt;' }
+                          'FilterManager'         { return '&lt;FltMgr&gt;'}
+                      }              
+                  }
+
+				          if ($_.PSIsContainer) { 
+                      return '&lt;DIR&gt;'
+                  }
+
+                  if ($Pscx:Preferences['FileSizeInUnits']) {
+                      return $_.Length | format-byte
+                  }
+
+                  return $_.Length
+                </ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+    			  		  $reparsePoint = $_.ReparsePoint
+    			  		  if ($reparsePoint -ne $null -and $reparsePoint.Target) {
+      						  '{0} [{1}]' -f $_.Name, $reparsePoint.Target
+					        }
+                  else {
+                    $_.Name
+                  }
+			          </ScriptBlock>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    
+    <View>
+      <Name>drives</Name>
+      <ViewSelectedBy>
+        <TypeName>System.IO.DriveInfo</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+
+          <TableColumnHeader>
+            <Label>VolumeLabel</Label>
+            <Width>18</Width>
+          </TableColumnHeader>
+
+          <TableColumnHeader>
+            <Label>Name</Label>
+            <Width>4</Width>
+          </TableColumnHeader>
+
+          <TableColumnHeader>
+            <Label>UsedSpace</Label>
+            <Width>18</Width>
+            <Alignment>right</Alignment>
+          </TableColumnHeader>
+
+          <TableColumnHeader>
+            <Label>FreeSpace</Label>
+            <Width>18</Width>
+            <Alignment>right</Alignment>
+          </TableColumnHeader>
+
+          <TableColumnHeader>
+            <Label>TotalSize</Label>
+            <Width>11</Width>
+            <Alignment>right</Alignment>
+          </TableColumnHeader>
+
+          <TableColumnHeader>
+            <Label>%Free</Label>
+            <Width>5</Width>
+            <Alignment>right</Alignment>
+          </TableColumnHeader>
+
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <ScriptBlock>
+                  if ($_.VolumeLabel.Length -gt 0) {
+                    return $_.VolumeLabel
+                  }
+                  'Local Disk'
+                </ScriptBlock>
+              </TableColumnItem>
+
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              
+              <TableColumnItem>
+                <ScriptBlock>
+                  if ($Pscx:Preferences['FileSizeInUnits']) {
+                      return $_.UsedSpace | format-byte
+                  }
+                  '{0:N0}' -f $_.UsedSpace
+                </ScriptBlock>
+              </TableColumnItem>
+
+              <TableColumnItem>
+                <ScriptBlock>
+                  if ($Pscx:Preferences['FileSizeInUnits']) {
+                      return $_.FreeSpace | format-byte
+                  }
+                  '{0:N0}' -f ($_.FreeSpace)
+                </ScriptBlock>
+              </TableColumnItem>
+
+              <TableColumnItem>
+                <ScriptBlock>
+                  $_.TotalSize | format-byte
+                </ScriptBlock>
+              </TableColumnItem>
+
+              <TableColumnItem>
+                <ScriptBlock>'{0:0} %' -f (100 * ([float]$_.FreeSpace / [float]$_.TotalSize))</ScriptBlock>
+              </TableColumnItem>
+
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+    <View>
+      <Name>LinkReparsePointInfo</Name>
+      <ViewSelectedBy>
+        <TypeName>Pscx.IO.Ntfs.LinkReparsePointInfo</TypeName>
+      </ViewSelectedBy>
+
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <ListItem>
+                <PropertyName>ReparsePointTag</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Path</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Target</PropertyName>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
+
+    <View>
+      <Name>Pscx.Commands.IO.HashInfo</Name>
+      <ViewSelectedBy>
+        <TypeName>Pscx.Commands.IO.HashInfo</TypeName>
+      </ViewSelectedBy>
+      <GroupBy>
+        <PropertyName>Algorithm</PropertyName>
+        <CustomControlName>HashInfo-GroupingFormat</CustomControlName>
+      </GroupBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <ListItem>
+                <PropertyName>Path</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>HashString</PropertyName>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
+
+    <View>
+      <Name>Pscx.Commands.IO.ShortPathInfo</Name>
+      <ViewSelectedBy>
+        <TypeName>Pscx.Commands.IO.ShortPathInfo</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>ShortPath</Label>
+            <Width>12</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Path</Label>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <ScriptBlock>[System.IO.Path]::GetFileName($_.ShortPath)</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Path</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+  </ViewDefinitions>
+</Configuration>

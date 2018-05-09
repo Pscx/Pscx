@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Types>
+  <Type>
+    <Name>Pscx.Commands.IO.Compression.ArchiveReader.ArchiveEntry</Name>
+    <Members>
+
+      <ScriptProperty>
+        <Name>ArchiveEntryPath</Name>
+        <GetScriptBlock>
+          $archive = [io.path]::GetFileName($this.ArchivePath)
+          $root = "${archive}#\"
+
+          $isFolder = $this.IsFolder
+
+          if ($isFolder) {
+            return $root + $this.Path
+          } elseif (($this.Path -eq $this.Name) -and !$isFolder) {
+            return $root
+          }
+          return $root + [System.IO.Path]::GetDirectoryName($this.Path)
+        </GetScriptBlock>
+      </ScriptProperty>
+      
+      <MemberSet>
+        <Name>PSStandardMembers</Name>
+        <Members>
+          <PropertySet>
+            <Name>DefaultDisplayPropertySet</Name>
+            <ReferencedProperties>
+              <Name>Index</Name>
+              <Name>Path</Name>
+              <Name>Size</Name>
+              <Name>CompressedSize</Name>
+              <Name>ModifiedDate</Name>
+              <Name>Name</Name>
+              <Name>IsEncrypted</Name>
+              <Name>IsFolder</Name>
+            </ReferencedProperties>
+          </PropertySet>
+        </Members>
+      </MemberSet>
+    </Members>
+  </Type>
+</Types>

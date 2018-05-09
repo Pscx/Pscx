@@ -1,0 +1,35 @@
+namespace Pscx.Interop.SevenZip
+{
+    public enum KnownSevenZipFormat
+    {
+        Unknown,
+        SevenZip,
+        Arj,
+        BZip2,
+        Cab,
+        Chm,
+        Compound,
+        Cpio,
+        Deb,
+        Dmg,
+        ELF,
+        GZip,
+        HFS,
+        Iso,
+        Lzh,
+        Lzma,
+        MachO,
+        Mub,
+        Nsis,
+        PE,
+        Rar,
+        Rpm,
+        Split,
+        Tar,
+        Udf,
+        Wim,
+        Xar,
+        Z,
+        Zip
+    }
+}

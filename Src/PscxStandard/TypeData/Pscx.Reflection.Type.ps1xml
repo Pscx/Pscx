@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Types>
+  <Type>
+    <Name>Pscx.Commands.Reflection.PEHeader</Name>
+    <Members>
+
+      <ScriptProperty>
+        <Name>IsManagedAssembly</Name>
+        <GetScriptBlock>
+          $corhdr = $this.GetDataDirectory('CorHeader')
+          
+          ($corhdr.VirtualAddress -ne 0) -and ($corhdr.Size -gt 0)
+        </GetScriptBlock>
+      </ScriptProperty>
+      
+      <MemberSet>
+        <Name>PSStandardMembers</Name>
+        <Members>
+          <PropertySet>
+            <Name>DefaultDisplayPropertySet</Name>
+            <ReferencedProperties>
+              <Name>Type</Name>
+              <Name>LinkerVersion</Name>
+              <Name>OperatingSystemVersion</Name>
+              <Name>ImageVersion</Name>
+              <Name>SubsystemVersion</Name>
+              <Name>Subsystem</Name>
+              <Name>DllCharacteristics</Name>
+              <Name>IsManagedAssembly</Name>
+            </ReferencedProperties>
+          </PropertySet>
+        </Members>
+      </MemberSet>
+    </Members>
+  </Type>
+</Types>

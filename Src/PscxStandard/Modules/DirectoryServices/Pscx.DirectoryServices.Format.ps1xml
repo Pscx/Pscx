@@ -1,0 +1,96 @@
+<Configuration>
+  
+  <ViewDefinitions>	
+    
+    <View>
+      <Name>DirectoryEntryInfo-Table</Name>
+      <ViewSelectedBy>
+        <TypeName>Pscx.Providers.DirectoryServices.DirectoryEntryInfo</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+
+          <TableColumnHeader>
+            <Label>LastWriteTime</Label>
+            <Width>22</Width>
+            <Alignment>right</Alignment>
+          </TableColumnHeader>
+
+          <TableColumnHeader>
+            <Label>Type</Label>
+            <Width>20</Width>
+          </TableColumnHeader>
+
+          <TableColumnHeader>
+            <Label>Name</Label>
+          </TableColumnHeader>
+
+        </TableHeaders>
+        
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+
+              <TableColumnItem>
+                <ScriptBlock>
+                  '{0,10} {1,8}' -f $_.LastWriteTime.ToString('d'), $_.LastWriteTime.ToString('t')
+                </ScriptBlock>
+              </TableColumnItem>
+
+              <TableColumnItem>
+                <PropertyName>Type</PropertyName>
+              </TableColumnItem>
+
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+    <View>
+      <Name>DomainController-Table</Name>
+      <ViewSelectedBy>
+        <TypeName>System.DirectoryServices.ActiveDirectory.DomainController</TypeName>
+      </ViewSelectedBy>
+
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>SiteName</Label>
+            <Width>20</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>CurrentTime</Label>
+            <Width>20</Width>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Name</Label>
+          </TableColumnHeader>
+        </TableHeaders>
+
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>SiteName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>CurrentTime</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+      
+    </View>
+    
+  </ViewDefinitions>
+
+</Configuration>

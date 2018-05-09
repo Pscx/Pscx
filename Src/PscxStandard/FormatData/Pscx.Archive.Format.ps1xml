@@ -1,0 +1,138 @@
+<Configuration>
+
+  <!--
+        private readonly uint _index;
+        private readonly string _path;
+        private readonly long _size;
+        private readonly long _compressedSize;
+        private readonly DateTime _modifiedDate;
+        private readonly string _name;
+        private readonly bool _isEncrypted;
+        private readonly bool _isFolder;
+        private readonly string _archivePath;
+        private readonly ArchiveFormat _format;
+  -->
+  <SelectionSets>
+    <SelectionSet>
+      <Name>ArchiveEntryTypes</Name>
+      <Types>
+        <TypeName>Pscx.Commands.IO.Compression.ArchiveReader.ArchiveEntry</TypeName>        
+        <TypeName>Deserialized.Pscx.Commands.IO.Compression.ArchiveReader.ArchiveEntry</TypeName>
+      </Types>
+    </SelectionSet>
+  </SelectionSets>
+
+  <Controls>
+    <Control>
+      <Name>ArchiveEntryTypes-GroupingFormat</Name>
+      <CustomControl>
+        <CustomEntries>
+          <CustomEntry>
+            <CustomItem>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>                  
+                  <ExpressionBinding>
+                    <!--
+                    <ItemSelectionCondition>
+                      <ScriptBlock><![CDATA[$_.IsFolder -eq $false]]></ScriptBlock>
+                    </ItemSelectionCondition>
+                    -->
+                    <ScriptBlock>"{0} Folder: {1}" -f $_.Format, $_.ArchiveEntryPath</ScriptBlock>
+                  </ExpressionBinding>
+                  <NewLine/>
+                </CustomItem>
+              </Frame>
+            </CustomItem>
+          </CustomEntry>
+        </CustomEntries>
+      </CustomControl>
+    </Control>
+  </Controls>
+
+  <ViewDefinitions>	
+    
+    <View>
+    <Name>ArchiveEntryTypes-View</Name>
+    <ViewSelectedBy>
+      <SelectionSetName>ArchiveEntryTypes</SelectionSetName>
+    </ViewSelectedBy>
+    <GroupBy>
+      <PropertyName>ArchiveEntryPath</PropertyName>
+      <CustomControlName>ArchiveEntryTypes-GroupingFormat</CustomControlName>
+    </GroupBy>
+    <TableControl>
+      <TableHeaders>
+        <TableColumnHeader>
+          <Label>Index</Label>
+          <Width>5</Width>
+          <Alignment>left</Alignment>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Label>LastWriteTime</Label>
+          <Width>22</Width>
+          <Alignment>right</Alignment>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Label>Size</Label>
+          <Width>12</Width>
+          <Alignment>right</Alignment>          
+        </TableColumnHeader>
+        <!--<TableColumnHeader>
+          <Label>Ratio</Label>
+          <Width>8</Width>
+          <Alignment>right</Alignment>
+        </TableColumnHeader>-->
+        <TableColumnHeader>
+        	<Label>Name</Label>
+        </TableColumnHeader>
+        <TableColumnHeader>
+        	<Label>CRC</Label>
+        </TableColumnHeader>
+      </TableHeaders>
+      <TableRowEntries>
+        <TableRowEntry>
+          <Wrap/>
+          <TableColumnItems>
+            <TableColumnItem>
+              <PropertyName>Index</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <ScriptBlock>
+                '{0,10} {1,8}' -f $_.ModifiedDate.ToString('d'), $_.ModifiedDate.ToString('t')
+              </ScriptBlock>
+            </TableColumnItem>
+            <TableColumnItem>
+              <PropertyName>Size</PropertyName>
+            </TableColumnItem>
+            <!--<TableColumnItem>
+              <ScriptBlock>
+              if ($_.Size -eq 0) {
+                return $null
+              }
+              return '{0:p}' -f ($_.CompressedSize / $_.Size)
+              </ScriptBlock>
+            </TableColumnItem>-->
+            <TableColumnItem>
+              <ScriptBlock>
+                $name = $_.Name
+                if ($_.IsEncrypted) {
+                  $name = "$name *"
+                }
+                return $name
+              </ScriptBlock>
+            </TableColumnItem>
+            <TableColumnItem>
+              <ScriptBlock>
+                "{0:x8}" -f $_.CRC
+              </ScriptBlock>
+            </TableColumnItem>          
+          </TableColumnItems>
+        </TableRowEntry>
+      </TableRowEntries>
+    </TableControl>
+  </View>
+    
+  </ViewDefinitions>
+
+</Configuration>

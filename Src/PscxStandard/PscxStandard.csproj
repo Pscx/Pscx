@@ -1,0 +1,234 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Pscx</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Commands\Com\**" />
+    <Compile Remove="Commands\DirectoryServices\**" />
+    <Compile Remove="Commands\Messaging\**" />
+    <Compile Remove="Commands\SnapinHelp\**" />
+    <Compile Remove="Commands\UIAutomation\**" />
+    <Compile Remove="Providers\AssemblyCache\**" />
+    <Compile Remove="Providers\DirectoryServices\**" />
+    <EmbeddedResource Remove="Commands\Com\**" />
+    <EmbeddedResource Remove="Commands\DirectoryServices\**" />
+    <EmbeddedResource Remove="Commands\Messaging\**" />
+    <EmbeddedResource Remove="Commands\SnapinHelp\**" />
+    <EmbeddedResource Remove="Commands\UIAutomation\**" />
+    <EmbeddedResource Remove="Providers\AssemblyCache\**" />
+    <EmbeddedResource Remove="Providers\DirectoryServices\**" />
+    <None Remove="Commands\Com\**" />
+    <None Remove="Commands\DirectoryServices\**" />
+    <None Remove="Commands\Messaging\**" />
+    <None Remove="Commands\SnapinHelp\**" />
+    <None Remove="Commands\UIAutomation\**" />
+    <None Remove="Providers\AssemblyCache\**" />
+    <None Remove="Providers\DirectoryServices\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="FormatData\Pscx.Archive.Format.ps1xml" />
+    <None Remove="FormatData\Pscx.Environment.Format.ps1xml" />
+    <None Remove="FormatData\Pscx.FeedStore.Format.ps1xml" />
+    <None Remove="FormatData\Pscx.Format.ps1xml" />
+    <None Remove="FormatData\Pscx.Security.Format.ps1xml" />
+    <None Remove="FormatData\Pscx.SIUnits.Format.ps1xml" />
+    <None Remove="FormatData\Pscx.TerminalServices.Format.ps1xml" />
+    <None Remove="Modules\CD\Messages.psd1" />
+    <None Remove="Modules\CD\Pscx.CD.psm1" />
+    <None Remove="Modules\DirectoryServices\Pscx.DirectoryServices.Format.ps1xml" />
+    <None Remove="Modules\DirectoryServices\Pscx.DirectoryServices.psd1" />
+    <None Remove="Modules\DirectoryServices\Pscx.DirectoryServices.Type.ps1xml" />
+    <None Remove="Modules\FileSystem\Pscx.FileSystem.Format.5.0.ps1xml" />
+    <None Remove="Modules\FileSystem\Pscx.FileSystem.Format.ps1xml" />
+    <None Remove="Modules\FileSystem\Pscx.FileSystem.psd1" />
+    <None Remove="Modules\FileSystem\Pscx.FileSystem.psm1" />
+    <None Remove="Modules\FileSystem\Pscx.FileSystem.Type.ps1xml" />
+    <None Remove="Modules\GetHelp\Pscx.GetHelp.psm1" />
+    <None Remove="Modules\Net\Pscx.Net.Format.ps1xml" />
+    <None Remove="Modules\Net\Pscx.Net.psd1" />
+    <None Remove="Modules\Net\Pscx.Net.Type.ps1xml" />
+    <None Remove="Modules\Prompt\Pscx.Prompt.psm1" />
+    <None Remove="Modules\Prompt\Themes\Jachym.ps1" />
+    <None Remove="Modules\Prompt\Themes\Modern.ps1" />
+    <None Remove="Modules\Prompt\Themes\WinXP.ps1" />
+    <None Remove="Modules\TranscribeSession\Pscx.TranscribeSession.psm1" />
+    <None Remove="Modules\Utility\Pscx.Utility.Format.ps1xml" />
+    <None Remove="Modules\Utility\Pscx.Utility.psd1" />
+    <None Remove="Modules\Utility\Pscx.Utility.psm1" />
+    <None Remove="Modules\Vhd\Pscx.Vhd.psm1" />
+    <None Remove="Modules\Wmi\Pscx.Wmi.psm1" />
+    <None Remove="Pscx.psd1" />
+    <None Remove="Pscx.UserPreferences.ps1" />
+    <None Remove="TypeData\Pscx.Archive.Type.ps1xml" />
+    <None Remove="TypeData\Pscx.FeedStore.Type.ps1xml" />
+    <None Remove="TypeData\Pscx.Reflection.Type.ps1xml" />
+    <None Remove="TypeData\Pscx.SIUnits.Type.ps1xml" />
+    <None Remove="TypeData\Pscx.TerminalServices.Type.ps1xml" />
+    <None Remove="TypeData\Pscx.Wmi.Type.ps1xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="FormatData\Pscx.Archive.Format.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FormatData\Pscx.Environment.Format.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FormatData\Pscx.FeedStore.Format.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FormatData\Pscx.Format.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FormatData\Pscx.Security.Format.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FormatData\Pscx.SIUnits.Format.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FormatData\Pscx.TerminalServices.Format.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\CD\Messages.psd1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\CD\Pscx.CD.psm1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\DirectoryServices\Pscx.DirectoryServices.Format.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\DirectoryServices\Pscx.DirectoryServices.psd1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\DirectoryServices\Pscx.DirectoryServices.Type.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\FileSystem\Pscx.FileSystem.Format.5.0.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\FileSystem\Pscx.FileSystem.Format.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\FileSystem\Pscx.FileSystem.psd1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\FileSystem\Pscx.FileSystem.psm1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\FileSystem\Pscx.FileSystem.Type.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\GetHelp\Pscx.GetHelp.psm1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Net\Pscx.Net.Format.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Net\Pscx.Net.psd1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Net\Pscx.Net.Type.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Prompt\Pscx.Prompt.psm1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Prompt\Themes\Jachym.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Prompt\Themes\Modern.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Prompt\Themes\WinXP.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\TranscribeSession\Pscx.TranscribeSession.psm1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Utility\Pscx.Utility.Format.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Utility\Pscx.Utility.psd1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Utility\Pscx.Utility.psm1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Vhd\Pscx.Vhd.psm1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Wmi\Pscx.Wmi.psm1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Pscx.psd1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Pscx.UserPreferences.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TypeData\Pscx.Archive.Type.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TypeData\Pscx.FeedStore.Type.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TypeData\Pscx.Reflection.Type.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TypeData\Pscx.SIUnits.Type.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TypeData\Pscx.TerminalServices.Type.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TypeData\Pscx.Wmi.Type.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PowerShellStandard.Library" Version="5.1.0-preview-03" />
+    <PackageReference Include="SevenZip" Version="4.12.1" />
+    <PackageReference Include="System.Drawing.Common" Version="4.5.0-rc1" />
+    <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Commands\Database\Ado\InvokeAdoCommandCommand.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Resources\Errors.Designer.cs">
+      <DependentUpon>Errors.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Strings.Designer.cs">
+      <DependentUpon>Strings.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Errors.resx">
+      <LastGenOutput>Errors.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Strings.resx">
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Pscx.psm1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

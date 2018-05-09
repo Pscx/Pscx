@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Types>
+  <Type>
+    <Name>System.Net.IPAddress</Name>
+    <Members>
+      <ScriptProperty>
+        <Name>SortableAddress</Name>
+        <GetScriptBlock>
+          $bytes=$this.GetAddressBytes()
+          [array]::Reverse($bytes)
+          $sum = 0
+          for ($i = 0; $i -lt $bytes.length; $i++) { $sum += ($bytes[$i] * [Math]::Pow(256,$i)) }
+          $sum
+        </GetScriptBlock>
+      </ScriptProperty>
+    </Members>
+  </Type>
+  <Type>
+    <Name>System.Net.NetworkInformation.PingReply</Name>
+    <Members>
+      <ScriptProperty>
+        <Name>BufferSize</Name>
+        <GetScriptBlock>
+          $this.Buffer.Length
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>OptionsString</Name>
+        <GetScriptBlock>
+          'TTL={0}, DontFragment={1}' -f $this.Options.Ttl, $this.Options.DontFragment
+        </GetScriptBlock>
+      </ScriptProperty>
+      <MemberSet>
+        <Name>PSStandardMembers</Name>
+        <Members>
+          <PropertySet>
+            <Name>DefaultDisplayPropertySet</Name>
+            <ReferencedProperties>
+              <Name>Status</Name>
+              <Name>Address</Name>
+              <Name>RoundtripTime</Name>
+              <Name>BufferSize</Name>
+              <Name>OptionsString</Name>
+            </ReferencedProperties>
+          </PropertySet>
+        </Members>
+      </MemberSet>
+    </Members>
+  </Type>
+</Types>

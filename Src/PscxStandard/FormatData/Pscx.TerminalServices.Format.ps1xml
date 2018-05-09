@@ -1,0 +1,94 @@
+<Configuration>
+
+  <Controls>
+    <Control>
+      <Name>TerminalSession-GroupingFormat</Name>
+      <CustomControl>
+        <CustomEntries>
+          <CustomEntry>
+            <CustomItem>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <Text>Server: </Text>
+                  <ExpressionBinding>
+                    <ScriptBlock>$_.Server</ScriptBlock>
+                  </ExpressionBinding>
+                  <NewLine/>
+                </CustomItem>
+              </Frame>
+            </CustomItem>
+          </CustomEntry>
+        </CustomEntries>
+      </CustomControl>
+    </Control>
+  </Controls>
+
+  <ViewDefinitions>
+
+    <View>
+      <Name>TerminalSession-Table</Name>
+
+      <ViewSelectedBy>
+        <TypeName>Pscx.TerminalServices.TerminalSession</TypeName>
+      </ViewSelectedBy>
+
+      <GroupBy>
+        <PropertyName>Server</PropertyName>
+        <CustomControlName>TerminalSession-GroupingFormat</CustomControlName>
+      </GroupBy>
+
+      <TableControl>
+
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Id</Label>
+            <Width>6</Width>
+            <Alignment>right</Alignment>
+          </TableColumnHeader>
+
+          <TableColumnHeader>
+            <Label>State</Label>
+            <Width>14</Width>
+          </TableColumnHeader>
+
+          <TableColumnHeader>
+            <Label>UserName</Label>
+            <Width>20</Width>
+          </TableColumnHeader>
+
+          <TableColumnHeader>
+            <Label>ClientAddress</Label>
+          </TableColumnHeader>
+        </TableHeaders>
+
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+
+              <TableColumnItem>
+                <PropertyName>Id</PropertyName>
+              </TableColumnItem>
+
+              <TableColumnItem>
+                <PropertyName>State</PropertyName>
+              </TableColumnItem>
+
+              <TableColumnItem>
+                <PropertyName>UserName</PropertyName>
+              </TableColumnItem>
+
+              <TableColumnItem>
+                <PropertyName>ClientAddress</PropertyName>
+              </TableColumnItem>
+
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+
+      </TableControl>
+    </View>
+
+  </ViewDefinitions>
+
+</Configuration>

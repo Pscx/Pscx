@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ClipboardExceptionFormat" xml:space="preserve">
+    <value>"{0} Clipboard owner: {1}:{2}",</value>
+    <comment>{0} = base.message, {1} = processName, {2} = pid</comment>
+  </data>
+  <data name="OverwriteExistingProfile" xml:space="preserve">
+    <value>A profile script already exists at:
+
+{0}
+
+Would you like to overwrite it?  
+
+If you choose to overwrite it a backup copy will be made. </value>
+    <comment>{0} = Profile path</comment>
+  </data>
+  <data name="PingHostInfo" xml:space="preserve">
+    <value>    Reply from {0} bytes={1} time={2}ms TTL={3}</value>
+    <comment>{0} = host, {1} = bytes, {2} = milliseconds, {3} =TTL</comment>
+  </data>
+  <data name="PingHostInfoGroup" xml:space="preserve">
+    <value>Pinging {0} with {1} bytes of data:</value>
+    <comment>{0} = host name, {1} = number of bytes</comment>
+  </data>
+  <data name="ResizeBitmapZeroDimension" xml:space="preserve">
+    <value>Resize would result into a bitmap with zero width or height.</value>
+  </data>
+  <data name="SmtpAttachmentNotFound" xml:space="preserve">
+    <value>The specified attachment paths could not be resolved to a provider path.  Consider using the -AttachmentLiteralPaths parameter.</value>
+  </data>
+  <data name="SnapinDescription" xml:space="preserve">
+    <value>PowerShell Community Extensions (PSCX) base snapin which implements a general purpose set of cmdlets.</value>
+  </data>
+  <data name="SnapinName" xml:space="preserve">
+    <value>PowerShell Community Extensions</value>
+  </data>
+  <data name="SnapinVendor" xml:space="preserve">
+    <value>PowerShell Community Developers</value>
+  </data>
+  <data name="SmtpUsingFrom_F2" xml:space="preserve">
+    <value>{0} using from address {1}</value>
+    <comment>{0} = cmdlet name,  {1} = from address</comment>
+  </data>
+  <data name="SmtpUsingHost_F2" xml:space="preserve">
+    <value>{0} using SMTP host {1}</value>
+    <comment>{0} = cmdlet name, {1} = hostname</comment>
+  </data>
+  <data name="SmtpUsingPort_F2" xml:space="preserve">
+    <value>{0} using SMTP port {1}</value>
+    <comment>{0} = cmdlet name, {1} = port number</comment>
+  </data>
+  <data name="SmtpMailSent" xml:space="preserve">
+    <value>SMTP mail message sent.</value>
+  </data>
+  <data name="ConfirmExpressionInvocation" xml:space="preserve">
+    <value>The following expression will be invoked in order to get tab expansions:
+{0}
+Press [Tab] to continue or any other key to cancel.</value>
+  </data>
+  <data name="ArchiveCompressing" xml:space="preserve">
+    <value>Compressing '{0}' ...</value>
+    <comment>{0} = archive input filename</comment>
+  </data>
+  <data name="ArchiveDestination" xml:space="preserve">
+    <value>Destination archive '{0}'.</value>
+    <comment>{0} = archive output filename</comment>
+  </data>
+  <data name="ArchiveNoClobberOutput" xml:space="preserve">
+    <value>Archive '{0}' exists and -NoClobber specified; aborting.</value>
+    <comment>{0} = archive output filename</comment>
+  </data>
+  <data name="ArchiveProgress" xml:space="preserve">
+    <value>{0} of {1} bytes compressed.</value>
+    <comment>{0} = bytes read, {1} = file size</comment>
+  </data>
+  <data name="ArchiveOutputPathMissingExtension" xml:space="preserve">
+    <value>Appending missing {0} extension to OutputPath.</value>
+    <comment>{0} = Default Extension</comment>
+  </data>
+  <data name="ArchiveOutputPathShouldBeFile" xml:space="preserve">
+    <value>OutputPath should represent a file, not a directory.</value>
+  </data>
+  <data name="ArchiveOutputAlreadyExists" xml:space="preserve">
+    <value>{0} already exists and -NoClobber specified; skipping file.</value>
+    <comment>{0} = output file</comment>
+  </data>
+  <data name="AssemblyCacheDownloadLoading" xml:space="preserve">
+    <value>Building the downloaded assemblies cache index.</value>
+  </data>
+  <data name="AssemblyCacheGacDriveDescription" xml:space="preserve">
+    <value>Global Assembly Cache</value>
+  </data>
+  <data name="AssemblyCacheGacLoading" xml:space="preserve">
+    <value>Building the global assembly cache index.</value>
+  </data>
+  <data name="AssemblyCacheNGenLoading" xml:space="preserve">
+    <value>Building the NGen cache index.</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="ArchiveConflictingFile" xml:space="preserve">
+    <value>{0} already exists in archive; conflicts with '{1}', skipping.</value>
+    <comment>{0} = archive input filename, {1} = conflicting source path</comment>
+  </data>
+  <data name="AssemblyCacheLoadEntireGac" xml:space="preserve">
+    <value>This operation will attempt to load every assembly in the GAC. Are you sure you want to do this?</value>
+  </data>
+  <data name="GetExportedTypes" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SettingsDriveDescription" xml:space="preserve">
+    <value>PowerShell Community Extensions Settings</value>
+  </data>
+  <data name="ProfileOldPscxConfigNotRemoved" xml:space="preserve">
+    <value>The configuration of a previous version of PSCX has been detected in the profile script:
+
+{0}
+
+After installation has completed, please remove the lines associated with the old version of PSCX from the profile script.</value>
+  </data>
+  <data name="SmtpMailDeprecationWarning" xml:space="preserve">
+    <value>Send-SmtpMail will be deprecated in the next major version of PSCX.  Please convert usage of this cmdlet over to PowerShell's built-in Send-MailMessage cmdlet.</value>
+  </data>
+  <data name="InputFileOutsideOfRoot" xml:space="preserve">
+    <value>Skipping {0}. It is not under the entry path root {1}.</value>
+    <comment>{0} = input file/directory, {1} = entry path root</comment>
+  </data>
+</root>

@@ -1,0 +1,274 @@
+<Configuration>
+  <ViewDefinitions>
+
+    <!-- PingHostStatistics-Custom -->
+    <View>
+      <Name>PingHostStatistics-Custom</Name>
+      <ViewSelectedBy>
+        <TypeName>Pscx.Commands.Net.PingHostStatistics</TypeName>
+      </ViewSelectedBy>
+      <CustomControl>
+        <CustomEntries>
+          <CustomEntry>
+            <CustomItem>
+              <Text>Ping statistics for </Text>
+              <ExpressionBinding>
+                <ScriptBlock>$_.HostName</ScriptBlock>
+              </ExpressionBinding>              
+              <Text>:</Text>
+              <NewLine />
+
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+
+                  <Text>Packets: Sent = </Text>
+                  <ExpressionBinding>
+                    <PropertyName>Sent</PropertyName>
+                  </ExpressionBinding>
+
+                  <Text> Received = </Text>
+                  <ExpressionBinding>
+                    <PropertyName>Received</PropertyName>
+                  </ExpressionBinding>
+
+                  <Text> (</Text>
+                  <ExpressionBinding>
+                    <PropertyName>Loss</PropertyName>
+                  </ExpressionBinding>
+                  <Text>% loss)</Text>
+
+                  <NewLine/>
+                </CustomItem>
+              </Frame>
+              <Frame>
+                <LeftIndent>4</LeftIndent>
+                <CustomItem>
+                  <Text>Approximate round trip time: min = </Text>
+
+                  <ExpressionBinding>
+                    <PropertyName>MinimumTime</PropertyName>
+                  </ExpressionBinding>
+
+                  <Text>ms, max = </Text>
+                  <ExpressionBinding>
+                    <PropertyName>MaximumTime</PropertyName>
+                  </ExpressionBinding>
+
+                  <Text>ms, avg = </Text>
+                  <ExpressionBinding>
+                    <PropertyName>AverageTime</PropertyName>
+                  </ExpressionBinding>
+                  <Text>ms</Text>
+
+                  <NewLine/>
+                </CustomItem>
+              </Frame>
+
+            </CustomItem>
+          </CustomEntry>
+        </CustomEntries>
+      </CustomControl>
+    </View>
+
+    <!-- PingHostStatistics-Table -->
+    <View>
+      <Name>PingHostStatistics-Table</Name>
+      <ViewSelectedBy>
+        <TypeName>Pscx.Commands.Net.PingHostStatistics</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+
+          <TableColumnHeader>
+            <Label>HostName</Label>
+          </TableColumnHeader>
+
+          <TableColumnHeader>
+            <Label>Loss</Label>
+            <Width>5</Width>
+          </TableColumnHeader>
+
+          <TableColumnHeader>
+            <Label>Sent</Label>
+            <Width>5</Width>
+          </TableColumnHeader>
+
+          <TableColumnHeader>
+            <Label>Received</Label>
+            <Width>8</Width>
+          </TableColumnHeader>
+
+          <TableColumnHeader>
+            <Label>AverageTime</Label>
+            <Width>11</Width>
+          </TableColumnHeader>
+
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+
+              <TableColumnItem>
+                <ScriptBlock>$_.HostNameWithAddress</ScriptBlock>
+              </TableColumnItem>
+
+              <TableColumnItem>
+                <ScriptBlock>'{0} %' -f $_.Loss</ScriptBlock>
+              </TableColumnItem>
+
+              <TableColumnItem>
+                <PropertyName>Sent</PropertyName>
+              </TableColumnItem>
+
+              <TableColumnItem>
+                <PropertyName>Received</PropertyName>
+              </TableColumnItem>
+
+              <TableColumnItem>
+                <ScriptBlock>'{0}ms' -f $_.AverageTime</ScriptBlock>
+              </TableColumnItem>
+
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+    <!-- PingHostStatistics-List -->
+    <View>
+      <Name>PingHostStatistics-List</Name>
+      <ViewSelectedBy>
+        <TypeName>Pscx.Commands.Net.PingHostStatistics</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              
+              <ListItem>
+                <Label>HostName</Label>
+                <ScriptBlock>$_.HostNameWithAddress</ScriptBlock>
+              </ListItem>
+
+              <ListItem>
+                <PropertyName>Sent</PropertyName>
+              </ListItem>
+
+              <ListItem>
+                <PropertyName>Received</PropertyName>
+              </ListItem>
+
+              <ListItem>
+                <Label>Loss</Label>
+                <ScriptBlock>'{0} %' -f $_.Loss</ScriptBlock>
+              </ListItem>
+
+              <ListItem>
+                <Label>Average Time</Label>
+                <ScriptBlock>'{0} ms' -f $_.AverageTime</ScriptBlock>
+              </ListItem>
+
+              <ListItem>
+                <Label>Minimum Time</Label>
+                <ScriptBlock>'{0} ms' -f $_.MinimumTime</ScriptBlock>
+              </ListItem>
+
+              <ListItem>
+                <Label>Maximum Time</Label>
+                <ScriptBlock>'{0} ms' -f $_.MaximumTime</ScriptBlock>
+              </ListItem>
+
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
+
+    <!-- PingReply-List -->
+    <View>
+      <Name>PingReply-List</Name>
+      <ViewSelectedBy>
+        <TypeName>System.Net.NetworkInformation.PingReply</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+
+              <ListItem>
+                <PropertyName>Status</PropertyName>
+              </ListItem>
+
+              <ListItem>
+                <PropertyName>Address</PropertyName>
+              </ListItem>
+
+              <ListItem>
+                <Label>RoundtripTime</Label>
+                <ScriptBlock>'{0} ms' -f $_.RoundtripTime</ScriptBlock>
+              </ListItem>
+
+              <ListItem>
+                <PropertyName>BufferSize</PropertyName>
+              </ListItem>
+
+              <ListItem>
+                <Label>Options</Label>
+                <PropertyName>OptionsString</PropertyName>
+              </ListItem>
+
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
+
+    <!-- MailMessage-List -->
+    <View>
+      <Name>System.Net.Mail.MailMessage</Name>
+      <ViewSelectedBy>
+        <TypeName>System.Net.Mail.MailMessage</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <ListItem>
+                <PropertyName>From</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>ReplyTo</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>To</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>CC</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Bcc</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Attachments</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Priority</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Subject</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>IsBodyHtml</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Body</PropertyName>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
+
+  </ViewDefinitions>
+</Configuration>

@@ -1,0 +1,99 @@
+<Configuration>
+  
+  <ViewDefinitions>
+
+    <View>
+      <Name>Microsoft.Feeds.Interop.IFeed</Name>
+      <ViewSelectedBy>
+        <TypeName>System.__ComObject#{0a1e6cad-0a47-4da2-a13d-5baaa5c8bd4f}</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Name</Label>
+            <Width>8</Width>
+            <Alignment>right</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader />
+          <TableColumnHeader>
+            <Label>Author</Label>
+            <Width>15</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>PubDate</Label>
+            <Width>25</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>LocalID</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Title</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Author</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>PubDate</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+    <View>
+      <Name>Microsoft.Feeds.Interop.IFeedFolder</Name>
+      <ViewSelectedBy>
+        <TypeName>System.__ComObject#{81f04ad1-4194-4d7d-86d6-11813cec163c}</TypeName>
+        <TypeName>System.__ComObject#{f7f915d8-2ede-42bc-98e7-a5d05063a757}</TypeName>
+        <TypeName>System.__ComObject#{33f2ea09-1398-4ab9-b6a4-f94b49d0a42e}</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Type</Label>
+            <Width>8</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader />
+          <TableColumnHeader>
+            <Label>ItemCount</Label>
+            <Width>10</Width>
+            <Alignment>right</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>UnreadItemCount</Label>
+            <Width>15</Width>
+            <Alignment>right</Alignment>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Type</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ItemCount</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>UnreadItemCount</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    
+  </ViewDefinitions>
+
+</Configuration>
