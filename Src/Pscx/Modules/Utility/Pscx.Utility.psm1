@@ -6,10 +6,10 @@ Set-Alias ep    Pscx\Edit-Profile                       -Description "PSCX alias
 Set-Alias gpar  Pscx\Get-Parameter                      -Description "PSCX alias"
 Set-Alias su    Pscx\Invoke-Elevated                    -Description "PSCX alias"
 Set-Alias igc   Pscx\Invoke-GC                          -Description "PSCX alias"
-Set-Alias :?:	Pscx\Invoke-Ternary               		-Description "PSCX alias"
-Set-Alias ?:	Pscx\Invoke-TernaryAsPipe         		-Description "PSCX alias"
-Set-Alias :??	Pscx\Invoke-NullCoalescing              -Description "PSCX alias"
-Set-Alias ??	Pscx\Invoke-NullCoalescingAsPipe        -Description "PSCX alias"
+Set-Alias :?:   Pscx\Invoke-Ternary               		-Description "PSCX alias"
+Set-Alias ?:    Pscx\Invoke-TernaryAsPipe         		-Description "PSCX alias"
+Set-Alias :??   Pscx\Invoke-NullCoalescing              -Description "PSCX alias"
+Set-Alias ??    Pscx\Invoke-NullCoalescingAsPipe        -Description "PSCX alias"
 Set-Alias call  Pscx\Invoke-Method                      -Description "PSCX alias"
 Set-Alias nho   Pscx\New-HashObject                     -Description "PSCX alias"
 Set-Alias ql    Pscx\QuoteList                          -Description "PSCX alias"
@@ -301,7 +301,7 @@ function Invoke-Ternary
     Parameter $InputObject
  .OUTPUTS
     The evaluation of $TrueExpression, if $ConditionExpression evaluates $false, else the evaluation of $FalseExpression
- .EXAMPLE (new alias syntax, for the old syntax look in 'Invoke-Ternary' .EXAMPLES section)
+ .EXAMPLE (new alias syntax, for the old syntax look in 'Invoke-Ternary' .EXAMPLE section)
     C:\PS> $i=0; {$i -eq 0} |?: {'tr' + 'ue' } {'fal' + 'se'}
     output: true
 
