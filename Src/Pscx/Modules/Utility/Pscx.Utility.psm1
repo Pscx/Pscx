@@ -113,159 +113,154 @@ filter New-HashObject {
     $result
 }
 
-<# .SYNOPSIS Emulates the ternary conditional operator with scriptblock injection from pipe.
+<# .SYNOPSIS Emulates the ternary conditional operator with scriptblock injection from pipe
  .DESCRIPTION
-    Emulates the ternary conditional operator, e.g. C# (<condition_expression>) ? <true_expression> : <false_expession>;
-    The $ConditionExpression is evaluated first.
-    If the evaluation is $true, the $TrueExpression will be evaluated as ouput, else the $FalseExpression will be
-    evaluated as ouput.
+   Emulates the ternary conditional operator, e.g. C# (<condition_expression>) ? <true_expression> : <false_expession>;
+   The $ConditionExpression is evaluated first.
+   If the evaluation is $true, the $TrueExpression will be evaluated as ouput, else the $FalseExpression will be
+   evaluated as ouput.
  .NOTES
-    Alias :  :?:
-    Author:  madmidi, Karl Prosser
+   Alias :  :?:
+   Author:  madmidi, Karl Prosser
  .PARAMETER InputObject
-    This function can inject the InputObject from the pipe into each scriptblock (as $_) of the $ConditionExpression,
-    $TrueExpression and $FalseExpression parameters.
-    You can use each parameter with or without injection then.
+   This function can inject the InputObject from the pipe into each scriptblock (as $_) of the $ConditionExpression,
+   $TrueExpression and $FalseExpression parameters.
+   You can use each parameter with or without injection then.
  .PARAMETER ConditionExpression
-    Expression to evaluate, that determines, whether the $TrueExpression or $FalseExpression is evaluated as ouput.
-    As expression you can pass:
-        $null, a literal, a variable, an 'external' expression ($b -eq 4) or a scriptblock {$b -eq 4}
+   Expression to evaluate, that determines, whether the $TrueExpression or $FalseExpression is evaluated as ouput.
+   As expression you can pass:
+       $null, a literal, a variable, an 'external' expression ($b -eq 4) or a scriptblock {$b -eq 4}
  .PARAMETER TrueExpression
-    Expression to get evaluated as output, if $ConditionExpression evaluates $true.
-    As expression you can pass:
-        $null, a literal, a variable, an 'external' expression ('true' + '!') or a scriptblock {Write-Host "Success"}
+   Expression to get evaluated as output, if $ConditionExpression evaluates $true.
+   As expression you can pass:
+       $null, a literal, a variable, an 'external' expression ('true' + '!') or a scriptblock {Write-Host "Success"}
  .PARAMETER FalseExpression
-    Expression to get evaluated as output, if $ConditionExpression evaluates $false
-    As expression you can pass:
-        $null, a literal, a variable, an 'external' expression ('false' + '!') or a scriptblock {Write-Host "Failure"}
+   Expression to get evaluated as output, if $ConditionExpression evaluates $false
+   As expression you can pass:
+       $null, a literal, a variable, an 'external' expression ('false' + '!') or a scriptblock {Write-Host "Failure"}
  .INPUTS
-    Parameter InputObject
+   Parameter InputObject
  .OUTPUTS
-    The evaluation of $TrueExpression, if $ConditionExpression evaluates $false, else the evaluation of $FalseExpression
+   The evaluation of $TrueExpression, if $ConditionExpression evaluates $false, else the evaluation of $FalseExpression
  .EXAMPLE
-    C:\PS> $i=0; :?: -If {$i -eq 0} -True {'tr' + 'ue' } -False {'fal' + 'se'}
-    output: true
-
-    C:\PS> $i=0; :?: -If {$i -eq 0} -Then {'tr' + 'ue' } -Else {'fal' + 'se'}
-    output: true
-
-    C:\PS> $i=0; :?: {$i -eq 0} {'tr' + 'ue' } {'fal' + 'se'}
-    output: true
-
-    C:\PS> $t='yes';$f='no'; :?: {$i -eq 1} $t $f
-    output: no
-
-    C:\PS> $b=$true;$t='yes';$f='no'; :?: $b $t $f
-    output: yes
+   C:\PS> $i=0; :?: -If {$i -eq 0} -True {'tr' + 'ue' } -False {'fal' + 'se'}
+   output: true
+   C:\PS> $i=0; :?: -If {$i -eq 0} -Then {'tr' + 'ue' } -Else {'fal' + 'se'}
+   output: true
+   C:\PS> $i=0; :?: {$i -eq 0} {'tr' + 'ue' } {'fal' + 'se'}
+   output: true
+   C:\PS> $t='yes';$f='no'; :?: {$i -eq 1} $t $f
+   output: no
+   C:\PS> $b=$true;$t='yes';$f='no'; :?: $b $t $f
+   output: yes
  .EXAMPLE
-    C:\PS> 1..10 | :?: {$_ -gt 5} {"$_ : Greater than 5"} {"$_ : Less than or equal to 5"}
-    Each input number is evaluated to see if it is > 5.
-    If true, then "NUMBER : Greater than 5" is displayed, else "NUMBER : Less than or equal to 5" is displayed.
-
-    C:\PS> 1..10 | :?: {$_ -gt 5} 'Greater than 5' 'Less than or equal to 5'
-    Each input number is evaluated to see if it is > 5.
-    If true, then "NUMBER : Greater than 5" is displayed, else "NUMBER : Less than or equal to 5" is displayed.
+   C:\PS> 1..10 | :?: {$_ -gt 5} {"$_ : Greater than 5"} {"$_ : Less than or equal to 5"}
+   Each input number is evaluated to see if it is > 5.
+   If true, then "NUMBER : Greater than 5" is displayed, else "NUMBER : Less than or equal to 5" is displayed.
+   C:\PS> 1..10 | :?: {$_ -gt 5} 'Greater than 5' 'Less than or equal to 5'
+   Each input number is evaluated to see if it is > 5.
+   If true, then "NUMBER : Greater than 5" is displayed, else "NUMBER : Less than or equal to 5" is displayed. 
  #>
 function Invoke-Ternary
 {
-    Param
-    (
-        # Object to inject into each existing scriptblock (as $_) in a parameter
-        [Parameter(ValueFromPipeline, ParameterSetName='pipe')]
-        [AllowNull()]
-        [psobject] $InputObject,
-
-        # Expression to evaluate and decide, whether the $TrueExpression or $FalseExpression is evaluated as ouput
-        [Parameter(Mandatory, Position=0)]
-        [Alias("If")]
-        [AllowNull()]
-        $ConditionExpression,
-
-        # Expression to get evaluated as output, if $ConditionExpression evaluates $true
-        [Parameter(Mandatory, Position=1)]
-        [Alias("Then", "True")]
-        [AllowNull()]
-        $TrueExpression,
-
-        # Expression to get evaluated as output, if $ConditionExpression evaluates $false
-        [Parameter(Mandatory, Position=2)]
-        [Alias("Else", "False")]
-        [AllowNull()]
-        $FalseExpression
-    )
-
-    Process
-    {
-        # evaluate condition ###########################################################################################
-
-        # do we have a valid scriptblock here ?
-        if ($ConditionExpression -and $ConditionExpression -is [scriptblock])
-        {#yes -> inject or invoke
-
-            # do we have an InputObject from the pipe to inject into this scriptblock ?
-            if ($pscmdlet.ParameterSetName -eq 'pipe')
-            {#yes -> inject $InputObject into the scriptblock and store result
-
-                $bool = Foreach-Object $ConditionExpression -InputObject $InputObject
-            }
-            else
-            {#no -> invoke the scriptblock the normal way and store result
-
-                $bool = Invoke-Command -ScriptBlock $ConditionExpression
-            }
-        }
-        else
-        {#no -> Condition is a value we just use
-
-            $bool = $ConditionExpression
-        }
-
-        # invoke expression for bool ###################################################################################
-
-        if ($bool)
-        {
-            # do we have a valid scriptblock here ?
-            if ($TrueExpression -and $TrueExpression -is [scriptblock])
-            {#yes -> inject or invoke
-
-                # do we have an InputObject from the pipe to inject into this scriptblock ?
-                if ($pscmdlet.ParameterSetName -eq 'pipe')
-                {#yes -> inject $InputObject into the scriptblock and invoke it
-
-                    return Foreach-Object $TrueExpression -InputObject $InputObject
-                }
-                else
-                {#no -> invoke the scriptblock the normal way
-
-                    return Invoke-Command -ScriptBlock $TrueExpression
-                }
-            }
-
-            # TrueExpression is a value we just use
-            return $TrueExpression
-        }
-
-        # do we have a valid scriptblock here ?
-        if ($FalseExpression -and $FalseExpression -is [scriptblock])
-        {#yes -> inject or invoke
-
-            # do we have an InputObject from the pipe to inject into this scriptblock ?
-            if ($pscmdlet.ParameterSetName -eq 'pipe')
-            {#yes -> inject $InputObject into the scriptblock and invoke it
-
-                return Foreach-Object $FalseExpression -InputObject $InputObject
-            }
-            else
-            {#no -> invoke the scriptblock the normal way
-
-                return Invoke-Command -ScriptBlock $FalseExpression
-            }
-        }
-
-        # FalseExpression is a value we just use
-        return $FalseExpression
-    }
-
+     Param
+     (
+         # Object to inject into each existing scriptblock (as $_) in a parameter
+         [Parameter(ValueFromPipeline, ParameterSetName='pipe')]
+         [AllowNull()]
+         [psobject] $InputObject,
+         
+         # Expression to evaluate and decide, whether the $TrueExpression or $FalseExpression is evaluated as ouput
+         [Parameter(Mandatory, Position=0)]
+         [Alias("If")]
+         [AllowNull()]
+         $ConditionExpression,     
+         
+         # Expression to get evaluated as output, if $ConditionExpression evaluates $true
+         [Parameter(Mandatory, Position=1)]
+         [Alias("Then", "True")]
+         [AllowNull()]
+         $TrueExpression,
+ 
+         # Expression to get evaluated as output, if $ConditionExpression evaluates $false
+         [Parameter(Mandatory, Position=2)]
+         [Alias("Else", "False")]
+         [AllowNull()]
+         $FalseExpression
+     )
+ 
+     Process
+     {
+         # evaluate condition ###########################################################################################
+         
+         # do we have a valid scriptblock here ?
+         if ($ConditionExpression -and $ConditionExpression -is [scriptblock])
+         {#yes -> inject or invoke
+ 
+             # do we have an InputObject from the pipe to inject into this scriptblock ?
+             if ($pscmdlet.ParameterSetName -eq 'pipe')
+             {#yes -> inject $InputObject into the scriptblock and store result
+ 
+                 $bool = Foreach-Object $ConditionExpression -InputObject $InputObject
+             }
+             else
+             {#no -> invoke the scriptblock the normal way and store result
+ 
+                 $bool = Invoke-Command -NoNewScope -ScriptBlock $ConditionExpression
+             }
+         }
+         else
+         {#no -> Condition is a value we just use
+ 
+             $bool = $ConditionExpression
+         }
+ 
+         # invoke expression for bool ###################################################################################
+ 
+         if ($bool)
+         {
+             # do we have a valid scriptblock here ?
+             if ($TrueExpression -and $TrueExpression -is [scriptblock])
+             {#yes -> inject or invoke
+                 
+                 # do we have an InputObject from the pipe to inject into this scriptblock ?
+                 if ($pscmdlet.ParameterSetName -eq 'pipe')
+                 {#yes -> inject $InputObject into the scriptblock and invoke it
+ 
+                     return ,(Foreach-Object $TrueExpression -InputObject $InputObject)
+                 }
+                 else
+                 {#no -> invoke the scriptblock the normal way
+ 
+                     return ,(Invoke-Command -NoNewScope -ScriptBlock $TrueExpression)
+                 }
+             }
+ 
+             # TrueExpression is a value we just use
+             return ,$TrueExpression
+         }
+ 
+         # do we have a valid scriptblock here ?
+         if ($FalseExpression -and $FalseExpression -is [scriptblock])
+         {#yes -> inject or invoke
+ 
+             # do we have an InputObject from the pipe to inject into this scriptblock ?
+             if ($pscmdlet.ParameterSetName -eq 'pipe')
+             {#yes -> inject $InputObject into the scriptblock and invoke it
+ 
+                 return ,(Foreach-Object $FalseExpression -InputObject $InputObject)
+             }
+             else
+             {#no -> invoke the scriptblock the normal way
+ 
+                 return ,(Invoke-Command -NoNewScope -ScriptBlock $FalseExpression)
+             }
+         }
+ 
+         # FalseExpression is a value we just use
+         return ,$FalseExpression
+     }
+ 
 } # Invoke-Ternary
 
 <# .SYNOPSIS Emulates the ternary conditional operator with the $ConditionExpression from pipe
@@ -319,60 +314,60 @@ function Invoke-Ternary
  #>
 function Invoke-TernaryAsPipe
 {
-    [CmdletBinding()]
-    Param
-    (
-        # Object to inject into each existing scriptblock (as $_) in a parameter
-        # Contains the Condition for the new alias syntax
-        [Parameter(ValueFromPipeline, ParameterSetName='pipe')]
-        [AllowNull()]
-        $InputObject,
-
-        # Expression to evaluate and decide, whether the $TrueExpression or $FalseExpression is evaluated as ouput
-        # Contains the TrueExpression for the new alias syntax
-        [Parameter(Mandatory, Position=0)]
-        [AllowNull()]
-        $ConditionExpression,
-
-        # Expression to get evaluated as output, if $ConditionExpression evaluates $true
-        # Contains the FalseExpression for the new alias syntax
-        [Parameter(Mandatory, Position=1)]
-        [AllowNull()]
-        $TrueExpression,
-
-        # Expression to get evaluated as output, if $ConditionExpression evaluates $false
-        # Contains nothing for the new alias syntax
-        [Parameter(Position=2)]
-        [AllowNull()]
-        $FalseExpression = 'c2169096-23fb-4bdb-bb1e-d585809922bb' #  to detect new alias syntax
-    )
-
-    Process
-    {
-        # do we have pipe input ?
-        if ($pscmdlet.ParameterSetName -eq 'pipe')
-        {
-            # do we have the new syntax used here ?
-            if ($FalseExpression -eq 'c2169096-23fb-4bdb-bb1e-d585809922bb')
-            {# new alias syntax with $ConditionExpression from pipe
-
-                # $InputObject contains the ConditionExpression, $ConditionExpression contains the TrueExpression and
-                # $TrueExpression contains the FalseExpression
-                Invoke-Ternary $InputObject $ConditionExpression $TrueExpression
-            }
-            else
-            {# old alias syntax, which injects InputObject from pipe into all scriptblocks
-
-                $InputObject | Invoke-Ternary $ConditionExpression $TrueExpression $FalseExpression
-            }
-        }
-        else
-        {# old alias syntax without pipe
-
-            Invoke-Ternary $ConditionExpression $TrueExpression $FalseExpression
-        }
-    }
-
+     [CmdletBinding()]
+     Param
+     (
+         # Object to inject into each existing scriptblock (as $_) in a parameter
+         # Contains the Condition for the new alias syntax
+         [Parameter(ValueFromPipeline, ParameterSetName='pipe')]
+         [AllowNull()]
+         $InputObject,
+ 
+         # Expression to evaluate and decide, whether the $TrueExpression or $FalseExpression is evaluated as ouput
+         # Contains the TrueExpression for the new alias syntax
+         [Parameter(Mandatory, Position=0)]
+         [AllowNull()]
+         $ConditionExpression,
+ 
+         # Expression to get evaluated as output, if $ConditionExpression evaluates $true
+         # Contains the FalseExpression for the new alias syntax
+         [Parameter(Mandatory, Position=1)]
+         [AllowNull()]
+         $TrueExpression,
+ 
+         # Expression to get evaluated as output, if $ConditionExpression evaluates $false
+         # Contains nothing for the new alias syntax
+         [Parameter(Position=2)]
+         [AllowNull()]
+         $FalseExpression = 'c2169096-23fb-4bdb-bb1e-d585809922bb' #  to detect new alias syntax
+     )
+ 
+     Process
+     {
+         # do we have pipe input ?
+         if ($pscmdlet.ParameterSetName -eq 'pipe')
+         {
+             # do we have the new syntax used here ?
+             if ($FalseExpression -eq 'c2169096-23fb-4bdb-bb1e-d585809922bb')
+             {# new alias syntax with $ConditionExpression from pipe
+ 
+                 # $InputObject contains the ConditionExpression, $ConditionExpression contains the TrueExpression and
+                 # $TrueExpression contains the FalseExpression
+                 return ,(Invoke-Ternary $InputObject $ConditionExpression $TrueExpression)
+             }
+             else
+             {# old alias syntax, which injects InputObject from pipe into all scriptblocks
+                 
+                 return ,($InputObject | Invoke-Ternary $ConditionExpression $TrueExpression $FalseExpression)
+             }
+         }
+         else
+         {# old alias syntax without pipe
+ 
+             return ,(Invoke-Ternary $ConditionExpression $TrueExpression $FalseExpression)
+         }
+     }
+ 
 } # Invoke-TernaryAsPipe
 
 <# .SYNOPSIS Emulates the null-coalescing operator with scriptblock injection from pipe.
@@ -428,83 +423,83 @@ function Invoke-TernaryAsPipe
  #>
 function Invoke-NullCoalescing
 {
-    Param
-    (
-        # Object to inject into each existing scriptblock (as $_) in a parameter
-        [Parameter(ValueFromPipeline, ParameterSetName='pipe')]
-        [AllowNull()]
-        [psobject] $InputObject,
-
-        # A variable value without a scriptblock to test for $null or
-        # a variable in a scriptblock to test for $null or not existing
-        [Parameter(Mandatory, Position=0)]
-        [AllowNull()]
-        $TestExpression,
-
-        # An alternate expression to evaluate as the output, if $TestExpression evaluates to $null.
-        [Parameter(Mandatory, Position=1)]
-        [Alias("Default", "Alt", "Alternate")]
-        [ValidateNotNull()]
-        $AlternateExpression
-    )
-
-    Process
-    {
-        # do we have a valid scriptblock here ?
-        if ($TestExpression -and $TestExpression -is [scriptblock])
-        {#yes -> inject or invoke
-
-            try # catch error: 'VariableIsUndefined'
-            {
-                # do we have an InputObject from the pipe to inject into this scriptblock ?
-                if ($pscmdlet.ParameterSetName -eq 'pipe')
-                {#yes -> inject $InputObject into the scriptblock and store result
-
-                    $result = Foreach-Object $TestExpression -InputObject $InputObject
-                }
-                else
-                {#no -> invoke the scriptblock the normal way and store result
-
-                    $result = Invoke-Command -ScriptBlock $TestExpression
-                }
-            }
-            catch
-            {
-                # has error 'VariableIsUndefined' occured ?
-                if ($_.psobject.Properties["Exception"] -and $_.Exception -and `
-                    $_.Exception.psobject.Properties["ErrorRecord"] -and $_.Exception.ErrorRecord -and `
-                    $_.Exception.ErrorRecord.psobject.Properties["FullyQualifiedErrorId"] -and `
-                    $_.Exception.ErrorRecord.FullyQualifiedErrorId -eq 'VariableIsUndefined')
-                {#yes -> a variable in the scriptblock is not existing
-
-                    $result = $null
-                }
-                else
-                {#no -> we have to raise the unknown error again
-
-                    throw
-                }
-            }
-        }
-        else
-        {#no -> TestExpression is a value we just use
-
-            $result = $TestExpression
-        }
-
-        # no we just call 'Invoke-Ternary' to do the rest
-
-        # do we have an InputObject from the pipe to pass to 'Invoke-Ternary' ?
-        if ($pscmdlet.ParameterSetName -eq 'pipe')
-        {
-            $InputObject | Invoke-Ternary $result $result $AlternateExpression
-        }
-        else
-        {
-            Invoke-Ternary $result $result $AlternateExpression
-        }
-    }
-
+     Param
+     (    
+         # Object to inject into each existing scriptblock (as $_) in a parameter
+         [Parameter(ValueFromPipeline, ParameterSetName='pipe')]
+         [AllowNull()]
+         [psobject] $InputObject,    
+     
+         # A variable value without a scriptblock to test for $null or
+         # a variable in a scriptblock to test for $null or not existing
+         [Parameter(Mandatory, Position=0)]
+         [AllowNull()]
+         $TestExpression,
+ 
+         # An alternate expression to evaluate as the output, if $TestExpression evaluates to $null.
+         [Parameter(Mandatory, Position=1)]
+         [Alias("Default", "Alt", "Alternate")]
+         [ValidateNotNull()]
+         $AlternateExpression
+     )
+ 
+     Process
+     {
+         # do we have a valid scriptblock here ?
+         if ($TestExpression -and $TestExpression -is [scriptblock])
+         {#yes -> inject or invoke
+ 
+             try # catch error: 'VariableIsUndefined'
+             {
+                 # do we have an InputObject from the pipe to inject into this scriptblock ?
+                 if ($pscmdlet.ParameterSetName -eq 'pipe')
+                 {#yes -> inject $InputObject into the scriptblock and store result
+ 
+                     $result = Foreach-Object $TestExpression -InputObject $InputObject
+                 }
+                 else
+                 {#no -> invoke the scriptblock the normal way and store result
+ 
+                     $result = Invoke-Command -NoNewScope -ScriptBlock $TestExpression
+                 }
+             }
+             catch
+             {
+                 # has error 'VariableIsUndefined' occured ?
+                 if ($_.psobject.Properties["Exception"] -and $_.Exception -and `
+                     $_.Exception.psobject.Properties["ErrorRecord"] -and $_.Exception.ErrorRecord -and `
+                     $_.Exception.ErrorRecord.psobject.Properties["FullyQualifiedErrorId"] -and `
+                     $_.Exception.ErrorRecord.FullyQualifiedErrorId -eq 'VariableIsUndefined')
+                 {#yes -> a variable in the scriptblock is not existing
+ 
+                     $result = $null
+                 }
+                 else
+                 {#no -> we have to raise the unknown error again
+ 
+                     throw
+                 }
+             }
+         }
+         else
+         {#no -> TestExpression is a value we just use
+ 
+             $result = $TestExpression
+         }
+ 
+         # no we just call 'Invoke-Ternary' to do the rest
+ 
+         # do we have an InputObject from the pipe to pass to 'Invoke-Ternary' ?
+         if ($pscmdlet.ParameterSetName -eq 'pipe')
+         {
+             return ,($InputObject | Invoke-Ternary $result $result $AlternateExpression)
+         }
+         else
+         {
+             return ,(Invoke-Ternary $result $result $AlternateExpression)
+         }
+     }
+ 
 } # Invoke-NullCoalescing
 
 <# .SYNOPSIS Emulates the null-coalescing operator with the $TestExpression from pipe
@@ -539,8 +534,8 @@ function Invoke-NullCoalescing
     $LogDir is set to the value of $env:LogDir, unless it doesn't exist, in which case it will then default to
     "$env:windir\System32\LogFiles".
     This behavior is also analogous to Korn shell assignments of this form:
-    LogDir = ${$LogDir:-$WinDir/System32/LogFiles}
-
+    LogDir = ${$LogDir:-$WinDir/System32/LogFiles}    
+ 
      PS C:\> {Write-Host} |?? {'expression evaluation' + ' for null variable'}
     output: expression evaluation for null variable
 
@@ -558,60 +553,60 @@ function Invoke-NullCoalescing
  #>
 function Invoke-NullCoalescingAsPipe
 {
-    Param
-    (
-        # Object to inject into each existing scriptblock (as $_) in a parameter
-        # Contains the TestExpression for the new alias syntax
-        [Parameter(ValueFromPipeline, ParameterSetName='pipe')]
-        [AllowNull()]
-        $InputObject,
-
-        # A variable value without a scriptblock to test for $null or
-        # a variable in a scriptblock to test for $null or not existing
-        # Contains the AlternateExpression for the new alias syntax
-        [Parameter(Mandatory, Position=0)]
-        [AllowNull()]
-        $TestExpression,
-
-        # An alternate expression to evaluate as the output, if $TestExpression evaluates to $null.
-        # Contains nothing for the new alias syntax
-        [Parameter(Position=1)]
-        [ValidateNotNull()] #  we don't allow $null as alternate value for $null
-        $AlternateExpression = 'c2169096-23fb-4bdb-bb1e-d585809922bb' #  to detect new alias syntax
-    )
-
-    Process
-    {
-        # do we have pipe input ?
-        if ($pscmdlet.ParameterSetName -eq 'pipe')
-        {
-            # do we have the new syntax used here ?
-            if ($AlternateExpression -eq 'c2169096-23fb-4bdb-bb1e-d585809922bb')
-            {# new alias syntax with $TestExpression from pipe
-
-                #  we don't allow $null as alternate value for $null
-                if ($TestExpression -eq $null) # $TestExpression contains the AlternateExpression here
-                {
-                    throw [System.ArgumentNullException]::new('(AlternateExpression in $TestExpression)')
-                }
-
-                # $InputObject contains the TestExpression, $TestExpression contains the AlternateExpression
-                Invoke-NullCoalescing $InputObject $TestExpression
-            }
-            else
-            {# old alias syntax, which injects InputObject from pipe into all scriptblocks
-
-                $InputObject | Invoke-NullCoalescing $TestExpression $AlternateExpression
-            }
-
-        }
-        else
-        {# old alias syntax without pipe
-
-            Invoke-NullCoalescing $TestExpression $AlternateExpression
-        }
-    }
-
+     Param
+     (
+         # Object to inject into each existing scriptblock (as $_) in a parameter
+         # Contains the TestExpression for the new alias syntax
+         [Parameter(ValueFromPipeline, ParameterSetName='pipe')]
+         [AllowNull()]
+         $InputObject,    
+     
+         # A variable value without a scriptblock to test for $null or
+         # a variable in a scriptblock to test for $null or not existing
+         # Contains the AlternateExpression for the new alias syntax
+         [Parameter(Mandatory, Position=0)]
+         [AllowNull()]
+         $TestExpression,
+ 
+         # An alternate expression to evaluate as the output, if $TestExpression evaluates to $null.
+         # Contains nothing for the new alias syntax
+         [Parameter(Position=1)]
+         [ValidateNotNull()] #  we don't allow $null as alternate value for $null
+         $AlternateExpression = 'c2169096-23fb-4bdb-bb1e-d585809922bb' #  to detect new alias syntax
+     )
+     
+     Process
+     {
+         # do we have pipe input ?
+         if ($pscmdlet.ParameterSetName -eq 'pipe')
+         {
+             # do we have the new syntax used here ?
+             if ($AlternateExpression -eq 'c2169096-23fb-4bdb-bb1e-d585809922bb')
+             {# new alias syntax with $TestExpression from pipe
+             
+                 #  we don't allow $null as alternate value for $null
+                 if ($TestExpression -eq $null) # $TestExpression contains the AlternateExpression here
+                 {
+                     throw [System.ArgumentNullException]::new('(AlternateExpression in $TestExpression)')
+                 }
+ 
+                 # $InputObject contains the TestExpression, $TestExpression contains the AlternateExpression
+                 return ,(Invoke-NullCoalescing $InputObject $TestExpression)
+             }
+             else
+             {# old alias syntax, which injects InputObject from pipe into all scriptblocks
+                 
+                 return ,($InputObject | Invoke-NullCoalescing $TestExpression $AlternateExpression)
+             }
+         
+         }
+         else
+         {# old alias syntax without pipe
+             
+             return ,(Invoke-NullCoalescing $TestExpression $AlternateExpression)
+         }
+     }
+ 
 } #  Invoke-NullCoalescingAsPipe
 
 <#
