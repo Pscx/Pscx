@@ -2,11 +2,11 @@
     GUID               = '0fab0d39-2f29-4e79-ab9a-fd750c66e6c5'
     Author             = 'PowerShell Community Developers'
     CompanyName        = 'http://pscx.codeplex.com/'
-    Copyright          = 'Copyright PowerShell Community Developers 2006 - 2017.'
+    Copyright          = 'Copyright PowerShell Community Developers 2006 - 2018.'
     Description        = 'PowerShell Community Extensions (PSCX) base module which implements a general purpose set of Cmdlets.'
     PowerShellVersion  = '3.0'
     CLRVersion         = '4.0'
-    ModuleVersion      = '3.3.0'
+    ModuleVersion      = '3.3.2'
     RequiredAssemblies = 'Pscx.dll' # needed for [pscxmodules] type (does not import cmdlets/providers)
     RootModule         = 'Pscx.psm1'
     NestedModules      = 'Pscx.dll'
@@ -172,34 +172,23 @@
             # A URL to an icon representing this module.
             IconUri = 'https://github.com/Pscx/Pscx/blob/master/PscxIcon.png?raw=true'
 
-            # ReleaseNotes of this module
+            # Release notes
             ReleaseNotes = @'
-What's New in PSCX 3.3.0
-September 5, 2017
+3.3.2 - January 16, 2018
+
+* Fix Edit-File does not respect TextEditor property [#48](https://github.com/Pscx/Pscx/issues/48)
+
+3.3.1 - October 12, 2017
+
+* Fix Import-VisualStudioVars - Select-VSSetupInstance ignores VS 2017 Build Tools by default [#36](https://github.com/Pscx/Pscx/issues/36)
+# Fix Import-VisualStudioVars - VS 2015 Build Tools do not have VsDevCmd.bat [#37](https://github.com/Pscx/Pscx/issues/37)
+# Fix Import-VisualStudioVars fails when workload for VC is not installed [#41](https://github.com/Pscx/Pscx/issues/41)
+
+3.3.0 - September 5, 2017
 
 * Fix issues with CD functionality not working on PowerShell Core.
 
 * Updated Import-VisualStudioVars to support Visual Studio 2017.
-
-What's New in PSCX 3.2.2
-June 25, 2016
-
-* Added better support for VS 2015 to Import-VisualStudioVars
-  If you do not specify an architecture than VsDevCmd.bat is called
-  otherwise vcvarsall.bat with the specified architecture is called.
-  This function will now output messages output the batch file.  This
-  is useful if you specify an architecture, say ARM, which you haven't
-  installed support for.  You will now see that message from the batch
-  file. Also added support for VS '15' using version number '150'.
-
-* Use Unicode chars for Show-Tree for all code pages.  User can always
-  fall back to using ASCII chars with -UseAsciiLineArt
-
-* Updated aliases to prefix all associated commands with the PSCX module
-  prefix.
-
-* PSCX has moved to GitHub for further development:
-  https://github.com/Pscx/Pscx
 '@
         } # End of PSData hashtable
     } # End of PrivateData hashtable

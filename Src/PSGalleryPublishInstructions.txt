@@ -1,26 +1,7 @@
-$releaseNotes = @'
-What's New in PSCX 3.2.2
-June 25, 2016
-
-* Added better support for VS 2015 to Import-VisualStudioVars
-  If you do not specify an architecture than VsDevCmd.bat is called
-  otherwise vcvarsall.bat with the specified architecture is called.
-  This function will now output messages output the batch file.  This
-  is useful if you specify an architecture, say ARM, which you haven't
-  installed support for.  You will now see that message from the batch
-  file. Also added support for VS '15' using version number '150'.
-
-* Use Unicode chars for Show-Tree for all code pages.  User can always
-  fall back to using ASCII chars with -UseAsciiLineArt
-
-* Updated aliases to prefix all associated commands with the PSCX module
-  prefix.
-
-* PSCX has moved to GitHub for further development:
-  https://github.com/Pscx/Pscx
-'@
 
 $nugetApiKey = '--------------------------'
+
+$releaseNotes = Get-Content $home\GitHub\pscx\pscx\ReleaseNotes.txt -Raw
 
 Publish-Module -Path $home\Documents\WindowsPowerShell\Modules\Pscx -NuGetApiKey $nugetApiKey `
                -ReleaseNotes $releaseNotes

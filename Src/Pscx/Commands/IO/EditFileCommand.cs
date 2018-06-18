@@ -160,7 +160,36 @@ namespace Pscx.Commands.IO
             }
             else if (PscxContext.Instance.Preferences.ContainsKey(TextEditorKey))
             {
-                _editor = PscxContext.Instance.Preferences[TextEditorKey] as string ?? DefaultEditor;
+                object textEditorPath = PscxContext.Instance.Preferences[TextEditorKey];
+                if (textEditorPath == null)
+                {
+                    _editor = DefaultEditor;
+                    return;
+                }
+
+                // Unwrap if a PSObject
+                if (textEditorPath is PSObject)
+                {
+                    textEditorPath = ((PSObject)textEditorPath).BaseObject;
+                }
+
+                if (textEditorPath is string)
+                {
+                    _editor = (string)textEditorPath;
+                }
+                else if (textEditorPath is FileInfo)
+                {
+                    _editor = ((FileInfo)textEditorPath).FullName;
+                }
+                else
+                {
+                    _editor = textEditorPath.ToString();
+                }
+
+                if (!File.Exists(_editor))
+                {
+                    _editor = DefaultEditor;
+                }
             }
         }
 
