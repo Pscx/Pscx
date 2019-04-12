@@ -2343,7 +2343,7 @@ function Import-VisualStudioVars
             '160|2019' {
                 $vsInstance = GetSpecifiedVSSetupInstance -Version '[16.0,17.0)' -FailOnMissingVSSetup
                 if (!$vsInstance) {
-                    throw "No instances of Visual Studio 2017 found$(if ($RequireWorkload) {" for the required workload: $RequireWorkload"})."
+                    throw "No instances of Visual Studio 2019 found$(if ($RequireWorkload) {" for the required workload: $RequireWorkload"})."
                 }
 
                 Push-EnvironmentBlock -Description "Before importing VS 2019 $Architecture environment variables"
