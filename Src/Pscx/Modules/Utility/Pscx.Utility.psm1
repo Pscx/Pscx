@@ -2203,7 +2203,7 @@ function Import-VisualStudioVars
     param
     (
         [Parameter(Position = 0)]
-        [ValidateSet('90', '2008', '100', '2010', '110', '2012', '120', '2013', '140', '2015', '150', '2017')]
+        [ValidateSet('90', '2008', '100', '2010', '110', '2012', '120', '2013', '140', '2015', '150', '2017','160','2019')]
         [string]
         $VisualStudioVersion,
 
@@ -2336,6 +2336,17 @@ function Import-VisualStudioVars
                 }
 
                 Push-EnvironmentBlock -Description "Before importing VS 2017 $Architecture environment variables"
+                $installPath = $vsInstance.InstallationPath
+                FindAndLoadBatchFile "$installPath/Common7/Tools" $ArchSpecified -IsAppxInstall
+            }
+
+            '160|2019' {
+                $vsInstance = GetSpecifiedVSSetupInstance -Version '[16.0,17.0)' -FailOnMissingVSSetup
+                if (!$vsInstance) {
+                    throw "No instances of Visual Studio 2017 found$(if ($RequireWorkload) {" for the required workload: $RequireWorkload"})."
+                }
+
+                Push-EnvironmentBlock -Description "Before importing VS 2019 $Architecture environment variables"
                 $installPath = $vsInstance.InstallationPath
                 FindAndLoadBatchFile "$installPath/Common7/Tools" $ArchSpecified -IsAppxInstall
             }
