@@ -2164,7 +2164,7 @@ function Get-Parameter {
     Pop-EnvironmentBlock.
 .PARAMETER VisualStudioVersion
     The version of Visual Studio to import environment variables for. Valid
-    values are 2008, 2010, 2012, 2013, 2015 and 2017.
+    values are 2008, 2010, 2012, 2013, 2015, 2017 and 2019.
 .PARAMETER Architecture
     Selects the desired architecture to configure the environment for.
     If this parameter isn't specified, the command will attempt to locate and
