@@ -467,9 +467,11 @@ function Invoke-Elevated()
 {
     Write-Debug "`$MyInvocation:`n$($MyInvocation | Out-String)"
 
+    $escapedPath = [System.Management.Automation.Language.CodeGeneration]::EscapeSingleQuotedStringContent($pwd.ProviderPath)
+
     $startProcessArgs = @{
         FilePath     = "PowerShell.exe"
-        ArgumentList = "-NoExit", "-Command", "& {Set-Location '$pwd'}"
+        ArgumentList = "-NoExit", "-Command", "& {Set-Location '$escapedPath'}"
         Verb         = "runas"
         PassThru     = $true
         WorkingDir   = $pwd
@@ -489,7 +491,7 @@ function Invoke-Elevated()
         }
         else
         {
-            $startProcessArgs['ArgumentList'] = "-NoExit", "-Command", "& {Set-Location '$pwd'; $script}"
+            $startProcessArgs['ArgumentList'] = "-NoExit", "-Command", "& {Set-Location '$escapedPath'; $script}"
         }
         [string[]]$cmdArgs = @()
         if ($args.Count -gt 1)
@@ -521,7 +523,7 @@ function Invoke-Elevated()
         }
         else {
             $poshCmd = $args[0]
-            $startProcessArgs['ArgumentList'] = "-NoExit", "-Command", "& {Set-Location '$pwd'; $poshCmd $cmdArgs}"
+            $startProcessArgs['ArgumentList'] = "-NoExit", "-Command", "& {Set-Location '$escapedPath'; $poshCmd $cmdArgs}"
             Write-Debug "  Starting PowerShell command $poshCmd with args: $cmdArgs"
         }
     }
