@@ -58,7 +58,7 @@
         'Import-Bitmap',
         'Invoke-AdoCommand',
         'Invoke-Apartment',
-        'Join-String',
+        'Join-PscxString',
         'New-Hardlink',
         'New-Junction',
         'New-MSMQueue',

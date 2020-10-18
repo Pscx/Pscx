@@ -83,7 +83,7 @@
     <None Include="Help\GetShortPath.xml" />
     <None Include="Help\GetTerminalSession.xml" />
     <None Include="Help\ImportBitmap.xml" />
-    <None Include="Help\JoinString.xml" />
+    <None Include="Help\JoinPscxString.xml" />
     <None Include="Help\NewHardlink.xml" />
     <None Include="Help\NewJunction.xml" />
     <None Include="Help\NewShortcut.xml" />

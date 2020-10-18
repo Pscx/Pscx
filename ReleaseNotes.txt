@@ -8,6 +8,7 @@ PowerShell Community Extensions Release Notes
 * Renamed all *-Clipboard commands to *-PscxClipboard
 * Renamed Format-Hex command to Format-PscxHex.
 * Renamed Get-Uptime to Get-PscxUptime.
+* Renamed Join-String to Join-PscxString.
 
 * Removed redefinition of the cd alias
 * Removed the gcb alias that now conflicts with the built-in gcb alias
