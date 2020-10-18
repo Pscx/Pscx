@@ -146,7 +146,7 @@
     <None Include="Help\TestUserGroupMembership.xml" />
     <None Include="Help\GetEnvironmentBlock.xml" />
     <None Include="Help\GetTypeName.xml" />
-    <None Include="Help\GetUptime.xml" />
+    <None Include="Help\GetPscxUptime.xml" />
     <None Include="Help\GetFileTail.xml" />
     <None Include="Help\GetLoremIpsum.xml" />
     <None Include="Help\TestScript.xml" />

@@ -28,7 +28,7 @@ namespace Pscx
         public const String TabExpansion = "TabExpansion";
         public const String TerminalSession = "TerminalSession";
         public const String TypeName = "TypeName";
-        public const String Uptime = "Uptime";
+        public const String Uptime = "PscxUptime";
         public const String Xml = "Xml";
 
         // DirectoryServices

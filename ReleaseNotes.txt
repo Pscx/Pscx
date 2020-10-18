@@ -7,6 +7,7 @@ PowerShell Community Extensions Release Notes
 * Renamed Set-LocationEx to Set-PscxLocation.
 * Renamed all *-Clipboard commands to *-PscxClipboard
 * Renamed Format-Hex command to Format-PscxHex.
+* Renamed Get-Uptime to Get-PscxUptime.
 
 * Removed redefinition of the cd alias
 * Removed the gcb alias that now conflicts with the built-in gcb alias
