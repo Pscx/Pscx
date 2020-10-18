@@ -110,7 +110,6 @@
         'Get-ScreenCss',
         'Get-ScreenHtml',
         'Get-ViewDefinition',
-        'help',
         'Import-VisualStudioVars',
         'Invoke-BatchFile',
         'Invoke-Elevated',
@@ -118,9 +117,10 @@
         'Invoke-Method',
         'Invoke-NullCoalescing',
         'Invoke-Ternary',
-        'less',
         'New-HashObject',
         'Out-Speech',
+        'PscxHelp',
+        'PscxLess',
         'prompt',
         'QuoteList',
         'QuoteString',
@@ -172,10 +172,18 @@
             # A URL to an icon representing this module.
             IconUri = 'https://github.com/Pscx/Pscx/blob/master/PscxIcon.png?raw=true'
 
-            Prerelease = 'beta1'
+            Prerelease = 'beta2'
 
             # Release notes
             ReleaseNotes = @'
+4.0.0-beta2 - November XX, 2020
+
+* Renamed less function to PscxLess
+* Renamed help function to PscxHelp
+
+* Changed Pscx to only override the built-in help function if PageHelpUsingLess Pscx.UserPreference is $true
+* Changed default value of Pscx.UserPreference to be $true only on PowerShell v5.
+
 4.0.0-beta1 - October 17, 2020
 
 BREAKING CHANGES - PLEASE READ

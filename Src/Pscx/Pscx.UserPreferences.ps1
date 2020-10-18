@@ -13,6 +13,9 @@
 #     Import-Module Pscx -arg "$(Split-Path $profile -parent)\Pscx.UserPreferences.ps1"
 #
 # ---------------------------------------------------------------------------
+
+$isPSv5 = $PSVersionTable.PSVersion.Major -le 5
+
 @{
     ShowModuleLoadDetails = $false    # Display module load details during Import-Module
 
@@ -29,7 +32,7 @@
                                       # set the ModulesToImport setting for Prompt below to $true.
                                       # Then set this value to one of: 'Modern', 'WinXP' or 'Jachym'.
 
-    PageHelpUsingLess = $true         # Pscx replaces PowerShell's More function. When this setting
+    PageHelpUsingLess = $isPSv5       # Pscx replaces PowerShell's More function. When this setting
                                       # is set to $true, less.exe is used to page items piped
                                       # to the More function. Less.exe is powerful paging app
                                       # that allows advanced navigation and search. Press 'h' to
@@ -45,7 +48,7 @@
                                       # using KB,MG,GB and TB units.
 
     ModulesToImport = @{
-        CD                = $true
+        CD                = $isPSv5
         DirectoryServices = $false
         FileSystem        = $false
         GetHelp           = $false    # Disabled by default due to some bugs that have to be resolved.
