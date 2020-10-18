@@ -6,9 +6,9 @@ using System.Runtime.CompilerServices;
 
 public static class PscxAssemblyInfo
 {
-    public const string AssemblyVersion = "3.2.*";
-    public const string FileVersion = "3.2.2.0";
+    public const string AssemblyVersion = "4.0.*";
+    public const string FileVersion = "4.0.0.0";
 
     public const string Product = "PowerShell Community Extensions";
-    public const string Copyright = "Copyright \xa9 2005-2016 PowerShell Community Extensions Team";
+    public const string Copyright = "Copyright \xa9 2005-2020 Keith Hill, Oisin Grehan, and contributors";
 }
