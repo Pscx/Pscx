@@ -1,8 +1,8 @@
 @{
     GUID               = '0fab0d39-2f29-4e79-ab9a-fd750c66e6c5'
-    Author             = 'PowerShell Community Developers'
+    Author             = 'Keith Hill, Oisin Grehan, and contributors'
     CompanyName        = 'http://pscx.codeplex.com/'
-    Copyright          = 'Copyright PowerShell Community Developers 2006 - 2020.'
+    Copyright          = '(c) 2006 - 2020 Keith Hill, Oisin Grehan, and contributors'
     Description        = 'PowerShell Community Extensions (PSCX) base module which implements a general purpose set of Cmdlets.'
     PowerShellVersion  = '3.0'
     CLRVersion         = '4.0'
@@ -171,6 +171,8 @@
 
             # A URL to an icon representing this module.
             IconUri = 'https://github.com/Pscx/Pscx/blob/master/PscxIcon.png?raw=true'
+
+            Prerelease = 'beta1'
 
             # Release notes
             ReleaseNotes = @'

@@ -12,6 +12,8 @@ PowerShell Community Extensions Release Notes
 
 * Removed redefinition of the cd alias
 * Removed the gcb alias that now conflicts with the built-in gcb alias
+* Removed ?? alias to avoid conflict with ?? operator in PS 7.
+* Removed ?: alias since PS 7 now implements a true ternary operator.
 
 3.3.2 - January 16, 2018
 
