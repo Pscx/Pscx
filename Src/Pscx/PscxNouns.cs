@@ -15,7 +15,7 @@ namespace Pscx
         public const String Base64 = "Base64";
         public const String Bitmap = "Bitmap";
         public const String BitmapSize = "BitmapSize";
-        public const String Clipboard = "Clipboard";
+        public const String Clipboard = "PscxClipboard";
         public const String File = "File";
         public const String FileTail = "FileTail";
         public const String FileVersionInfo = "FileVersionInfo";
