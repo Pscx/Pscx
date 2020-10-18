@@ -120,7 +120,7 @@ if ($args.Length -gt 0)
 # Cmdlet aliases
 # -----------------------------------------------------------------------
 Set-Alias gtn   Pscx\Get-TypeName      -Description "PSCX alias"
-Set-Alias fhex  Pscx\Format-Hex        -Description "PSCX alias"
+Set-Alias fhex  Pscx\Format-PscxHex    -Description "PSCX alias"
 Set-Alias cvxml Pscx\Convert-Xml       -Description "PSCX alias"
 Set-Alias fxml  Pscx\Format-Xml        -Description "PSCX alias"
 Set-Alias ocb   Pscx\Out-PscxClipboard -Description "PSCX alias"

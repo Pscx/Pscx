@@ -57,7 +57,7 @@ namespace Pscx
 
         // Formatting
         public const String Byte = "Byte";
-        public const String Hex = "Hex";
+        public const String Hex = "PscxHex";
 
         // EnvironmentBlock
         public const String EnvironmentBlock = "EnvironmentBlock";

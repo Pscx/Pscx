@@ -65,7 +65,7 @@
     <None Include="Help\DisconnectTerminalSession.xml" />
     <None Include="Help\ExportBitmap.xml" />
     <None Include="Help\FormatByte.xml" />
-    <None Include="Help\FormatHex.xml" />
+    <None Include="Help\FormatPscxHex.xml" />
     <None Include="Help\FormatXml.xml" />
     <None Include="Help\GetADObject.xml" />
     <None Include="Help\GetPscxClipboard.xml" />

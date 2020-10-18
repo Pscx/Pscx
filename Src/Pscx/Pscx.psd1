@@ -26,7 +26,7 @@
         'Expand-PscxArchive',
         'Export-Bitmap',
         'Format-Byte',
-        'Format-Hex',
+        'Format-PscxHex',
         'Format-Xml',
         'Get-ADObject',
         'Get-AdoConnection',

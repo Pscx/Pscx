@@ -6,6 +6,7 @@ PowerShell Community Extensions Release Notes
 * Renamed Expand-Archive to Expand-PscxArchive and Read-Archive to Read-PscxArchive.
 * Renamed Set-LocationEx to Set-PscxLocation.
 * Renamed all *-Clipboard commands to *-PscxClipboard
+* Renamed Format-Hex command to Format-PscxHex.
 
 * Removed redefinition of the cd alias
 * Removed the gcb alias that now conflicts with the built-in gcb alias
