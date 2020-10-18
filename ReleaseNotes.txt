@@ -1,8 +1,8 @@
 PowerShell Community Extensions Release Notes
 
-4.0.0 - November XX, 2020
+4.0.0-beta1 - October 17, 2020
 
-* Migrate onto .NET 4.61
+* Migrate to .NET 4.61
 * Renamed Expand-Archive to Expand-PscxArchive and Read-Archive to Read-PscxArchive.
 * Renamed Set-LocationEx to Set-PscxLocation.
 * Renamed all *-Clipboard commands to *-PscxClipboard

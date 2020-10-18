@@ -176,6 +176,24 @@
 
             # Release notes
             ReleaseNotes = @'
+4.0.0-beta1 - October 17, 2020
+
+* Migrate to .NET 4.61
+* Renamed Expand-Archive to Expand-PscxArchive and Read-Archive to Read-PscxArchive.
+* Renamed Set-LocationEx to Set-PscxLocation.
+* Renamed all *-Clipboard commands to *-PscxClipboard
+* Renamed Format-Hex command to Format-PscxHex.
+* Renamed Get-Uptime to Get-PscxUptime.
+* Renamed Join-String to Join-PscxString.
+
+* Removed redefinition of the cd alias
+* Removed the gcb alias that now conflicts with the built-in gcb alias
+* Removed ?? alias to avoid conflict with ?? operator in PS 7.
+* Removed ?: alias since PS 7 now implements a true ternary operator.
+
+* Fixed Expand-PscxArchive help topic to remove references to the Format parameter - this parameter does not exist.
+* Changed help function to default to displaying Full help details.
+
 3.3.2 - January 16, 2018
 
 * Fix Edit-File does not respect TextEditor property [#48](https://github.com/Pscx/Pscx/issues/48)
@@ -189,7 +207,6 @@
 3.3.0 - September 5, 2017
 
 * Fix issues with CD functionality not working on PowerShell Core.
-
 * Updated Import-VisualStudioVars to support Visual Studio 2017.
 '@
         } # End of PSData hashtable
