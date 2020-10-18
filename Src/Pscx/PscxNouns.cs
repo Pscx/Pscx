@@ -15,7 +15,7 @@ namespace Pscx
         public const String Base64 = "Base64";
         public const String Bitmap = "Bitmap";
         public const String BitmapSize = "BitmapSize";
-        public const String Clipboard = "Clipboard";
+        public const String Clipboard = "PscxClipboard";
         public const String File = "File";
         public const String FileTail = "FileTail";
         public const String FileVersionInfo = "FileVersionInfo";
@@ -28,7 +28,7 @@ namespace Pscx
         public const String TabExpansion = "TabExpansion";
         public const String TerminalSession = "TerminalSession";
         public const String TypeName = "TypeName";
-        public const String Uptime = "Uptime";
+        public const String Uptime = "PscxUptime";
         public const String Xml = "Xml";
 
         // DirectoryServices
@@ -53,11 +53,11 @@ namespace Pscx
         public const String GZip = "GZip";
         public const String Tar = "Tar";
         public const String Zip = "Zip";
-        public const String Archive = "Archive";
+        public const String Archive = "PscxArchive";
 
         // Formatting
         public const String Byte = "Byte";
-        public const String Hex = "Hex";
+        public const String Hex = "PscxHex";
 
         // EnvironmentBlock
         public const String EnvironmentBlock = "EnvironmentBlock";

@@ -3,8 +3,8 @@
 # Desc:   Module that replaces the regular CD function with one that handles
 #         history and backward/forward navigation using - and +.
 #         as ..[.]*.
-# Date:   Nov 18, 2006
-# Site:   http://pscx.codeplex.com
+# Date:   Nov 18, 2006, Oct 17, 2020
+# Site:   https://github.com/Pscx/Pscx
 #---------------------------------------------------------------------------
 #requires -Version 3
 Set-StrictMode -Version Latest
@@ -12,35 +12,27 @@ Set-StrictMode -Version Latest
 $backwardStack = new-object System.Collections.ArrayList
 $forewardStack = new-object System.Collections.ArrayList
 
-# When the module removed, set the cd alias back to something reasonable.
-# We could use the original cd alias but most of the time it's going to be set to Set-Location.
-# And you may have loaded another module in between stashing the "original" cd alias that
-# modifies the cd alias.  So setting it back to the "original" may not be the right thing to
-# do anyway.
-$ExecutionContext.SessionState.Module.OnRemove = {
-    Set-Alias cd Set-Location -Scope Global -Option AllScope -Force
-}.GetNewClosure()
-
-# We are going to replace the PowerShell default "cd" alias with the CD function defined below.
-Set-Alias cd Pscx\Set-LocationEx -Force -Scope Global -Option AllScope -Description "PSCX alias"
-
 <#
 .SYNOPSIS
-    CD function that tracks location history allowing easy navigation to previous locations.
+    Set-PscxLocation function that tracks location history allowing easy navigation to previous locations.
 .DESCRIPTION
-    CD function that tracks location history allowing easy navigation to previous locations.
-    CD maintains a backward and forward stack mechanism that can be navigated using "cd -"
-    to go backwards in the stack and "cd +" to go forwards in the stack.  Executing "cd"
-    without any parameters will display the current stack history. By default, the new location
-    is echo'd to the host.  If you want to suppress this set the preference variable in your
-    profile e.g. $Pscx:Preferences['CD_EchoNewLocation'] = $false
+    Set-PscxLocation function that tracks location history allowing easy navigation to previous locations.
+    Set-PscxLocation maintains a backward and forward stack mechanism that can be navigated using "Set-PscxLocation -"
+    to go backwards in the stack and "Set-PscxLocation +" to go forwards in the stack.  Executing "Set-PscxLocation"
+    without any parameters will display the current stack history. 
+    
+    By default, the new location is echo'd to the host.  If you want to suppress this set the preference 
+    variable in your profile e.g. $Pscx:Preferences['CD_EchoNewLocation'] = $false. 
+    
+    If you want to change your cd alias to use Set-PscxLocation, execute:
+    Set-Alias cd Set-PscxLocation -Option AllScope
 .PARAMETER Path
     The path to change location to.
 .PARAMETER LiteralPath
     The literal path to change location to.  This path can contain wildcard characters that
     do not need to be escaped.
 .PARAMETER PassThru
-    If the PassThru switch is specified the object passed into the CD function is also output
+    If the PassThru switch is specified the object passed into the Set-PscxLocation function is also output
     from the function.  This allows the next pipeline stage to also operate on the object.
 .PARAMETER UnboundArguments
     This parameter accumulates all the additional arguments and concatenates them to the Path
@@ -53,29 +45,29 @@ Set-Alias cd Pscx\Set-LocationEx -Force -Scope Global -Option AllScope -Descript
     is in progress. For more information, see about_Transactions.  This parameter is not supported
     in PowerShell Core.
 .EXAMPLE
-    C:\PS> cd $pshome; cd -; cd +
+    C:\PS> set-alias cd Set-PscxLocation -Option AllScope; cd $pshome; cd -; cd +
     This example changes location to the PowerShell install dir, then back to the original
     location, than forward again to the PowerShell install dir.
 .EXAMPLE
-    C:\PS> cd ....
+    C:\PS> set-alias cd Set-PscxLocation -Option AllScope; cd ....
     This example changes location up two levels from the current path.  You can use an arbitrary
     number of periods to indicate how many levels you want to go up.  A single period "." indicates
     the current location.  Two periods ".." indicate the current location's parent.  Three periods "..."
     indicates the current location's parent's parent and so on.
 .EXAMPLE
-    C:\PS> cd
+    C:\PS> set-alias cd Set-PscxLocation -Option AllScope; cd
     Executing CD without any parameters will cause it to display the current stack contents.
 .EXAMPLE
-    C:\PS> cd -0
+    C:\PS> set-alias cd Set-PscxLocation -Option AllScope; cd -0
     Changes location to the very first (0th index) location in the stack. Execute CD without any parameters
     to see all the paths, then execute CD -<number> to change location to that path.
 .EXAMPLE
-    C:\PS> $profile | cd
+    C:\PS> set-alias cd Set-PscxLocation -Option AllScope; $profile | cd
     This example will change location to the parent location of $profile.
 .NOTES
     This is a PSCX function.
 #>
-function Set-LocationEx
+function Set-PscxLocation
 {
     [CmdletBinding(DefaultParameterSetName='Path')]
     param(

@@ -6,9 +6,7 @@ Set-Alias ep    Pscx\Edit-Profile           -Description "PSCX alias"
 Set-Alias gpar  Pscx\Get-Parameter          -Description "PSCX alias"
 Set-Alias su    Pscx\Invoke-Elevated        -Description "PSCX alias"
 Set-Alias igc   Pscx\Invoke-GC              -Description "PSCX alias"
-Set-Alias ??    Pscx\Invoke-NullCoalescing  -Description "PSCX alias"
 Set-Alias call  Pscx\Invoke-Method          -Description "PSCX alias"
-Set-Alias ?:    Pscx\Invoke-Ternary         -Description "PSCX alias"
 Set-Alias nho   Pscx\New-HashObject         -Description "PSCX alias"
 Set-Alias ql    Pscx\QuoteList              -Description "PSCX alias"
 Set-Alias qs    Pscx\QuoteString            -Description "PSCX alias"
@@ -314,6 +312,11 @@ function help
 
     $outputEncoding=[System.Console]::OutputEncoding
 
+    # Display the full help topic by default but only for the AllUsersView parameter set.
+    if (($psCmdlet.ParameterSetName -eq 'AllUsersView') -and !$Full) {
+        $PSBoundParameters['Full'] = $true
+    }
+
     if ($Pscx:Preferences["PageHelpUsingLess"])
     {
         Get-Help @PSBoundParameters | less
@@ -392,6 +395,8 @@ function less
         }
     }
 
+    $lessPrompt = '-PsPage %db?B of %D:.\. Press h for help or q to quit\.$'
+
     # Tricky to get this just right.
     # Here are three test cases to verify all works as it should:
     # less *.txt      : Should bring up named txt file in less in succession, press q to go to next file
@@ -399,12 +404,12 @@ function less
     # man gcm -online : Should open help topic in web browser but not open less.exe
     if ($resolvedPaths)
     {
-        & "$Pscx:Home\Apps\less.exe" $resolvedPaths
+        & "$Pscx:Home\Apps\less.exe" $resolvedPaths $lessPrompt
     }
     elseif ($input.MoveNext())
     {
         $input.Reset()
-        $input | & "$Pscx:Home\Apps\less.exe"
+        $input | & "$Pscx:Home\Apps\less.exe" $lessPrompt
     }
 }
 

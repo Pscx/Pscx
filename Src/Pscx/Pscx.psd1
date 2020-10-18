@@ -1,12 +1,12 @@
 @{
     GUID               = '0fab0d39-2f29-4e79-ab9a-fd750c66e6c5'
-    Author             = 'PowerShell Community Developers'
+    Author             = 'Keith Hill, Oisin Grehan, and contributors'
     CompanyName        = 'http://pscx.codeplex.com/'
-    Copyright          = 'Copyright PowerShell Community Developers 2006 - 2018.'
+    Copyright          = '(c) 2006 - 2020 Keith Hill, Oisin Grehan, and contributors'
     Description        = 'PowerShell Community Extensions (PSCX) base module which implements a general purpose set of Cmdlets.'
-    PowerShellVersion  = '3.0'
+    PowerShellVersion  = '5.0'
     CLRVersion         = '4.0'
-    ModuleVersion      = '3.3.2'
+    ModuleVersion      = '4.0.0'
     RequiredAssemblies = 'Pscx.dll' # needed for [pscxmodules] type (does not import cmdlets/providers)
     RootModule         = 'Pscx.psm1'
     NestedModules      = 'Pscx.dll'
@@ -23,15 +23,15 @@
         'Convert-Xml',
         'Disconnect-TerminalSession',
         'Edit-File',
-        'Expand-Archive',
+        'Expand-PscxArchive',
         'Export-Bitmap',
         'Format-Byte',
-        'Format-Hex',
+        'Format-PscxHex',
         'Format-Xml',
         'Get-ADObject',
         'Get-AdoConnection',
         'Get-AdoDataProvider',
-        'Get-Clipboard',
+        'Get-PscxClipboard',
         'Get-DhcpServer',
         'Get-DomainController',
         'Get-DriveInfo',
@@ -48,27 +48,27 @@
         'Get-PathVariable',
         'Get-PEHeader',
         'Get-Privilege',
+        'Get-PscxUptime',
         'Get-PSSnapinHelp',
         'Get-ReparsePoint',
         'Get-RunningObject',
         'Get-ShortPath',
         'Get-TerminalSession',
         'Get-TypeName',
-        'Get-Uptime',
         'Import-Bitmap',
         'Invoke-AdoCommand',
         'Invoke-Apartment',
-        'Join-String',
+        'Join-PscxString',
         'New-Hardlink',
         'New-Junction',
         'New-MSMQueue',
         'New-Shortcut',
         'New-Symlink',
-        'Out-Clipboard',
+        'Out-PscxClipboard',
         'Ping-Host',
         'Pop-EnvironmentBlock',
         'Push-EnvironmentBlock',
-        'Read-Archive',
+        'Read-PscxArchive',
         'Receive-MSMQueue',
         'Remove-MountPoint',
         'Remove-ReparsePoint',
@@ -76,7 +76,7 @@
         'Send-MSMQueue',
         'Send-SmtpMail',
         'Set-BitmapSize',
-        'Set-Clipboard',
+        'Set-PscxClipboard',
         'Set-FileTime',
         'Set-ForegroundWindow',
         'Set-PathVariable',
@@ -92,7 +92,7 @@
         'Test-UserGroupMembership',
         'Test-Xml',
         'Write-BZip2',
-        'Write-Clipboard',
+        'Write-PscxClipboard',
         'Write-GZip',
         'Write-Tar',
         'Write-Zip'
@@ -133,7 +133,7 @@
         'Show-Tree',
         'Start-PowerShell',
         'Stop-RemoteProcess',
-        'Set-LocationEx',
+        'Set-PscxLocation',
         'Dismount-VHD',
         'Mount-VHD'
     )
@@ -161,7 +161,7 @@
         PSData = @{
 
             # Tags applied to this module. These help with module discovery in online galleries.
-            Tags = @('Utilities','Xml','Zip','Clipboard','Base64','ShortPath','PEHeader','CD')
+            Tags = @('PSEdition_Desktop','Windows','Utilities','Xml','Zip','Clipboard','Base64','ShortPath','PEHeader')
 
             # A URL to the license for this module.
             LicenseUri = 'https://github.com/Pscx/Pscx/blob/master/LICENSE'
@@ -172,8 +172,29 @@
             # A URL to an icon representing this module.
             IconUri = 'https://github.com/Pscx/Pscx/blob/master/PscxIcon.png?raw=true'
 
+            Prerelease = 'beta1'
+
             # Release notes
             ReleaseNotes = @'
+4.0.0-beta1 - October 17, 2020
+
+BREAKING CHANGES - PLEASE READ
+* Migrate to .NET 4.61
+* Renamed Expand-Archive to Expand-PscxArchive and Read-Archive to Read-PscxArchive.
+* Renamed Set-LocationEx to Set-PscxLocation.
+* Renamed all *-Clipboard commands to *-PscxClipboard
+* Renamed Format-Hex command to Format-PscxHex.
+* Renamed Get-Uptime to Get-PscxUptime.
+* Renamed Join-String to Join-PscxString.
+
+* Removed redefinition of the cd alias
+* Removed the gcb alias that now conflicts with the built-in gcb alias
+* Removed ?? alias to avoid conflict with ?? operator in PS 7.
+* Removed ?: alias since PS 7 now implements a true ternary operator.
+
+* Fixed Expand-PscxArchive help topic to remove references to the Format parameter - this parameter does not exist.
+* Changed help function to default to displaying Full help details.
+
 3.3.2 - January 16, 2018
 
 * Fix Edit-File does not respect TextEditor property [#48](https://github.com/Pscx/Pscx/issues/48)
@@ -187,7 +208,6 @@
 3.3.0 - September 5, 2017
 
 * Fix issues with CD functionality not working on PowerShell Core.
-
 * Updated Import-VisualStudioVars to support Visual Studio 2017.
 '@
         } # End of PSData hashtable

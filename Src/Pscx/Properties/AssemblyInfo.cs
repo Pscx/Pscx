@@ -1,3 +1,3 @@
 ﻿using System.Reflection;
 
-[assembly: AssemblyTitle("PowerShell Community Extensions Snapin")]
+[assembly: AssemblyTitle("PowerShell Community Extensions Module")]

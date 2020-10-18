@@ -7,14 +7,10 @@
 // Modified Date: Dec 13, 2006: refactored to behave more like Write-Host
 //                              and derived from ClipboardCommandBase 
 //---------------------------------------------------------------------
-using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Text;
-using System.Threading;
 using System.Management.Automation;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
 using WinFormsClipboard = System.Windows.Forms.Clipboard;
 
 namespace Pscx.Commands.UIAutomation
