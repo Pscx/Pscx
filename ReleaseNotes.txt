@@ -2,10 +2,12 @@ PowerShell Community Extensions Release Notes
 
 4.0.0-beta1 - October 17, 2020
 
-* Migrate to .NET 4.61
+BREAKING CHANGES - PLEASE READ
+* Minimum version of PowerShell is 5.0.
+* Migrate to .NET 4.61.
 * Renamed Expand-Archive to Expand-PscxArchive and Read-Archive to Read-PscxArchive.
 * Renamed Set-LocationEx to Set-PscxLocation.
-* Renamed all *-Clipboard commands to *-PscxClipboard
+* Renamed all *-Clipboard commands to *-PscxClipboard.
 * Renamed Format-Hex command to Format-PscxHex.
 * Renamed Get-Uptime to Get-PscxUptime.
 * Renamed Join-String to Join-PscxString.

@@ -4,7 +4,7 @@
     CompanyName        = 'http://pscx.codeplex.com/'
     Copyright          = '(c) 2006 - 2020 Keith Hill, Oisin Grehan, and contributors'
     Description        = 'PowerShell Community Extensions (PSCX) base module which implements a general purpose set of Cmdlets.'
-    PowerShellVersion  = '3.0'
+    PowerShellVersion  = '5.0'
     CLRVersion         = '4.0'
     ModuleVersion      = '4.0.0'
     RequiredAssemblies = 'Pscx.dll' # needed for [pscxmodules] type (does not import cmdlets/providers)
@@ -161,7 +161,7 @@
         PSData = @{
 
             # Tags applied to this module. These help with module discovery in online galleries.
-            Tags = @('PSEdition_Desktop','Utilities','Xml','Zip','Clipboard','Base64','ShortPath','PEHeader','CD')
+            Tags = @('PSEdition_Desktop','Windows','Utilities','Xml','Zip','Clipboard','Base64','ShortPath','PEHeader')
 
             # A URL to the license for this module.
             LicenseUri = 'https://github.com/Pscx/Pscx/blob/master/LICENSE'
@@ -178,6 +178,7 @@
             ReleaseNotes = @'
 4.0.0-beta1 - October 17, 2020
 
+BREAKING CHANGES - PLEASE READ
 * Migrate to .NET 4.61
 * Renamed Expand-Archive to Expand-PscxArchive and Read-Archive to Read-PscxArchive.
 * Renamed Set-LocationEx to Set-PscxLocation.
