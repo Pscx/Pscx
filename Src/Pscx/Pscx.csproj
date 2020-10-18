@@ -469,7 +469,7 @@ if not exist "$(TargetDir)Apps" (
   @echo "Creating $(TargetDir)Apps"
   mkdir "$(TargetDir)Apps"
 )
-xcopy "$(SolutionDir)..\Imports\Less-394\*.*" "$(TargetDir)Apps" /R /Y /F
+xcopy "$(SolutionDir)..\Imports\Less-553\*.*" "$(TargetDir)Apps" /R /Y /F
 
 </PostBuildEvent>
     <PreBuildEvent>xcopy "$(SolutionDir)ReleaseNotes.txt" "$(TargetDir)" /D /R /Y
