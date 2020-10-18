@@ -3,7 +3,8 @@ PowerShell Community Extensions Release Notes
 4.0.0 - November XX, 2020
 
 * Migrate onto .NET 4.61
-* Removed all commands that conflict with commands in PowerShell 7.
+* Renamed Expand-Archive to Expand-PscxArchive and Read-Archive to Read-PscxArchive.
+* Renamed Set-LocationEx to Set-PscxLocation.
 
 3.3.2 - January 16, 2018
 

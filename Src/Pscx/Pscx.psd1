@@ -2,11 +2,11 @@
     GUID               = '0fab0d39-2f29-4e79-ab9a-fd750c66e6c5'
     Author             = 'PowerShell Community Developers'
     CompanyName        = 'http://pscx.codeplex.com/'
-    Copyright          = 'Copyright PowerShell Community Developers 2006 - 2018.'
+    Copyright          = 'Copyright PowerShell Community Developers 2006 - 2020.'
     Description        = 'PowerShell Community Extensions (PSCX) base module which implements a general purpose set of Cmdlets.'
     PowerShellVersion  = '3.0'
     CLRVersion         = '4.0'
-    ModuleVersion      = '3.3.2'
+    ModuleVersion      = '4.0.0'
     RequiredAssemblies = 'Pscx.dll' # needed for [pscxmodules] type (does not import cmdlets/providers)
     RootModule         = 'Pscx.psm1'
     NestedModules      = 'Pscx.dll'
@@ -23,7 +23,7 @@
         'Convert-Xml',
         'Disconnect-TerminalSession',
         'Edit-File',
-        'Expand-Archive',
+        'Expand-PscxArchive',
         'Export-Bitmap',
         'Format-Byte',
         'Format-Hex',
@@ -68,7 +68,7 @@
         'Ping-Host',
         'Pop-EnvironmentBlock',
         'Push-EnvironmentBlock',
-        'Read-Archive',
+        'Read-PscxArchive',
         'Receive-MSMQueue',
         'Remove-MountPoint',
         'Remove-ReparsePoint',
@@ -133,7 +133,7 @@
         'Show-Tree',
         'Start-PowerShell',
         'Stop-RemoteProcess',
-        'Set-LocationEx',
+        'Set-PscxLocation',
         'Dismount-VHD',
         'Mount-VHD'
     )

@@ -53,7 +53,7 @@ namespace Pscx
         public const String GZip = "GZip";
         public const String Tar = "Tar";
         public const String Zip = "Zip";
-        public const String Archive = "Archive";
+        public const String Archive = "PscxArchive";
 
         // Formatting
         public const String Byte = "Byte";

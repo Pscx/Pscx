@@ -115,7 +115,7 @@
     <None Include="Help\AddPathVariable.xml" />
     <None Include="Help\ClearMSMQueue.xml" />
     <None Include="Help\NewGenericObject.xml" />
-    <None Include="Help\ExpandArchive.xml" />
+    <None Include="Help\ExpandPscxArchive.xml" />
     <None Include="Help\GetAdoConnection.xml" />
     <None Include="Help\GetAdoDataProvider.xml" />
     <None Include="Help\GetDriveInfo.xml" />
@@ -136,7 +136,7 @@
     <None Include="Help\NewMSMQueue.xml" />
     <None Include="Help\PopEnvironmentBlock.xml" />
     <None Include="Help\PushEnvironmentBlock.xml" />
-    <None Include="Help\ReadArchive.xml" />
+    <None Include="Help\ReadPscxArchive.xml" />
     <None Include="Help\ReceiveMSMQueue.xml" />
     <None Include="Help\SendMSMQueue.xml" />
     <None Include="Help\SetPathVariable.xml" />
