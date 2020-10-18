@@ -312,6 +312,11 @@ function help
 
     $outputEncoding=[System.Console]::OutputEncoding
 
+    # Display the full help topic by default but only for the AllUsersView parameter set.
+    if (($psCmdlet.ParameterSetName -eq 'AllUsersView') -and !$Full) {
+        $PSBoundParameters['Full'] = $true
+    }
+
     if ($Pscx:Preferences["PageHelpUsingLess"])
     {
         Get-Help @PSBoundParameters | less

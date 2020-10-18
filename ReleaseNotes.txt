@@ -15,6 +15,9 @@ PowerShell Community Extensions Release Notes
 * Removed ?? alias to avoid conflict with ?? operator in PS 7.
 * Removed ?: alias since PS 7 now implements a true ternary operator.
 
+* Fixed Expand-PscxArchive help topic to remove references to the Format parameter - this parameter does not exist.
+* Changed help function to default to displaying Full help details.
+
 3.3.2 - January 16, 2018
 
 * Fix Edit-File doesn't respect TextEditor property [#48](https://github.com/Pscx/Pscx/issues/48)
