@@ -11,13 +11,13 @@
 Set-StrictMode -Version Latest
 
 $Theme = @{
-    # Host RawUI Colors	
+    # Host RawUI Colors
     HostBackgroundColor   = $null
     HostForegroundColor   = $null
-    
+
     PromptBackgroundColor = $null
-    PromptForegroundColor = $null	
-    
+    PromptForegroundColor = $null
+
     #Host Private Data Colors
     PrivateData = @{
         ErrorForegroundColor    = $null  # Console = Red,      ISE = #FFFF0000
@@ -29,11 +29,11 @@ $Theme = @{
         VerboseForegroundColor  = $null  # Console = Yellow,   ISE = #FF0000FF
         VerboseBackgroundColor  = $null  # Console = Black,    ISE = #00FFFFFF
         ProgressForegroundColor = $null  # Console = Yellow,   ISE = <not defined>
-        ProgressBackgroundColor = $null  # Console = DarkCyan, ISE = <not defined>	
+        ProgressBackgroundColor = $null  # Console = DarkCyan, ISE = <not defined>
     }
-    
+
     # Behavior (ie scriptblocks)
-    PromptScriptBlock            = $null 
+    PromptScriptBlock            = $null
     StartupMessageScriptBlock    = $null
     UpdateWindowTitleScriptBlock = $null
 }
@@ -44,7 +44,7 @@ $Theme = @{
 function Update-HostWindowTitle
 {
     if (!$Theme.UpdateWindowTitleScriptBlock) { return }
-    
+
     if ($Theme.UpdateWindowTitleScriptBlock -is [scriptblock])
     {
         $title = & $Theme.UpdateWindowTitleScriptBlock
@@ -55,7 +55,7 @@ function Update-HostWindowTitle
     }
 
     $OFS = ''
-    $Host.UI.RawUI.WindowTitle = "$title"	
+    $Host.UI.RawUI.WindowTitle = "$title"
 }
 
 # ---------------------------------------------------------------------------
@@ -64,7 +64,7 @@ function Update-HostWindowTitle
 function Write-StartupMessage
 {
     if (!$Theme.StartupMessageScriptBlock) { return }
-    
+
     if ($Theme.StartupMessageScriptBlock -is [scriptblock])
     {
         $message = & $Theme.StartupMessageScriptBlock
@@ -73,16 +73,16 @@ function Write-StartupMessage
     {
         $message = "$($Theme.StartupMessageScriptBlock)"
     }
-    
+
     if (!$Pscx:Preferences['ShowModuleLoadDetails'])
     {
         Clear-Host
     }
-            
-    if ($message) 
+
+    if ($message)
     {
         $foreColor = $Host.UI.RawUI.ForegroundColor
-        
+
         if ($Host.Name -eq 'ConsoleHost')
         {
             if ($Theme.PromptForegroundColor)
@@ -90,7 +90,7 @@ function Write-StartupMessage
                 $foreColor = $Theme.PromptForegroundColor
             }
         }
-        
+
         Write-Host $message -ForegroundColor $foreColor
     }
 }
@@ -101,24 +101,24 @@ function Write-StartupMessage
 function Write-Prompt($Id)
 {
     # Default prompt
-    $prompt = "PS $(Get-Location)>"	
+    $prompt = "PS $(Get-Location)>"
     if ($Theme.PromptScriptBlock -is [scriptblock])
     {
         $OFS = ''
-        $prompt = "$(& $Theme.PromptScriptBlock $Id)"	
+        $prompt = "$(& $Theme.PromptScriptBlock $Id)"
     }
     elseif ($Theme.PromptScriptBlock -is [string])
     {
         $prompt = $Theme.PromptScriptBlock
     }
-    
+
     if ($Host.Name -eq 'ConsoleHost')
     {
         if ($Host.UI.RawUI.CursorPosition.X -ne 0)
         {
             Write-Host
-        }	
-        
+        }
+
         $foreColor = $Host.UI.RawUI.ForegroundColor
         if ($Theme.PromptForegroundColor)
         {
@@ -130,7 +130,7 @@ function Write-Prompt($Id)
         {
             $backColor = $Theme.PromptBackgroundColor
         }
-                
+
         Write-Host $prompt -NoNewLine -ForegroundColor $foreColor -BackgroundColor $backColor
     }
     else
@@ -143,7 +143,7 @@ function Write-Prompt($Id)
 # ---------------------------------------------------------------------------
 # The replacment prompt function
 # ---------------------------------------------------------------------------
-function Prompt
+function PscxPrompt
 {
     $id = 0
     $histItem = Get-History -Count 1
@@ -151,12 +151,12 @@ function Prompt
     {
         $id = $histItem.Id
     }
-    
+
     if ($id -eq 0)
     {
         Write-StartupMessage
     }
-    
+
     Write-Prompt ($id + 1)
     Update-HostWindowTitle
     return ' ' # If you don't return anything PowerShell gives you PS>
@@ -191,17 +191,17 @@ if ($Host.Name -eq 'ConsoleHost')
         $Host.PrivateData.WarningBackgroundColor = $Theme.HostBackgroundColor
         $Host.PrivateData.DebugBackgroundColor   = $Theme.HostBackgroundColor
         $Host.PrivateData.VerboseBackgroundColor = $Theme.HostBackgroundColor
-    }	
+    }
     foreach ($key in $Theme.PrivateData.Keys)
     {
         if ($Theme.PrivateData.$key)
         {
             $Host.PrivateData.$key = $Theme.PrivateData.$key
         }
-    }    
+    }
 }
-    
+
 # Update window title if a scriptblock has been provided
 Update-HostWindowTitle
 
-Export-ModuleMember -Function Prompt
+Export-ModuleMember -Function PscxPrompt

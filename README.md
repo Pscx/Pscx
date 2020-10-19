@@ -1,30 +1,32 @@
 # Pscx - PowerShell Community Extensions
 
-[![Join the chat at https://gitter.im/Pscx/Pscx](https://badges.gitter.im/Pscx/Pscx.svg)](https://gitter.im/Pscx/Pscx?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-This PowerShell module is aimed at providing a widely useful set of additional cmdlets, providers, aliases, filters, functions and
-scripts for PowerShell that members of the community have expressed interest in.
+This PowerShell module is aimed at providing a widely useful set of additional cmdlets, providers, aliases, filters,
+functions and scripts for PowerShell that members of the community have expressed interest in.
 
 ## Release notes
 
 See [ReleaseNotes.txt](ReleaseNotes.txt).
 
 ## Install Pscx
+
 Pscx is hosted on the PowerShell Gallery.  You can install Pscx with the following command:
-```
+
+```powershell
 Install-Module Pscx -Scope CurrentUser
 ```
+
 You may be prompted to trust the PSGallery.  Respond with a 'y' (for yes) to proceed with the install.
 
 If you already have installed Pscx from the PowerShell Gallery, you can update Pscx with the command:
-```
+
+```powershell
 Update-Module Pscx
 ```
 
 ## Maintainers
 
- - [Keith Hill](https://github.com/rkeithhill) - [@r_keith_hill](http://twitter.com/r_keith_hill)
- - [Oisin Grehan](https://github.com/oising) - [@oising](http://twitter.com/oising)
+- [Keith Hill](https://github.com/rkeithhill) - [@r_keith_hill](http://twitter.com/r_keith_hill)
+- [Oisin Grehan](https://github.com/oising) - [@oising](http://twitter.com/oising)
 
 ## Included cmdlets and functions
 
@@ -66,13 +68,13 @@ Tests for the existence of the specified alternate data stream from an NTFS file
 
 PSCX Cmdlet:
 
-### Archive
+### PscxArchive
 
-#### `Expand-Archive`
+#### `Expand-PscxArchive`
 
 Expands a compressed archive file, or ArchiveEntry object, to its constituent file(s).
 
-#### `Read-Archive`
+#### `Read-PscxArchive`
 
 Enumerates compressed archives such as 7z or rar, emitting ArchiveEntry objects representing records in the archive.
 
@@ -126,21 +128,21 @@ Displays numbers in multiples of byte units.
 
 Create BZIP2 format archive files from pipline or parameter input.
 
-### Clipboard
+### PscxClipboard
 
-#### `Get-Clipboard`
+#### `Get-PscxClipboard`
 
 Gets data from the clipboard.
 
-#### `Out-Clipboard`
+#### `Out-PscxClipboard`
 
 Formats text via Out-String before placing in clipboard. Can also place string in clipboard as a file.
 
-#### `Set-Clipboard`
+#### `Set-PscxClipboard`
 
 Puts the specified object into the system clipboard.
 
-#### `Write-Clipboard`
+#### `Write-PscxClipboard`
 
 Writes objects to the clipboard using their string representation, bypassing the default PowerShell formatting.
 
@@ -266,9 +268,9 @@ Gets the hash value for the specified file or byte array via the pipeline.
 
 Create a PSObject from a dictionary such as a hashtable.
 
-### Hex
+### PscxHex
 
-#### `Format-Hex`
+#### `Format-PsxHex`
 
 System.Object[]
 
@@ -306,9 +308,9 @@ Gets an HTTP resource or optionally the headers associated with the resource.
 
 Creates NTFS directory junctions.
 
-### LocationEx
+### PscxLocation
 
-#### `Set-LocationEx`
+#### `Set-PscxLocation`
 
 CD function that tracks location history allowing easy navigation to previous locations.
 
@@ -527,7 +529,7 @@ Outputs text as spoken words.
 
 ### String
 
-#### `Join-String`
+#### `Join-PscxString`
 
 Joins an array of strings into a single string.
 
@@ -585,9 +587,9 @@ Get-TypeName displays the typename of the input object.
 
 Converts the line endings in the specified file to Unix line endings "\n".
 
-### Uptime
+### PscxUptime
 
-#### `Get-Uptime`
+#### `Get-PscxUptime`
 
 Gets the operating system's uptime and last bootup time.
 

@@ -121,7 +121,6 @@
         'Out-Speech',
         'PscxHelp',
         'PscxLess',
-        'prompt',
         'QuoteList',
         'QuoteString',
         'Resolve-ErrorRecord',
@@ -180,6 +179,7 @@
 
 * Renamed less function to PscxLess
 * Renamed help function to PscxHelp
+* Renamed prompt function to PscxPrompt.
 
 * Changed Pscx to only override the built-in help function if PageHelpUsingLess Pscx.UserPreference is $true
 * Changed default value of Pscx.UserPreference to be $true only on PowerShell v5.
