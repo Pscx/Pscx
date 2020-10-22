@@ -28,7 +28,7 @@
         'Format-Byte',
         'Format-PscxHex',
         'Format-Xml',
-        'Get-ADObject',
+        'Get-PscxADObject',
         'Get-AdoConnection',
         'Get-AdoDataProvider',
         'Get-PscxClipboard',
@@ -104,7 +104,7 @@
         'Edit-HostProfile',
         'Enable-OpenPowerShellHere',
         'Get-ExecutionTime',
-        'Get-Help',
+        'Get-PscxHelp',
         'Get-Parameter',
         'Get-PropertyValue',
         'Get-ScreenCss',
@@ -121,7 +121,6 @@
         'Out-Speech',
         'PscxHelp',
         'PscxLess',
-        'prompt',
         'QuoteList',
         'QuoteString',
         'Resolve-ErrorRecord',
@@ -134,8 +133,8 @@
         'Start-PowerShell',
         'Stop-RemoteProcess',
         'Set-PscxLocation',
-        'Dismount-VHD',
-        'Mount-VHD'
+        'Dismount-PscxVHD',
+        'Mount-PscxVHD'
     )
     FormatsToProcess   = @(
         'FormatData\Pscx.Format.ps1xml',
@@ -178,8 +177,12 @@
             ReleaseNotes = @'
 4.0.0-beta2 - November XX, 2020
 
-* Renamed less function to PscxLess
-* Renamed help function to PscxHelp
+* Renamed less function to PscxLess.
+* Renamed help function to PscxHelp.
+* Renamed prompt function to PscxPrompt.
+* Renamed Get-ADObject to Get-PscxADObject.
+* Renamed Get-Help to Get-PscxHelp.
+* Renamed Mount/Dismount-VHD to Mount/Dismount-PscxVHD.
 
 * Changed Pscx to only override the built-in help function if PageHelpUsingLess Pscx.UserPreference is $true
 * Changed default value of Pscx.UserPreference to be $true only on PowerShell v5.

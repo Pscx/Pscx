@@ -233,6 +233,32 @@ foreach ($key in $keys)
     }
 }
 
+if ($Pscx:Preferences.ModulesToImport["Prompt"]) {
+    # Get the default prompt definition.
+    $initialSessionState = [System.Management.Automation.Runspaces.Runspace]::DefaultRunspace.InitialSessionState
+    if (!$initialSessionState -or !$initialSessionState.PSObject.Properties.Match('Commands') -or !$initialSessionState.Commands['prompt']) {
+        $defaultPromptDef = "`$(if (test-path variable:/PSDebugContext) { '[DBG]: ' } else { '' }) + 'PS ' + `$(Get-Location) + `$(if (`$nestedpromptlevel -ge 1) { '>>' }) + '> '"
+    }
+    else {
+        $defaultPromptDef = $initialSessionState.Commands['prompt'].Definition
+    }
+
+    $currentPromptDef = if ($funcInfo = Get-Command prompt -ErrorAction SilentlyContinue) { $funcInfo.Definition }
+
+    if (!$currentPromptDef) {
+        # If prompt is missing, create a global one we can overwrite with Set-Item
+        function global:prompt { ' ' }
+    }
+
+    $pscxPromptScriptBlock = (Get-Command PscxPrompt -Type Function).ScriptBlock
+
+    # If there is no prompt function or the prompt function is the default, replace the current prompt function definition
+    if (!$currentPromptDef -or ($currentPromptDef -eq $defaultPromptDef)) {
+        # Set the posh-git prompt as the default prompt
+        Set-Item Function:\prompt -Value $pscxPromptScriptBlock
+    }
+}
+
 if ($Pscx:Preferences.ShowModuleLoadDetails)
 {
     Write-Host "`nTotal module load time: $totalModuleLoadTimeMs mS"

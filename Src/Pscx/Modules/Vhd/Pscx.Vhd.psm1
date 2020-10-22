@@ -6,7 +6,7 @@ function ScriptDiskPart($script)
 
     try
     {
-        Set-Content $file $script -Encoding utf8 
+        Set-Content $file $script -Encoding utf8
         & diskpart /s $file > $null
     }
     finally
@@ -29,7 +29,7 @@ function EnsureFileExists($VHD)
 .PARAMETER Path
     Path to the VHD file.
 #>
-function Mount-VHD
+function Mount-PscxVHD
 {
     [CmdletBinding()]
     param
@@ -43,7 +43,7 @@ function Mount-VHD
         select vdisk file="$Path"
         attach vdisk
 "@
-    
+
 }
 
 <#
@@ -52,20 +52,20 @@ function Mount-VHD
 .PARAMETER Path
     Path to the VHD file.
 #>
-function Dismount-VHD
+function Dismount-PscxVHD
 {
     [CmdletBinding()]
     param
     (
         [Parameter(Position=1, Mandatory=$true)]
         $Path
-    ) 
+    )
 
     EnsureFileExists $Path
     ScriptDiskPart @"
         select vdisk file="$Path"
         detach vdisk
-"@ 
+"@
 }
 
-Export-ModuleMember Mount-VHD, Dismount-VHD
+Export-ModuleMember Mount-PscxVHD, Dismount-PscxVHD
