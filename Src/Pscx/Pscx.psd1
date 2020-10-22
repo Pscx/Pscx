@@ -104,7 +104,7 @@
         'Edit-HostProfile',
         'Enable-OpenPowerShellHere',
         'Get-ExecutionTime',
-        'Get-Help',
+        'Get-PscxHelp',
         'Get-Parameter',
         'Get-PropertyValue',
         'Get-ScreenCss',
@@ -181,6 +181,7 @@
 * Renamed help function to PscxHelp.
 * Renamed prompt function to PscxPrompt.
 * Renamed Get-ADObject to Get-PscxADObject.
+* Renamed Get-Help to Get-PscxHelp.
 * Renamed Mount/Dismount-VHD to Mount/Dismount-PscxVHD.
 
 * Changed Pscx to only override the built-in help function if PageHelpUsingLess Pscx.UserPreference is $true
