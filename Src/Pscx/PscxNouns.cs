@@ -32,7 +32,7 @@ namespace Pscx
         public const String Xml = "Xml";
 
         // DirectoryServices
-        public const String ADObject = "ADObject";
+        public const String ADObject = "PscxADObject";
         public const String DhcpServer = "DhcpServer";
         public const String DomainController = "DomainController";
 
@@ -74,8 +74,8 @@ namespace Pscx
         public const String PEHeader = "PEHeader";
 
         // Database
-        public const String SqlData = "SqlData"; 
-        public const String SqlDataSet = "SqlDataSet"; 
+        public const String SqlData = "SqlData";
+        public const String SqlDataSet = "SqlDataSet";
         public const String SqlCommand = "SqlCommand";
         public const String OleDbData = "OleDbData";
         public const String OleDbDataSet = "OleDbDataSet";
