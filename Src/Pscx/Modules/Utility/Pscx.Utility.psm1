@@ -130,7 +130,7 @@ filter New-HashObject {
     Specifies the input object. Invoke-Ternary injects the InputObject into each scriptblock
     provided via the Condition, TrueBlock and FalseBlock parameters.
 .EXAMPLE
-    C:\PS> $toolPath = ?: {[IntPtr]::Size -eq 4} {"$env:ProgramFiles(x86)\Tools"} {"$env:ProgramFiles\Tools"}}
+    C:\PS> $toolPath = ?: {[IntPtr]::Size -eq 4} {"$env:ProgramFiles(x86)\Tools"} {"$env:ProgramFiles\Tools"}
     Each input number is evaluated to see if it is > 5.  If it is then "Greater than 5" is
     displayed otherwise "Less than or equal to 5" is displayed.
 .EXAMPLE
