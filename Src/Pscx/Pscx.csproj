@@ -18,7 +18,7 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -469,7 +469,7 @@ if not exist "$(TargetDir)Apps" (
   @echo "Creating $(TargetDir)Apps"
   mkdir "$(TargetDir)Apps"
 )
-xcopy "$(SolutionDir)..\Imports\Less-394\*.*" "$(TargetDir)Apps" /R /Y /F
+xcopy "$(SolutionDir)..\Imports\Less-553\*.*" "$(TargetDir)Apps" /R /Y /F
 
 </PostBuildEvent>
     <PreBuildEvent>xcopy "$(SolutionDir)ReleaseNotes.txt" "$(TargetDir)" /D /R /Y

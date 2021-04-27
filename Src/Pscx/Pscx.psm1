@@ -1,8 +1,8 @@
 ﻿# -----------------------------------------------------------------------
-# Desc: This is the PSCX initialization module script that loads nested 
+# Desc: This is the PSCX initialization module script that loads nested
 #       modules.  Which nested modules are loaded is controlled via
 #       $Pscx:Preferences.ModulesToImport.  You can override the default
-#       settings by passing either a file containing the appropriate 
+#       settings by passing either a file containing the appropriate
 #       settings in hashtable form as shown in Pscx.Options.ps1 or you
 #       can pass in a hashtable with the appropriate settings directly.
 # -----------------------------------------------------------------------
@@ -16,21 +16,21 @@ function WriteUsage([string]$msg)
     $moduleNames = $Pscx:Preferences.ModulesToImport.Keys | Sort
 
     if ($msg) { Write-Host $msg }
-    
+
     $OFS = ','
     Write-Host @"
- 
-To load all PSCX modules using the default PSCX preferences execute: 
+
+To load all PSCX modules using the default PSCX preferences execute:
 
     Import-Module Pscx
-    
+
 To load all PSCX modules except a few, pass in a hashtable containing
 a nested hashtable called ModulesToImport.  In this nested hashtable
-add the module name you want to suppress and set its value to false e.g.: 
+add the module name you want to suppress and set its value to false e.g.:
 
     Import-Module Pscx -args @{ModulesToImport = @{DirectoryServices = $false}}
-    
-To have complete control over which PSCX modules load as well as the PSCX 
+
+To have complete control over which PSCX modules load as well as the PSCX
 options, copy the Pscx.UserPreferences.ps1 file to your home dir. Edit this
 file and modify the settings as desired.  Then pass the path to this file as
 an argument to Import-Module as shown below:
@@ -40,7 +40,7 @@ an argument to Import-Module as shown below:
 The nested module names are:
 
 $moduleNames
- 
+
 "@
 }
 
@@ -61,7 +61,7 @@ function UpdateDefaultPreferencesWithUserPreferences([hashtable]$userPreferences
         if ($key -eq 'ModulesToImport')
         {
             foreach ($modkey in $userPreferences.ModulesToImport.Keys)
-            {	
+            {
                 if ($Pscx:Preferences.ModulesToImport.ContainsKey($modkey))
                 {
                     $Pscx:Preferences.ModulesToImport.$modkey = $userPreferences.ModulesToImport.$modkey
@@ -74,22 +74,22 @@ function UpdateDefaultPreferencesWithUserPreferences([hashtable]$userPreferences
         }
         else
         {
-            $Pscx:Preferences.$key = $userPreferences.$key		
+            $Pscx:Preferences.$key = $userPreferences.$key
         }
     }
 }
 
 # -----------------------------------------------------------------------
-# Process module arguments - allows user to override the default options 
+# Process module arguments - allows user to override the default options
 # using Import-Module -args
 # -----------------------------------------------------------------------
-if ($args.Length -gt 0) 
+if ($args.Length -gt 0)
 {
-    if ($args[0] -eq 'help') 
+    if ($args[0] -eq 'help')
     {
         # Display help/usage info
         WriteUsage
-        return	
+        return
     }
     elseif ($args[0] -is [hashtable])
     {
@@ -99,8 +99,8 @@ if ($args.Length -gt 0)
     elseif (Test-Path $args[0])
     {
         # Attempt to load the user specified settings by executing the specified script
-        $userPreferences = & $args[0]	
-        if ($userPreferences -isnot [hashtable]) 
+        $userPreferences = & $args[0]
+        if ($userPreferences -isnot [hashtable])
         {
             WriteUsage "'$($args[0])' must return a hashtable instead of a $($userPreferences.GetType().FullName)"
             return
@@ -112,35 +112,44 @@ if ($args.Length -gt 0)
     {
         # Display help/usage info
         WriteUsage "'$($args[0])' is not recognized as either a hashtable or a valid path"
-        return		
+        return
     }
-}	
+}
 
 # -----------------------------------------------------------------------
 # Cmdlet aliases
 # -----------------------------------------------------------------------
-Set-Alias gtn   Pscx\Get-TypeName    -Description "PSCX alias"
-Set-Alias fhex  Pscx\Format-Hex      -Description "PSCX alias"
-Set-Alias cvxml Pscx\Convert-Xml     -Description "PSCX alias"
-Set-Alias fxml  Pscx\Format-Xml      -Description "PSCX alias"
-Set-Alias gcb   Pscx\Get-Clipboard   -Description "PSCX alias"
-Set-Alias ocb   Pscx\Out-Clipboard   -Description "PSCX alias"
-Set-Alias lorem Pscx\Get-LoremIpsum  -Description "PSCX alias"
-Set-Alias ln    Pscx\New-HardLink    -Description "PSCX alias"
-Set-Alias touch Pscx\Set-FileTime    -Description "PSCX alias"
-Set-Alias tail  Pscx\Get-FileTail    -Description "PSCX alias"
-Set-Alias skip  Pscx\Skip-Object     -Description "PSCX alias"
+Set-Alias gtn   Pscx\Get-TypeName      -Description "PSCX alias"
+Set-Alias fhex  Pscx\Format-PscxHex    -Description "PSCX alias"
+Set-Alias cvxml Pscx\Convert-Xml       -Description "PSCX alias"
+Set-Alias fxml  Pscx\Format-Xml        -Description "PSCX alias"
+Set-Alias ocb   Pscx\Out-PscxClipboard -Description "PSCX alias"
+Set-Alias lorem Pscx\Get-LoremIpsum    -Description "PSCX alias"
+Set-Alias ln    Pscx\New-HardLink      -Description "PSCX alias"
+Set-Alias touch Pscx\Set-FileTime      -Description "PSCX alias"
+Set-Alias tail  Pscx\Get-FileTail      -Description "PSCX alias"
+Set-Alias skip  Pscx\Skip-Object       -Description "PSCX alias"
 
 # Compatibility alias
 Set-Alias Resize-Bitmap Pscx\Set-BitmapSize -Description "PSCX alias"
+
+if ($Pscx:Preferences["PageHelpUsingLess"]) {
+    if ($PSVersionTable.PSVersion.Major -le 5) {
+        Set-Alias help PscxHelp -Option AllScope -Scope Global -Description "PSCX alias"
+    }
+    elseif (!(Test-Path Env:PAGER)) {
+        # Only set this env var if someone has not defined it themselves
+        $env:PAGER = 'less "-PsPage %db?B of %D:.\. Press h for help or q to quit\.$"'
+    }
+}
 
 # -----------------------------------------------------------------------
 # Load nested modules selected by user
 # -----------------------------------------------------------------------
 $stopWatch = new-object System.Diagnostics.StopWatch
 $keys = @($Pscx:Preferences.ModulesToImport.Keys)
-if ($Pscx:Preferences.ShowModuleLoadDetails) 
-{ 
+if ($Pscx:Preferences.ShowModuleLoadDetails)
+{
     Write-Host "PowerShell Community Extensions $($Pscx:Version)`n"
     $totalModuleLoadTimeMs = 0
     $stopWatch.Reset()
@@ -150,82 +159,108 @@ if ($Pscx:Preferences.ShowModuleLoadDetails)
 
 foreach ($key in $keys)
 {
-    if ($Pscx:Preferences.ShowModuleLoadDetails) 
+    if ($Pscx:Preferences.ShowModuleLoadDetails)
     {
         $stopWatch.Reset()
         $stopWatch.Start()
         Write-Host " $key $(' ' * (20 - $key.length))[ " -NoNewline
     }
-    
-    if (!$Pscx:Preferences.ModulesToImport.$key) 
-    { 	
-        # Not selected for loading by user 
-        if ($Pscx:Preferences.ShowModuleLoadDetails) 
-        {	
+
+    if (!$Pscx:Preferences.ModulesToImport.$key)
+    {
+        # Not selected for loading by user
+        if ($Pscx:Preferences.ShowModuleLoadDetails)
+        {
             Write-Host "Skipped" -nonew
-        }		
+        }
     }
-    else 
+    else
     {
         $subModuleBasePath = "$PSScriptRoot\Modules\{0}\Pscx.{0}" -f $key
-        
+
         # Check for PSD1 first
         $path = "$subModuleBasePath.psd1"
-        if (!(Test-Path -PathType Leaf $path)) 
+        if (!(Test-Path -PathType Leaf $path))
         {
             # Assume PSM1 only
             $path = "$subModuleBasePath.psm1"
             if (!(Test-Path -PathType Leaf $path))
             {
                 # Missing/invalid module
-                if ($Pscx:Preferences.ShowModuleLoadDetails) 
+                if ($Pscx:Preferences.ShowModuleLoadDetails)
                 {
                     Write-Host "Module $path is missing ]"
-                } 
-                else 
+                }
+                else
                 {
                     Write-Warning "Module $path is missing."
-                }			
+                }
                 continue
             }
         }
-        
-        try 
+
+        try
         {
             # Don't complain about non-standard verbs with nested imports but
             # we will still have one complaint for the final global scope import
-            Import-Module $path -DisableNameChecking 
-            
-            if ($Pscx:Preferences.ShowModuleLoadDetails) 
-            { 
+            Import-Module $path -DisableNameChecking
+
+            if ($Pscx:Preferences.ShowModuleLoadDetails)
+            {
                 $stopWatch.Stop()
                 $totalModuleLoadTimeMs += $stopWatch.ElapsedMilliseconds
                 $loadTimeMsg = "Loaded in {0,4} mS" -f $stopWatch.ElapsedMilliseconds
                 Write-Host $loadTimeMsg -nonew
             }
-        } 
-        catch 
+        }
+        catch
         {
             # Problem in module
-            if ($Pscx:Preferences.ShowModuleLoadDetails) 
+            if ($Pscx:Preferences.ShowModuleLoadDetails)
             {
-                Write-Host "Module $key load error: $_" -nonew 
-            } 
-            else 
+                Write-Host "Module $key load error: $_" -nonew
+            }
+            else
             {
                 Write-Warning "Module $key load error: $_"
             }
-        }		
-    } 
-    
-    if ($Pscx:Preferences.ShowModuleLoadDetails) 
-    { 
-        Write-Host " ]" 
+        }
+    }
+
+    if ($Pscx:Preferences.ShowModuleLoadDetails)
+    {
+        Write-Host " ]"
     }
 }
 
-if ($Pscx:Preferences.ShowModuleLoadDetails) 
-{ 
+if ($Pscx:Preferences.ModulesToImport["Prompt"]) {
+    # Get the default prompt definition.
+    $initialSessionState = [System.Management.Automation.Runspaces.Runspace]::DefaultRunspace.InitialSessionState
+    if (!$initialSessionState -or !$initialSessionState.PSObject.Properties.Match('Commands') -or !$initialSessionState.Commands['prompt']) {
+        $defaultPromptDef = "`$(if (test-path variable:/PSDebugContext) { '[DBG]: ' } else { '' }) + 'PS ' + `$(Get-Location) + `$(if (`$nestedpromptlevel -ge 1) { '>>' }) + '> '"
+    }
+    else {
+        $defaultPromptDef = $initialSessionState.Commands['prompt'].Definition
+    }
+
+    $currentPromptDef = if ($funcInfo = Get-Command prompt -ErrorAction SilentlyContinue) { $funcInfo.Definition }
+
+    if (!$currentPromptDef) {
+        # If prompt is missing, create a global one we can overwrite with Set-Item
+        function global:prompt { ' ' }
+    }
+
+    $pscxPromptScriptBlock = (Get-Command PscxPrompt -Type Function).ScriptBlock
+
+    # If there is no prompt function or the prompt function is the default, replace the current prompt function definition
+    if (!$currentPromptDef -or ($currentPromptDef -eq $defaultPromptDef)) {
+        # Set the posh-git prompt as the default prompt
+        Set-Item Function:\prompt -Value $pscxPromptScriptBlock
+    }
+}
+
+if ($Pscx:Preferences.ShowModuleLoadDetails)
+{
     Write-Host "`nTotal module load time: $totalModuleLoadTimeMs mS"
 }
 

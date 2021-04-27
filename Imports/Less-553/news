@@ -7,10 +7,381 @@
       http://www.greenwoodsoftware.com/less
   You can also download the latest version of less from there.
 
-  To report bugs, suggestions or comments, send email to bug-less@gnu.org.
+  To report bugs, suggestions or comments, send email to bug-less@gnu.org
 
 ======================================================================
 
+	Major changes between "less" versions 530 and 551
+
+* Add --mouse option.
+
+* Add --wheel-lines option.
+
+* Add --no-histdups option.
+
+* Add --save-marks option.
+
+* Support PCRE2 regular expression library.
+
+* Redraw screen on SIGWINCH even if screen size doesn't change.
+
+* Shell-escape filenames in history so they can be used again.
+
+* Ring bell if user enters invalid long option name.
+
+* Use PCRE_UTF8 flag for pcre regular expressions when in UTF-8 mode.
+
+* Windows: use wide-char string to set console title.
+
+* Don't count lines in initial screen if using -X with -F.
+
+* Support mingw build system.
+
+* Fix bug in v command on empty file.
+
+* Fix bug in v command when filename contains shell metacharacters.
+
+======================================================================
+
+	Major changes between "less" versions 487 and 530
+
+* Don't output terminal init sequence if using -F and file fits on one screen.
+
+* When using -S, mark truncated lines with a special character.
+  The character can be changed or disabled via the new --rscroll option.
+
+* New command M marks the last line displayed on the screen.
+
+* New command ESC-m removes a line mark.
+
+* Status column (enabled via -J) now shows mark letters.
+
+* Status column shows search matches even if highlighting is disabled via -G.
+
+* A second ESC-u command will clear search match markers in the status column.
+
+* Do same ANSI escape code filtering for tag matching that we do for 
+  searching, to help when viewing syntax-highlighted code.
+  
+* Catch SIGTERM and clean up before exiting.
+
+* Fix bug initializing default charset on Windows.
+
+* Handle keypad ENTER key correctly if it sends something other than newline.
+
+* Fix buffering bug when using stdin with a LESSOPEN pipe.
+
+* On Windows, allow 'u' in -D option to enable underlining.
+
+* On Windows, use underline in sgr mode.
+
+* On Windows, convert UTF-8 to multibyte if console is not UTF-8.
+
+* Update Unicode tables to 2017-03-08.
+
+* Pass-thru Unicode formating chars (Cf type) instead of treating them
+  as binary chars. But treat them as binary if -U is set.
+
+* Fix erroneous binary file warning when UTF-8 file contains ANSI SGR sequences.
+
+* Fix bugs when using LESSOPEN and switching between stdin and other files.
+
+* Fix some bugs handling filenames containing shell metacharacters.
+
+* Fix some memory leaks.
+
+* Allow some debugging environment variables to be set in lesskey file.
+
+* Code improvements:
+  . Use ANSI prototypes in funcs.h declarations.
+  . Fix some const mismatches.
+  . Remove archaic "register" in variable declarations.
+
+======================================================================
+
+	Major changes between "less" versions 481 and 487
+
+* New commands ESC-{ and ESC-} to shift to start/end of displayed lines.
+
+* Make search highlights work correctly when changing caselessness with -i.
+
+* New option -Da in Windows version to enable SGR mode.
+
+* Fix "nothing to search" error when top or bottom line on screen is empty.
+
+* Fix bug when terminal has no "cm" termcap entry.
+
+* Fix incorrect display when entering double-width chars in search string.
+
+* Fix bug in Unicode handling that missed some double width characters.
+
+* Update Unicode database to 9.0.0.
+
+======================================================================
+
+	Major changes between "less" versions 458 and 481
+
+* Don't overwrite history file; just append to it.
+
+* New command ESC-G goes to end of currently buffered data in a pipe.
+
+* Disable history feature when compiled with LESSHISTFILE set to "-".
+
+* In more-compatible mode, make the -p option apply to every file opened,
+  not just the first one.
+
+* In more-compatible mode, change the -e option to work like -E, not -EF.
+
+* Treat multiple CRs before LF are like one CR (all the CRs are hidden).
+
+* Allow "extra" string in lesskey file to append to a multi-char command
+  (like a search pattern), without executing the command.
+
+* Ignore -u/-U setting while viewing help file, so that 
+  underline and bold chars are displayed correctly.
+
+* Improve detection of "binary" files in UTF-8 mode.
+
+* Fix bug with ++ commands.
+
+* Fix bug where prompt was sometimes not displayed with +G.
+
+* Fix possible memory corruption 
+
+* Fix bugs and improve performance in ampersand filtering.
+
+* Automate construction of Unicode tables from Unicode database.
+
+* Allow %% escape sequence in LESSOPEN variable.
+
+======================================================================
+
+	Major changes between "less" versions 451 and 458
+
+* Allow backslash escaping of metacharacters in LESS environment variable
+  after the --use-backslash option.
+
+* Don't quit if syntax errors are found in command line options.
+
+* Increase sizes of some internal buffers.
+
+* Fix configure bug with --with-regex=none.
+
+* Fix crash with "stty rows 0".
+
+* Fix Win32 attribute display bug.
+
+* Fix display bug when using up/down arrow on the command line.
+
+======================================================================
+
+	Major changes between "less" versions 444 and 451
+
+* Add ESC-F command to keep reading data until a pattern is found.
+
+* Use exit code of LESSOPEN script if LESSOPEN starts with "||".
+
+* When up/down arrow is used on the command line immediately after
+  typing text, the next command starting with that text is found.
+
+* Add support for GNU regex.
+
+* Add configure option --with-regex=none and fix compile errors
+  when compiling with no regex library.
+
+* Fix bugs handling SGR sequences in Win32.
+
+* Fix possible crashes caused by malformed LESSOPEN or 
+  LESSCLOSE variables.
+
+* Fix bug highlighting text which is discontiguous in the file 
+  due to backspace processing.
+
+* Fix bug in displaying status column when scrolling backwards 
+  with -J and -S in effect.
+
+======================================================================
+
+	Major changes between "less" versions 443 and 444
+
+* Fix bug in unget handling that can cause strange effects on the
+  command line.
+
+* Remove vestiges of obsolete -l option that can cause a crash.
+
+======================================================================
+
+	Major changes between "less" versions 436 and 443
+
+* Change search behavior such that when a search is given an explicit 
+  pattern, the entire displayed screen is included in the search and 
+  not just the portion after the target line.
+
+* Add -A option to change search behavior to the old way: only
+  the portion of the screen after the target line is searched.
+
+* Add %F formatting to prompt strings, replaced by the last component
+  of the input file.
+
+* Control-G while editing a command exits the command.
+
+* Less now exits with status 2 if control-C is pressed and -K is in effect.
+
+* Fix "ungetc overflow" when passing long commands via the -p option.
+
+* Fix bug in using line filtering via the & command 
+  in combination with -i and -I.
+
+* Fix bug in handling negative arguments to the -j option.
+
+* Fix bug in handling %t in prompt strings.
+
+* Improve handling of long option names.
+
+* Improve percentage calculation for very large files.
+
+======================================================================
+
+	Major changes between "less" versions 429 and 436
+
+* Don't pass "-" to non-pipe LESSOPEN unless it starts with "-".
+
+* Allow a fraction as the argument to the -# (--shift) option.
+
+* Fix highlight bug when underlined/overstruck text matches at end of line.
+
+* Fix non-regex searches with ctrl-R.
+
+======================================================================
+
+	Major changes between "less" versions 424 and 429
+
+* LESSOPEN pipe will now be used on standard input, if the LESSOPEN
+  environment variable begins with "|-".
+
+* The -D option with one number now means use the normal background color.
+
+* Don't change permissions on history file if it is not a regular file.
+
+* Fix non-ANSI-compliant code that caused problems with some compilers.
+
+* Fix binary file detection in UTF-8 mode.
+
+* Fix display problems with long lines on "ignaw" terminals.
+
+* Fix problem interrupting the line number calculation for initial prompt.
+
+* Fix SGR emulation when dealing with multiple attributes (eg. bold+underline).
+
+* Fix highlight bug when searching for underlined/overstruck text.
+
+======================================================================
+
+	Major changes between "less" versions 418 and 424
+
+* New "&" command allows filtering of lines based on a pattern.
+
+* Status column now displays a search match, even if the matched
+  string is scrolled off screen because -S is in effect.
+
+* Improve behavior of -F option.
+
+* Allow CSI character (0x9B) to work in UTF-8 mode.
+
+* Output carriage return at startup in case terminal doesn't default
+  to column 1.
+
+* Fix bug in '' (quote, quote) command after G command.
+
+======================================================================
+
+	Major changes between "less" versions 416 and 418
+
+* Color escape sequences are now supported in WIN32 build.
+
+* Makefile now uses EXEEXT feature of autoconf.
+
+* Fix search bug when using -R and text contains ANSI color escape sequences.
+
+* Fix crash when using -r with UTF-8 text containing 0x9B bytes.
+
+* Fix display bug when using ' command to move less than one page forward.
+
+* Update GPL to version 3.
+
+======================================================================
+
+	Major changes between "less" versions 409 and 416
+
+* New --follow-name option makes F command follow the name of a file
+  rather than the file descriptor if an open file is renamed.
+
+* Make searching with -i/-I work correctly with non-ASCII text.
+
+* Fix DJGPP build.
+
+======================================================================
+
+	Major changes between "less" versions 406 and 409
+
+* Support CSI escape sequences, like SGR escape sequences.
+
+* Fix bug which caused screen to fail to repaint when window is resized.
+
+* Fix bug in using -i and -I flags with non-ASCII text.
+
+* Fix configure bug on systems which don't support langinfo.h.
+
+* Fix crash when searching text containing certain invalid UTF-8 sequences.
+
+======================================================================
+
+	Major changes between "less" versions 394 and 406
+
+* Allow decimal point in number for % (percent) command.
+
+* Allow decimal point in number for -j option (fraction of screen height).
+
+* Make n command fetch previous pattern from history file on first search.
+
+* Don't rewrite history file if it has not changed.
+
+* Don't move to bottom of screen on first page.
+
+* Don't output extraneous newlines, so copy & pasting lines from the
+  output works better.
+
+* The -c option has been made identical with the -C option.
+
+* Allow "/dev/null" as synomym for "-" in LESSHISTFILE to indicate
+  that no history file should be used.
+
+* Search can now find text which follows a null byte, if the PCRE
+  library is used, or if no-regex searching (ctrl-R) is used.
+
+* Better compatibility with POSIX more specification.
+
+* Make -f work for directories.
+
+* Make "t" cmd traverse tags in the correct order.
+
+* Allow a few binary characters in the input file before warning
+  that the file is binary.
+
+* Don't warn that file is binary if it merely contains ANSI color sequences
+  and -R is in effect.
+
+* Update Unicode character tables.
+
+* Support DESTDIR in Makefile.
+
+* Fix bug when filename contains certain shell metacharacters such as "$".
+
+* Fix bug when resizing the window while waiting for input from a pipe.
+
+* Fix configure bugs.
+
+======================================================================
 
 	Major changes between "less" versions 382 and 394
 
@@ -632,3 +1003,8 @@
 * Lesskey files may now include characters after the action as
   extra input to be parsed after the action; for example:
   "toggle-option X" to toggle a specific option X.
+
+
+
+
+

@@ -6,9 +6,7 @@ Set-Alias ep    Pscx\Edit-Profile           -Description "PSCX alias"
 Set-Alias gpar  Pscx\Get-Parameter          -Description "PSCX alias"
 Set-Alias su    Pscx\Invoke-Elevated        -Description "PSCX alias"
 Set-Alias igc   Pscx\Invoke-GC              -Description "PSCX alias"
-Set-Alias ??    Pscx\Invoke-NullCoalescing  -Description "PSCX alias"
 Set-Alias call  Pscx\Invoke-Method          -Description "PSCX alias"
-Set-Alias ?:    Pscx\Invoke-Ternary         -Description "PSCX alias"
 Set-Alias nho   Pscx\New-HashObject         -Description "PSCX alias"
 Set-Alias ql    Pscx\QuoteList              -Description "PSCX alias"
 Set-Alias qs    Pscx\QuoteString            -Description "PSCX alias"
@@ -263,72 +261,139 @@ function Invoke-NullCoalescing {
 .FORWARDHELPTARGETNAME Get-Help
 .FORWARDHELPCATEGORY Cmdlet
 #>
-function help
+function PscxHelp
 {
-    [CmdletBinding(DefaultParameterSetName='AllUsersView', HelpUri='http://go.microsoft.com/fwlink/?LinkID=113316')]
+    [CmdletBinding(DefaultParameterSetName='AllUsersView', HelpUri='https://go.microsoft.com/fwlink/?LinkID=113316')]
     param(
         [Parameter(Position=0, ValueFromPipelineByPropertyName=$true)]
-        [System.String]
+        [string]
         ${Name},
 
-        [System.String]
+        [string]
         ${Path},
 
-        [ValidateSet('Alias','Cmdlet','Provider','General','FAQ','Glossary','HelpFile','ScriptCommand','Function','Filter','ExternalScript','All','DefaultHelp','Workflow')]
-        [System.String[]]
+        [ValidateSet('Alias','Cmdlet','Provider','General','FAQ','Glossary','HelpFile','ScriptCommand','Function','Filter','ExternalScript','All','DefaultHelp','DscResource','Class','Configuration')]
+        [string[]]
         ${Category},
 
-        [System.String[]]
-        ${Component},
-
-        [System.String[]]
-        ${Functionality},
-
-        [System.String[]]
-        ${Role},
-
         [Parameter(ParameterSetName='DetailedView', Mandatory=$true)]
-        [Switch]
+        [switch]
         ${Detailed},
 
         [Parameter(ParameterSetName='AllUsersView')]
-        [Switch]
+        [switch]
         ${Full},
 
         [Parameter(ParameterSetName='Examples', Mandatory=$true)]
-        [Switch]
+        [switch]
         ${Examples},
 
         [Parameter(ParameterSetName='Parameters', Mandatory=$true)]
-        [System.String]
+        [string[]]
         ${Parameter},
 
-       [Parameter(ParameterSetName='Online', Mandatory=$true)]
-       [switch]
-       ${Online},
+        [string[]]
+        ${Component},
 
-       [Parameter(ParameterSetName='ShowWindow', Mandatory=$true)]
-       [switch]
-       ${ShowWindow}
-    )
+        [string[]]
+        ${Functionality},
 
-    $outputEncoding=[System.Console]::OutputEncoding
+        [string[]]
+        ${Role},
 
-    if ($Pscx:Preferences["PageHelpUsingLess"])
-    {
-        Get-Help @PSBoundParameters | less
+        [Parameter(ParameterSetName='Online', Mandatory=$true)]
+        [switch]
+        ${Online},
+
+        [Parameter(ParameterSetName='ShowWindow', Mandatory=$true)]
+        [switch]
+        ${ShowWindow}
+     )
+
+    # Display the full help topic by default but only for the AllUsersView parameter set.
+    if (($psCmdlet.ParameterSetName -eq 'AllUsersView') -and !$Full) {
+        $PSBoundParameters['Full'] = $true
     }
-    else
-    {
-        Get-Help @PSBoundParameters | more
+
+    # Nano needs to use Unicode, but Windows and Linux need the default
+    $OutputEncoding = [System.Console]::OutputEncoding
+
+    $help = Get-Help @PSBoundParameters
+
+    # If a list of help is returned or AliasHelpInfo (because it is small), don't pipe to more
+    $psTypeNames = ($help | Select-Object -First 1).PSTypeNames
+    if ($psTypeNames -Contains 'HelpInfoShort' -Or $psTypeNames -Contains 'AliasHelpInfo') {
+        $help
+    }
+    elseif ($help -ne $null) {
+        # By default use more on Windows and less on Linux.
+        if ($Pscx:Preferences["PageHelpUsingLess"]) {
+            $pagerCommand = "$Pscx:Home\Apps\less.exe"
+            $pagerArgs = '-Ps"Page %db?B of %D:.\. Press h for help or q to quit\.$"'
+        }
+        else {
+            $pagerCommand = 'more.com'
+            $pagerArgs = $null
+        }
+
+        # Respect PAGER environment variable which allows user to specify a custom pager.
+        # Ignore a pure whitespace PAGER value as that would cause the tokenizer to return 0 tokens.
+        if (![string]::IsNullOrWhitespace($env:PAGER)) {
+            if (Get-Command $env:PAGER -ErrorAction Ignore) {
+                # Entire PAGER value corresponds to a single command.
+                $pagerCommand = $env:PAGER
+                $pagerArgs = $null
+            }
+            else {
+                # PAGER value is not a valid command, check if PAGER command and arguments have been specified.
+                # Tokenize the specified $env:PAGER value. Ignore tokenizing errors since any errors may be valid
+                # argument syntax for the paging utility.
+                $errs = $null
+                $tokens = [System.Management.Automation.PSParser]::Tokenize($env:PAGER, [ref]$errs)
+
+                $customPagerCommand = $tokens[0].Content
+                if (!(Get-Command $customPagerCommand -ErrorAction Ignore)) {
+                    # Custom pager command is invalid, issue a warning.
+                    Write-Warning "Custom-paging utility command not found. Ignoring command specified in `$env:PAGER: $env:PAGER"
+                }
+                else {
+                    # This approach will preserve all the pagers args.
+                    $pagerCommand = $customPagerCommand
+                    $pagerArgs = if ($tokens.Count -gt 1) {$env:PAGER.Substring($tokens[1].Start)} else {$null}
+                }
+            }
+        }
+
+        $pagerCommandInfo = Get-Command -Name $pagerCommand -ErrorAction Ignore
+        if ($pagerCommandInfo -eq $null) {
+            $help
+        }
+        elseif ($pagerCommandInfo.CommandType -eq 'Application') {
+            # If the pager is an application, format the output width before sending to the app.
+            $consoleWidth = [System.Math]::Max([System.Console]::WindowWidth, 20)
+
+            if ($pagerArgs) {
+                # Supply pager arguments to an application without any PowerShell parsing of the arguments.
+                # Leave environment variable to help user debug arguments supplied in $env:PAGER.
+                $env:__PSPAGER_ARGS = $pagerArgs
+                $help | Out-String -Stream -Width ($consoleWidth - 1) | & $pagerCommand --% %__PSPAGER_ARGS%
+            }
+            else {
+                $help | Out-String -Stream -Width ($consoleWidth - 1) | & $pagerCommand
+            }
+        }
+        else {
+            # The pager command is a PowerShell function, script or alias, so pipe directly into it.
+            $help | & $pagerCommand $pagerArgs
+        }
     }
 }
 
 <#
 .SYNOPSIS
-    Less provides better paging of output from cmdlets.
+    PscxLess provides better paging of output from cmdlets.
 .DESCRIPTION
-    Less provides better paging of output from cmdlets.
+    PscxLess provides better paging of output from cmdlets.
     By default PowerShell uses more.com for paging which is a pretty minimal paging app that doesn't support advanced
     navigation features.  This function uses Less.exe ie Less394 as the replacement for more.com.  Less can navigate
     down as well as up and can be scrolled by page or by line and responds to the Home and End keys. Less also
@@ -350,14 +415,14 @@ function help
     the built-in PowerShell "more" function or the PSCX "less" function depending on the value of the
     PageHelpUsingLess preference variable.
 .EXAMPLE
-    C:\PS> less *.txt
+    C:\PS> PscxLess *.txt
     Opens each text file in less.exe in succession.  Pressing ':n' moves to the next file.
 .NOTES
     This function is just a passthru in all other hosts except for the PowerShell.exe console host.
 .LINK
     http://en.wikipedia.org/wiki/Less_(Unix)
 #>
-function less
+function PscxLess
 {
     param([string[]]$Path, [string[]]$LiteralPath)
 
@@ -392,6 +457,8 @@ function less
         }
     }
 
+    $lessPrompt = '-PsPage %db?B of %D:.\. Press h for help or q to quit\.$'
+
     # Tricky to get this just right.
     # Here are three test cases to verify all works as it should:
     # less *.txt      : Should bring up named txt file in less in succession, press q to go to next file
@@ -399,12 +466,12 @@ function less
     # man gcm -online : Should open help topic in web browser but not open less.exe
     if ($resolvedPaths)
     {
-        & "$Pscx:Home\Apps\less.exe" $resolvedPaths
+        & "$Pscx:Home\Apps\less.exe" $resolvedPaths $lessPrompt
     }
     elseif ($input.MoveNext())
     {
         $input.Reset()
-        $input | & "$Pscx:Home\Apps\less.exe"
+        $input | & "$Pscx:Home\Apps\less.exe" $lessPrompt
     }
 }
 
@@ -467,9 +534,11 @@ function Invoke-Elevated()
 {
     Write-Debug "`$MyInvocation:`n$($MyInvocation | Out-String)"
 
+    $escapedPath = [System.Management.Automation.Language.CodeGeneration]::EscapeSingleQuotedStringContent($pwd.ProviderPath)
+
     $startProcessArgs = @{
         FilePath     = "PowerShell.exe"
-        ArgumentList = "-NoExit", "-Command", "& {Set-Location '$pwd'}"
+        ArgumentList = "-NoExit", "-Command", "& {Set-Location '$escapedPath'}"
         Verb         = "runas"
         PassThru     = $true
         WorkingDir   = $pwd
@@ -489,7 +558,7 @@ function Invoke-Elevated()
         }
         else
         {
-            $startProcessArgs['ArgumentList'] = "-NoExit", "-Command", "& {Set-Location '$pwd'; $script}"
+            $startProcessArgs['ArgumentList'] = "-NoExit", "-Command", "& {Set-Location '$escapedPath'; $script}"
         }
         [string[]]$cmdArgs = @()
         if ($args.Count -gt 1)
@@ -521,7 +590,7 @@ function Invoke-Elevated()
         }
         else {
             $poshCmd = $args[0]
-            $startProcessArgs['ArgumentList'] = "-NoExit", "-Command", "& {Set-Location '$pwd'; $poshCmd $cmdArgs}"
+            $startProcessArgs['ArgumentList'] = "-NoExit", "-Command", "& {Set-Location '$escapedPath'; $poshCmd $cmdArgs}"
             Write-Debug "  Starting PowerShell command $poshCmd with args: $cmdArgs"
         }
     }
@@ -2164,33 +2233,57 @@ function Get-Parameter {
     Pop-EnvironmentBlock.
 .PARAMETER VisualStudioVersion
     The version of Visual Studio to import environment variables for. Valid
-    values are 2008, 2010, 2012 and 2013
+    values are 2008, 2010, 2012, 2013, 2015, 2017 and 2019.
 .PARAMETER Architecture
     Selects the desired architecture to configure the environment for.
-    Defaults to x86 if running in 32-bit PowerShell, otherwise defaults to
-    amd64.  Other valid values are: arm, x86_arm, x86_amd64, amd64_x86.
+    If this parameter isn't specified, the command will attempt to locate and
+    use VsDevCmd.bat.  If VsDevCmd.bat can't be found (not installed) then the
+    command will use vcvarsall.bat with either the argument x86 if running in
+    32-bit PowerShell or amd64 if running in 64-bit PowerShell. Other valid
+    values are: arm, x86_arm, x86_amd64, amd64_x86.
+.PARAMETER RequireWorkload
+    This parameter applies to Visual Studio 2017 and higher.  It allows you 
+    to specify which workloads are required for the environment you desire to
+    import.  This can be used when you have multiple versions of Visual Studio
+    2017 installed and different versions support different workloads e.g.
+    perhaps only the "Preview" version supports the 
+    Microsoft.VisualStudio.Component.VC.Tools.x86.x64 workload.
 .EXAMPLE
     C:\PS> Import-VisualStudioVars 2015
 
-    Sets up the environment variables to use the VS 2015 compilers. Defaults
-    to x86 if running in 32-bit PowerShell, otherwise defaults to amd64.
+    Sets up the environment variables to use the VS 2015 tools. If 
+    VsDevCmd.bat is found then it will use that. Otherwise, vcvarsall.bat will
+    be used with an architecture of either x86 for 32-bit Powershell, or amd64
+    for 64-bit Powershell.
 .EXAMPLE
     C:\PS> Import-VisualStudioVars 2013 arm
 
-    Sets up the environment variables for the VS 2013 ARM compiler.
+    Sets up the environment variables for the VS 2013 ARM tools.
+.EXAMPLE
+    C:\PS> Import-VisualStudioVars 2017 -Architecture amd64 -RequireWorkload Microsoft.VisualStudio.Component.VC.Tools.x86.x64
+
+    Finds an instance of VS 2017 that has the required workload and sets up
+    the environment variables to use that instance of the VS 2017 tools. 
+    To see a full list of available workloads, execute:
+    Get-VSSetupInstance | Foreach-Object Packages | Foreach-Object Id | Sort-Object
 #>
 function Import-VisualStudioVars
 {
     param
     (
         [Parameter(Position = 0)]
-        [ValidateSet('90', '2008', '100', '2010', '110', '2012', '120', '2013', '140', '2015', '150', '2017')]
+        [ValidateSet('90', '2008', '100', '2010', '110', '2012', '120', '2013', '140', '2015', '150', '2017','160','2019')]
         [string]
         $VisualStudioVersion,
 
         [Parameter(Position = 1)]
         [string]
-        $Architecture
+        $Architecture,
+
+        [Parameter()]
+        [ValidateNotNullOrEmpty()]
+        [string[]]
+        $RequireWorkload
     )
 
     begin {
@@ -2200,20 +2293,75 @@ function Import-VisualStudioVars
             $Architecture = $(if ($Pscx:Is64BitProcess) {'amd64'} else {'x86'})
         }
 
+        function GetSpecifiedVSSetupInstance($Version, [switch]$Latest, [switch]$FailOnMissingVSSetup) {
+            if ((Get-Module -Name VSSetup -ListAvailable) -eq $null) {
+                Write-Warning "You must install the VSSetup module to import Visual Studio variables for Visual Studio 2017 or higher."
+                Write-Warning "Install the VSSetup module with the command: Install-Module VSSetup -Scope CurrentUser"
+
+                if ($FailOnMissingVSSetup) {
+                    throw "VSSetup module is not installed, unable to import Visual Studio 2017 (or higher) environment variables."
+                }
+                else {
+                    # For the default (no VS version specified) case, we can look for earlier versions of VS.
+                    return $null
+                }
+            }
+
+            Import-Module VSSetup -ErrorAction Stop
+
+            $selectArgs = @{
+                Product = '*'
+            }
+
+            if ($Latest) {
+                $selectArgs['Latest'] = $true
+            }
+            elseif ($Version) {
+                $selectArgs['Version'] = $Version
+            }
+
+            if ($RequireWorkload -or $ArchSpecified) {
+                if (!$RequireWorkload) {
+                    # We get here when the architecture was specified but no worload, most likely these users want the C++ workload
+                    $RequireWorkload = 'Microsoft.VisualStudio.Component.VC.Tools.x86.x64'
+                }
+
+                $selectArgs['Require'] = $RequireWorkload
+            }
+
+            Write-Verbose "$($MyInvocation.MyCommand.Name) Select-VSSetupInstance args:"
+            Write-Verbose "$(($selectArgs | Out-String) -split "`n")"
+            $vsInstance = Get-VSSetupInstance | Select-VSSetupInstance @selectArgs | Select-Object -First 1
+            $vsInstance
+        } 
+
         function FindAndLoadBatchFile($ComnTools, $ArchSpecified, [switch]$IsAppxInstall) {
-            if (!$ArchSpecified) {
-                $batchFilePath = Convert-Path (Join-Path $ComnTools VsDevCmd.bat)
-                Write-Verbose "Invoking '$batchFilePath'"
+            $batchFilePath = Join-Path $ComnTools VsDevCmd.bat
+            if (!$ArchSpecified -and (Test-Path -LiteralPath $batchFilePath)) {
+                if ($IsAppxInstall) {
+                    # The newer batch files spit out a header that tells you which environment was loaded
+                    # so only write out the below message when -Verbose is specified.
+                    Write-Verbose "Invoking '$batchFilePath'"
+                }
+                else {
+                    "Invoking '$batchFilePath'"
+                }
+
                 Invoke-BatchFile $batchFilePath
             }
             else {
                 if ($IsAppxInstall) {
-                    $batchFilePath = Convert-Path (Join-Path $ComnTools ..\..\VC\Auxiliary\Build\vcvarsall.bat)
+                    $batchFilePath = Join-Path $ComnTools ..\..\VC\Auxiliary\Build\vcvarsall.bat
+
+                    # The newer batch files spit out a header that tells you which environment was loaded
+                    # so only write out the below message when -Verbose is specified.
+                    Write-Verbose "Invoking '$batchFilePath' $Architecture"
                 }
                 else {
-                    $batchFilePath = Convert-Path (Join-Path $ComnTools ..\..\VC\vcvarsall.bat)
+                    $batchFilePath = Join-Path $ComnTools ..\..\VC\vcvarsall.bat
+                    "Invoking '$batchFilePath' $Architecture"
                 }
-                Write-Verbose "Invoking '$batchFilePath' $Architecture"
+
                 Invoke-BatchFile $batchFilePath $Architecture
             }
         }
@@ -2251,33 +2399,42 @@ function Import-VisualStudioVars
             }
 
             '150|2017' {
-                if ((Get-Module -Name VSSetup -ListAvailable) -eq $null) {
-                    Write-Warning "You must install the VSSetup module to import Visual Studio variables for this version of Visual Studio."
-                    Write-Warning "Install this PowerShell module with the command: Install-Module VSSetup -Scope CurrentUser"
-                    throw "VSSetup module not installed, unable to import Visual Studio environment variables."
+                $vsInstance = GetSpecifiedVSSetupInstance -Version '[15.0,16.0)' -FailOnMissingVSSetup
+                if (!$vsInstance) {
+                    throw "No instances of Visual Studio 2017 found$(if ($RequireWorkload) {" for the required workload: $RequireWorkload"})."
                 }
-                Import-Module VSSetup -ErrorAction Stop
-                $installPath = Get-VSSetupInstance | 
-                               Select-VSSetupInstance -Version '[15.0,16.0)' -Require Microsoft.VisualStudio.Component.VC.Tools.x86.x64 | 
-                               Select-Object -First 1 | ForEach-Object InstallationPath
+
                 Push-EnvironmentBlock -Description "Before importing VS 2017 $Architecture environment variables"
+                $installPath = $vsInstance.InstallationPath
+                FindAndLoadBatchFile "$installPath/Common7/Tools" $ArchSpecified -IsAppxInstall
+            }
+
+            '160|2019' {
+                $vsInstance = GetSpecifiedVSSetupInstance -Version '[16.0,17.0)' -FailOnMissingVSSetup
+                if (!$vsInstance) {
+                    throw "No instances of Visual Studio 2019 found$(if ($RequireWorkload) {" for the required workload: $RequireWorkload"})."
+                }
+
+                Push-EnvironmentBlock -Description "Before importing VS 2019 $Architecture environment variables"
+                $installPath = $vsInstance.InstallationPath
                 FindAndLoadBatchFile "$installPath/Common7/Tools" $ArchSpecified -IsAppxInstall
             }
 
             default {
-                $envvar = Get-Item Env:\vs*comntools
-                if ($envvar) {
-                    $ver = ''
-                    if ($envvar.Name -match 'vs(.*?)comntools') {
-                        $ver = $matches[1]
+                $vsInstance = GetSpecifiedVSSetupInstance -Latest
+                if ($vsInstance) {
+                    Push-EnvironmentBlock -Description "Before importing $($vsInstance.DisplayName) $Architecture environment variables"
+                    $installPath = $vsInstance.InstallationPath
+                    FindAndLoadBatchFile "$installPath/Common7/Tools" $ArchSpecified -IsAppxInstall
+                }
+                else {
+                    $envvar = @(Get-Item Env:\vs*comntools | Sort-Object { $_.Name -replace '(?<=VS)(\d)(0)','0$1$2'} -Descending)[0]
+                    if (!$envvar) {
+                        throw "No versions of Visual Studio found."
                     }
 
-                    Push-EnvironmentBlock -Description "Before importing $ver $Architecture environment variables"
-
-                    $vscomntoolspath = $envvar.Value
-                    $vcvarsallPath = Join-Path $vscomntoolspath "..\..\VC\vcvarsall.bat"
-                    Write-Verbose "Invoking default path $vcvarsallPath $Architecture"
-                    Invoke-BatchFile $vcvarsallPath $Architecture
+                    Push-EnvironmentBlock -Description "Before importing $($envvar.Name) $Architecture environment variables"
+                    FindAndLoadBatchFile ($envvar.Value) $ArchSpecified
                 }
             }
         }
