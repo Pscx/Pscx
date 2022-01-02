@@ -171,11 +171,15 @@
             # A URL to an icon representing this module.
             IconUri = 'https://github.com/Pscx/Pscx/blob/master/PscxIcon.png?raw=true'
 
-            Prerelease = 'beta2'
+            Prerelease = 'beta3'
 
             # Release notes
             ReleaseNotes = @'
-4.0.0-beta2 - November XX, 2020
+4.0.0-beta3 - January 2, 2022
+
+* Updated Import-VisualStudioVars to support Visual Studio 2022. Thanks @weloytty (Bill Loytty)!
+
+4.0.0-beta2 - October 22, 2020
 
 * Renamed less function to PscxLess.
 * Renamed help function to PscxHelp.

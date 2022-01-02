@@ -30,6 +30,7 @@ $outPath = Join-Path $PSScriptRoot src\Pscx\bin\Release -Resolve
 
     Remove-Item $modulePath\*.pdb
     Remove-Item $modulePath\PowerCollections.xml
+    Remove-Item $modulePath\SoftUni.Wintellect.PowerCollections.xml
     Remove-Item $modulePath\Trinet.Core.IO.Ntfs.xml
 
     Remove-Item $modulePath\x86 -Recurse -Force -ErrorAction Ignore
