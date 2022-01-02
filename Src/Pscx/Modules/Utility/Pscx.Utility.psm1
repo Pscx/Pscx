@@ -2242,16 +2242,16 @@ function Get-Parameter {
     32-bit PowerShell or amd64 if running in 64-bit PowerShell. Other valid
     values are: arm, x86_arm, x86_amd64, amd64_x86.
 .PARAMETER RequireWorkload
-    This parameter applies to Visual Studio 2017 and higher.  It allows you 
+    This parameter applies to Visual Studio 2017 and higher.  It allows you
     to specify which workloads are required for the environment you desire to
     import.  This can be used when you have multiple versions of Visual Studio
     2017 installed and different versions support different workloads e.g.
-    perhaps only the "Preview" version supports the 
+    perhaps only the "Preview" version supports the
     Microsoft.VisualStudio.Component.VC.Tools.x86.x64 workload.
 .EXAMPLE
     C:\PS> Import-VisualStudioVars 2015
 
-    Sets up the environment variables to use the VS 2015 tools. If 
+    Sets up the environment variables to use the VS 2015 tools. If
     VsDevCmd.bat is found then it will use that. Otherwise, vcvarsall.bat will
     be used with an architecture of either x86 for 32-bit Powershell, or amd64
     for 64-bit Powershell.
@@ -2263,7 +2263,7 @@ function Get-Parameter {
     C:\PS> Import-VisualStudioVars 2017 -Architecture amd64 -RequireWorkload Microsoft.VisualStudio.Component.VC.Tools.x86.x64
 
     Finds an instance of VS 2017 that has the required workload and sets up
-    the environment variables to use that instance of the VS 2017 tools. 
+    the environment variables to use that instance of the VS 2017 tools.
     To see a full list of available workloads, execute:
     Get-VSSetupInstance | Foreach-Object Packages | Foreach-Object Id | Sort-Object
 #>
@@ -2272,7 +2272,7 @@ function Import-VisualStudioVars
     param
     (
         [Parameter(Position = 0)]
-        [ValidateSet('90', '2008', '100', '2010', '110', '2012', '120', '2013', '140', '2015', '150', '2017','160','2019')]
+        [ValidateSet('90','2008','100','2010','110','2012','120','2013','140','2015','150','2017','160','2019','170','2022')]
         [string]
         $VisualStudioVersion,
 
@@ -2333,7 +2333,7 @@ function Import-VisualStudioVars
             Write-Verbose "$(($selectArgs | Out-String) -split "`n")"
             $vsInstance = Get-VSSetupInstance | Select-VSSetupInstance @selectArgs | Select-Object -First 1
             $vsInstance
-        } 
+        }
 
         function FindAndLoadBatchFile($ComnTools, $ArchSpecified, [switch]$IsAppxInstall) {
             $batchFilePath = Join-Path $ComnTools VsDevCmd.bat
@@ -2416,6 +2416,17 @@ function Import-VisualStudioVars
                 }
 
                 Push-EnvironmentBlock -Description "Before importing VS 2019 $Architecture environment variables"
+                $installPath = $vsInstance.InstallationPath
+                FindAndLoadBatchFile "$installPath/Common7/Tools" $ArchSpecified -IsAppxInstall
+            }
+
+            '170|2022' {
+                $vsInstance = GetSpecifiedVSSetupInstance -Version '[17.0,18.0)' -FailOnMissingVSSetup
+                if (!$vsInstance) {
+                    throw "No instances of Visual Studio 2022 found$(if ($RequireWorkload) {" for the required workload: $RequireWorkload"})."
+                }
+
+                Push-EnvironmentBlock -Description "Before importing VS 2022 $Architecture environment variables"
                 $installPath = $vsInstance.InstallationPath
                 FindAndLoadBatchFile "$installPath/Common7/Tools" $ArchSpecified -IsAppxInstall
             }
