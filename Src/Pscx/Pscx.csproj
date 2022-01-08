@@ -102,7 +102,7 @@
       <HintPath>..\packages\Microsoft.PowerShell.3.ReferenceAssemblies.1.0.0\lib\net4\System.Management.Automation.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Messaging" />
+    <!-- <Reference Include="System.Messaging" /> -->
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -231,14 +231,14 @@
     <Compile Include="Commands\IO\ImageMastering\ImapiProfileTypeMappings.cs" />
     <Compile Include="Commands\IO\GetFileTailCommand.cs" />
     <Compile Include="Commands\LastBootUpTimeInfo.cs" />
-    <Compile Include="Commands\Messaging\ClearMSMQueue.cs" />
+    <!-- <Compile Include="Commands\Messaging\ClearMSMQueue.cs" />
     <Compile Include="Commands\Messaging\GetMSMQueue.cs" />
     <Compile Include="Commands\Messaging\MessageQueueCmdlet.cs" />
     <Compile Include="Commands\Messaging\MessageQueueInfo.cs" />
     <Compile Include="Commands\Messaging\NewMSMQueue.cs" />
     <Compile Include="Commands\Messaging\ReceiveMSMQueue.cs" />
     <Compile Include="Commands\Messaging\SendMSMQueue.cs" />
-    <Compile Include="Commands\Messaging\TestMSMQueue.cs" />
+    <Compile Include="Commands\Messaging\TestMSMQueue.cs" /> -->
     <Compile Include="Commands\Net\GetHttpResource.cs" />
     <Compile Include="Commands\Net\HttpResourceCommandBase.cs" />
     <Compile Include="Commands\Net\HttpResourceContentCommandBase.cs" />
@@ -450,7 +450,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
