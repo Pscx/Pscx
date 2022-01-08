@@ -1,5 +1,10 @@
 PowerShell Community Extensions Release Notes
 
+4.0.0-beta4 - January 8, 2022
+
+* BREAKING CHANGE: Remove Windows specific commands: *-MSMQueue, will consider moving into a stand-alone module for Windows only
+* Expand sort alias to Sort-Object in PS1 files - fixes Get-Parameter on Linux/macOS
+
 4.0.0-beta3 - January 2, 2022
 
 * Updated Import-VisualStudioVars to support Visual Studio 2022. Thanks @weloytty (Bill Loytty)!

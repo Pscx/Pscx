@@ -570,7 +570,7 @@ function Invoke-Elevated()
     }
     else
     {
-        $app = Get-Command $args[0] | Select -First 1 | Where {$_.CommandType -eq 'Application'}
+        $app = Get-Command $args[0] | Select-Object -First 1 | Where-Object {$_.CommandType -eq 'Application'}
         [string[]]$cmdArgs = @()
         if ($args.Count -gt 1)
         {
@@ -906,7 +906,7 @@ function Get-ViewDefinition
                 }
             }
             # Populate the arrays with format info from loaded modules
-            Get-Module | Select -ExpandProperty exportedformatfiles | % `
+            Get-Module | Select-Object -ExpandProperty exportedformatfiles | % `
             {
                 if (Test-Path $_)
                 {
@@ -921,7 +921,7 @@ function Get-ViewDefinition
             if ($IncludeSnapInFormatting)
             {
                 # Populate the arrays with format info from loaded snapins
-                Get-PSSnapin | ? { $_.name -notmatch "Microsoft\." } | select applicationbase,formats | % `
+                Get-PSSnapin | ? { $_.name -notmatch "Microsoft\." } | Select-Object applicationbase,formats | % `
                 {
                     foreach ($f in $_.formats)
                     {
@@ -1862,7 +1862,7 @@ function Show-Tree
             if ($isContainer -and ($IsLast.Count -lt $Depth))
             {
                 $childItems = @(Get-ChildItem -LiteralPath $ItemPath -Force:$Force -ErrorAction $ErrorActionPreference |
-                                Where {$ShowLeaf -or $_.PSIsContainer} | Select PSPath, PSChildName)
+                                Where-Object {$ShowLeaf -or $_.PSIsContainer} | Select-Object PSPath, PSChildName)
             }
 
             # Track parent's "last item" status to determine which level gets a vertical bar
@@ -1877,7 +1877,7 @@ function Show-Tree
                 $itemProp = Get-ItemProperty -LiteralPath $ItemPath -ErrorAction SilentlyContinue
                 if ($itemProp)
                 {
-                    $props = @($itemProp.psobject.properties | Sort Name | Where {$excludedProviderNoteProps -notcontains $_.Name})
+                    $props = @($itemProp.psobject.properties | Sort-Object Name | Where-Object {$excludedProviderNoteProps -notcontains $_.Name})
                 }
                 else
                 {
@@ -1886,7 +1886,7 @@ function Show-Tree
                     try { $item = Get-Item -LiteralPath $ItemPath -ErrorAction SilentlyContinue } catch {}
                     if ($item)
                     {
-                        $props = @($item.psobject.properties | Sort Name | Where {$excludedProviderNoteProps -notcontains $_.Name})
+                        $props = @($item.psobject.properties | Sort-Object Name | Where-Object {$excludedProviderNoteProps -notcontains $_.Name})
                     }
                 }
 
@@ -2074,7 +2074,7 @@ function Get-Parameter {
 
          foreach ($p in $MoreParameters | Where-Object { !$Parameters.ContainsKey($_.Name) } ) {
             Write-Debug ("INITIALLY: " + $p.Name)
-            $Parameters.($p.Name) = $p | Select *
+            $Parameters.($p.Name) = $p | Select-Object *
          }
 
          if ($Provider) {
@@ -2086,7 +2086,7 @@ function Get-Parameter {
                       $Parameters.($d.Name).DynamicProvider += $Provider.Name
                    } else {
                       Write-Debug ("CREATE:" + $d.Name + " " + $Provider.Name)
-                      $Parameters.($d.Name) = $Parameters.($d.Name) | Select *, @{ n="DynamicProvider";e={ @($Provider.Name) } }
+                      $Parameters.($d.Name) = $Parameters.($d.Name) | Select-Object *, @{ n="DynamicProvider";e={ @($Provider.Name) } }
                    }
                 }
              }
@@ -2124,7 +2124,7 @@ function Get-Parameter {
             if(!$SkipProviderParameters -and $isCoreCommand) {
                ## The best I can do is to validate that the command has a parameter which could accept a string path
                foreach($param in $Command.Parameters.Values) {
-                  if(([String[]],[String] -contains $param.ParameterType) -and ($param.ParameterSets.Values | Where { $_.Position -ge 0 })) {
+                  if(([String[]],[String] -contains $param.ParameterType) -and ($param.ParameterSets.Values | Where-Object { $_.Position -ge 0 })) {
                      $NoProviderParameters = $false
                      break
                   }
@@ -2142,7 +2142,7 @@ function Get-Parameter {
                   } else {
                      $drive = "{0}\{1}::\" -f $provider.ModuleName, $provider.Name
                   }
-                  Write-Verbose ("Get-Command $command -Args $drive | Select -Expand Parameters")
+                  Write-Verbose ("Get-Command $command -Args $drive | Select-Object -Expand Parameters")
 
                   $MoreParameters = @()
                   try {
@@ -2166,7 +2166,7 @@ function Get-Parameter {
             $ParameterNames = $Parameters.Keys + $Aliases
             foreach ($p in $($Parameters.Keys)) {
                $short = "^"
-               $aliases = @($p) + @($Parameters.$p.Aliases) | sort { $_.Length }
+               $aliases = @($p) + @($Parameters.$p.Aliases) | Sort-Object { $_.Length }
                $shortest = "^" + @($aliases)[0]
 
                foreach($name in $aliases) {

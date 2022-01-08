@@ -13,7 +13,6 @@
     AliasesToExport    = '*'
     CmdletsToExport    = @(
         'Add-PathVariable',
-        'Clear-MSMQueue',
         'ConvertFrom-Base64',
         'ConvertTo-Base64',
         'ConvertTo-MacOs9LineEnding',
@@ -43,7 +42,6 @@
         'Get-HttpResource',
         'Get-LoremIpsum',
         'Get-MountPoint',
-        'Get-MSMQueue',
         'Get-OpticalDriveInfo',
         'Get-PathVariable',
         'Get-PEHeader',
@@ -61,7 +59,6 @@
         'Join-PscxString',
         'New-Hardlink',
         'New-Junction',
-        'New-MSMQueue',
         'New-Shortcut',
         'New-Symlink',
         'Out-PscxClipboard',
@@ -69,11 +66,9 @@
         'Pop-EnvironmentBlock',
         'Push-EnvironmentBlock',
         'Read-PscxArchive',
-        'Receive-MSMQueue',
         'Remove-MountPoint',
         'Remove-ReparsePoint',
         'Resolve-Host',
-        'Send-MSMQueue',
         'Send-SmtpMail',
         'Set-BitmapSize',
         'Set-PscxClipboard',
@@ -87,7 +82,6 @@
         'Stop-TerminalSession',
         'Test-AlternateDataStream',
         'Test-Assembly',
-        'Test-MSMQueue',
         'Test-Script',
         'Test-UserGroupMembership',
         'Test-Xml',
@@ -171,10 +165,15 @@
             # A URL to an icon representing this module.
             IconUri = 'https://github.com/Pscx/Pscx/blob/master/PscxIcon.png?raw=true'
 
-            Prerelease = 'beta3'
+            Prerelease = 'beta4'
 
             # Release notes
             ReleaseNotes = @'
+4.0.0-beta4 - January 8, 2022
+
+* BREAKING CHANGE: Remove Windows specific commands: *-MSMQueue, will consider moving into a stand-alone module for Windows only
+* Expand sort alias to Sort-Object in PS1 files - fixes Get-Parameter on Linux/macOS
+
 4.0.0-beta3 - January 2, 2022
 
 * Updated Import-VisualStudioVars to support Visual Studio 2022. Thanks @weloytty (Bill Loytty)!
