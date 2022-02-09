@@ -126,7 +126,7 @@ Displays numbers in multiples of byte units.
 
 #### `Write-BZip2`
 
-Create BZIP2 format archive files from pipline or parameter input.
+Create BZIP2 format archive files from pipeline or parameter input.
 
 ### PscxClipboard
 
@@ -663,4 +663,4 @@ Tests for well formedness and optionally validates against XML Schema.
 
 #### `Write-Zip`
 
-Create ZIP format archive files from pipline or parameter input.
+Create ZIP format archive files from pipeline or parameter input.
