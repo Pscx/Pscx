@@ -1,40 +1,5 @@
-<Configuration>
-
-  <SelectionSets>
-    <SelectionSet>
-      <Name>FileSystemTypes</Name>
-      <Types>
-        <TypeName>System.IO.DirectoryInfo</TypeName>
-        <TypeName>System.IO.FileInfo</TypeName>
-        <TypeName>Deserialized.System.IO.DirectoryInfo</TypeName>
-        <TypeName>Deserialized.System.IO.FileInfo</TypeName>
-      </Types>
-    </SelectionSet>
-  </SelectionSets>
-
+﻿<Configuration>
   <Controls>
-    <Control>
-      <Name>FileSystemTypes-GroupingFormat</Name>
-      <CustomControl>
-        <CustomEntries>
-          <CustomEntry>
-            <CustomItem>
-              <Frame>
-                <LeftIndent>4</LeftIndent>
-                <CustomItem>
-                  <Text AssemblyName="System.Management.Automation" BaseName="FileSystemProviderStrings" ResourceId="DirectoryDisplayGrouping"/>
-                  <ExpressionBinding>
-                    <ScriptBlock>$ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($_.PSParentPath)</ScriptBlock>
-                  </ExpressionBinding>
-                  <NewLine/>
-                </CustomItem>
-              </Frame>
-            </CustomItem>
-          </CustomEntry>
-        </CustomEntries>
-      </CustomControl>
-    </Control>
-    
     <Control>
       <Name>HashInfo-GroupingFormat</Name>
       <CustomControl>
@@ -57,99 +22,7 @@
     </Control>
   </Controls>
 
-  <ViewDefinitions>	
-    <View>
-      <Name>FileSystemTypes-View</Name>
-      <ViewSelectedBy>
-        <SelectionSetName>FileSystemTypes</SelectionSetName>
-      </ViewSelectedBy>
-      <GroupBy>
-        <PropertyName>PSParentPath</PropertyName>
-        <CustomControlName>FileSystemTypes-GroupingFormat</CustomControlName>
-      </GroupBy>
-      <TableControl>
-        <TableHeaders>
-          <TableColumnHeader>
-            <Label>Mode</Label>
-            <Width>5</Width>
-            <Alignment>left</Alignment>
-          </TableColumnHeader>
-          <TableColumnHeader>
-            <Label>LastWriteTime</Label>
-            <Width>22</Width>
-            <Alignment>right</Alignment>
-          </TableColumnHeader>
-          <TableColumnHeader>
-            <Label>Length</Label>
-            <Width>12</Width>
-            <Alignment>right</Alignment>
-          </TableColumnHeader>
-          <TableColumnHeader>
-        	  <Label>Name</Label>
-          </TableColumnHeader>
-        </TableHeaders>
-        <TableRowEntries>
-          <TableRowEntry>
-            <Wrap/>
-            <TableColumnItems>
-              <TableColumnItem>
-                <PropertyName>Mode</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <ScriptBlock>
-                  '{0,10} {1,8}' -f $_.LastWriteTime.ToString('d'), $_.LastWriteTime.ToString('t')
-                </ScriptBlock>
-              </TableColumnItem>
-              <TableColumnItem>
-                <ScriptBlock>
-                  $reparse = $_.ReparsePoint
-
-                  if ($reparse) {
-                      switch($reparse.ReparsePointTag) {
-                          'MountPoint'   { return '&lt;JUNCTION&gt;' }
-                          'SymbolicLink' {
-                              if((get-item $reparse.Target).PSIsContainer) { 
-								                  return '&lt;SYMLINKD&gt;' 
-                              }  
-    							            
-                              return '&lt;SYMLINK&gt;'
-                          }
-                          
-                          'HierarchicalStorage'   { return '&lt;HSM&gt;' }
-                          'SingleInstanceStore'   { return '&lt;SIS&gt;' }
-                          'DistributedFileSystem' { return '&lt;DFS&gt;' }
-                          'FilterManager'         { return '&lt;FltMgr&gt;'}
-                      }              
-                  }
-
-				          if ($_.PSIsContainer) { 
-                      return '&lt;DIR&gt;'
-                  }
-
-                  if ($Pscx:Preferences['FileSizeInUnits']) {
-                      return $_.Length | format-byte
-                  }
-
-                  return $_.Length
-                </ScriptBlock>
-              </TableColumnItem>
-              <TableColumnItem>
-                <ScriptBlock>
-    			  		  $reparsePoint = $_.ReparsePoint
-    			  		  if ($reparsePoint -ne $null -and $reparsePoint.Target) {
-      						  '{0} [{1}]' -f $_.Name, $reparsePoint.Target
-					        }
-                  else {
-                    $_.Name
-                  }
-			          </ScriptBlock>
-              </TableColumnItem>
-            </TableColumnItems>
-          </TableRowEntry>
-        </TableRowEntries>
-      </TableControl>
-    </View>
-    
+  <ViewDefinitions>
     <View>
       <Name>drives</Name>
       <ViewSelectedBy>
@@ -199,7 +72,7 @@
               <TableColumnItem>
                 <ScriptBlock>
                   if ($_.VolumeLabel.Length -gt 0) {
-                    return $_.VolumeLabel
+                  return $_.VolumeLabel
                   }
                   'Local Disk'
                 </ScriptBlock>
@@ -208,11 +81,11 @@
               <TableColumnItem>
                 <PropertyName>Name</PropertyName>
               </TableColumnItem>
-              
+
               <TableColumnItem>
                 <ScriptBlock>
                   if ($Pscx:Preferences['FileSizeInUnits']) {
-                      return $_.UsedSpace | format-byte
+                  return $_.UsedSpace | format-byte
                   }
                   '{0:N0}' -f $_.UsedSpace
                 </ScriptBlock>
@@ -221,7 +94,7 @@
               <TableColumnItem>
                 <ScriptBlock>
                   if ($Pscx:Preferences['FileSizeInUnits']) {
-                      return $_.FreeSpace | format-byte
+                  return $_.FreeSpace | format-byte
                   }
                   '{0:N0}' -f ($_.FreeSpace)
                 </ScriptBlock>

@@ -14,11 +14,8 @@ using System.Security;
 using System.Text;
 
 using NUnit.Framework;
-
-using Pscx.Providers.DirectoryServices;
-using Pscx.DirectoryServices;
-
-using EntryInfoList = System.Collections.Generic.List<Pscx.Providers.DirectoryServices.DirectoryEntryInfo>;
+using Pscx.Win.Fwk.Providers.DirectoryServices;
+using EntryInfoList = System.Collections.Generic.List<Pscx.Win.Fwk.Providers.DirectoryServices.DirectoryEntryInfo>;
 
 namespace PscxUnitTests.DirectoryServices
 {
@@ -32,7 +29,7 @@ namespace PscxUnitTests.DirectoryServices
         private DirectoryServiceDriveInfo trustedDrive;
         private DirectoryServiceDriveInfo defaultDrive;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public override void SetUp()
         {
             base.SetUp();
@@ -41,7 +38,7 @@ namespace PscxUnitTests.DirectoryServices
             defaultDrive = ConnectDefaultNamingContext();
         }
 
-        [TestFixtureTearDown]
+        [OneTimeTearDown]
         public override void TearDown()
         {
             RemoveDrive(trustedDrive);

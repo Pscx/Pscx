@@ -1,126 +1,41 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{2CAE8B46-1C50-4997-803B-180EF6938E1B}</ProjectGuid>
+    <TargetFramework>net6.0</TargetFramework>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PscxUnitTests</RootNamespace>
     <AssemblyName>PscxUnitTests</AssemblyName>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-Signed|AnyCPU'">
     <OutputPath>bin\Release-Signed\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="SoftUni.Wintellect.PowerCollections, Version=1.1.5733.22550, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SoftUni.Wintellect.PowerCollections.1.1.5733.22550\lib\net20\SoftUni.Wintellect.PowerCollections.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.DirectoryServices" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.PowerShell.3.ReferenceAssemblies.1.0.0\lib\net4\System.Management.Automation.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Xml" />
-    <Reference Include="Trinet.Core.IO.Ntfs, Version=3.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Trinet.Core.IO.Ntfs.3.5.0.0\lib\net35\Trinet.Core.IO.Ntfs.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
+    <Compile Remove="IO\Compression\**" />
+    <EmbeddedResource Remove="IO\Compression\**" />
+    <None Remove="IO\Compression\**" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database\DataTypeSetterTest.cs" />
-    <Compile Include="Database\TypeBuilderTest.cs" />
-    <Compile Include="DirectoryServices\DirectoryServicesTest.cs" />
-    <Compile Include="DirectoryServices\ForeignServerTests.cs" />
-    <Compile Include="Drawing\BitmapTestBase.cs" />
-    <Compile Include="Drawing\ExportBitmapTest.cs" />
-    <Compile Include="Drawing\ResizeBitmapTest.cs" />
-    <Compile Include="GetHashCommandTests.cs" />
-    <Compile Include="IO\PscxPathInfoTests.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PscxProviderTest.cs" />
-    <Compile Include="PscxCmdletTest.cs" />
-    <Compile Include="SIUnits\LengthTests.cs" />
-    <Compile Include="Xml\TestXmlTests.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Pscx.Core\Pscx.Core.csproj">
-      <Project>{2527CA26-82B6-4E2C-8199-25E5986A8AA2}</Project>
-      <Name>Pscx.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pscx\Pscx.csproj">
-      <Project>{CAC61CE5-BD44-469A-A27E-8BC945E84019}</Project>
-      <Name>Pscx</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\Pscx.Win\Pscx.Win.csproj" />
+    <ProjectReference Include="..\Pscx\Pscx.csproj" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Drawing\TestBitmap.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="IO\Compression\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-    <None Include="Xml\fails_schema_validation.xml" />
-    <None Include="Xml\passes_schema_validation.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Xml\test.xsd">
+    <None Update="Xml\test.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.1" />
+    <PackageReference Include="Microsoft.NETCore.Platforms" Version="6.0.7" />
+    <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.2.8" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="NUnit" Version="3.13.3" />
+    <PackageReference Include="System.DirectoryServices" Version="6.0.0" />
+  </ItemGroup>
 </Project>

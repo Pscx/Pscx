@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Pscx.EnvironmentBlock
 {
@@ -131,7 +132,7 @@ namespace Pscx.EnvironmentBlock
                 return;
             }
 
-            Environment.SetEnvironmentVariable(_name, string.Join(";", _values.ToArray()), _target);
+            Environment.SetEnvironmentVariable(_name, string.Join(Path.PathSeparator, _values.ToArray()), _target);
         }
 
         private int IndexOf(string value)
@@ -147,18 +148,19 @@ namespace Pscx.EnvironmentBlock
             return -1;
         }
 
-        private void EnsureValuesLoaded()
-        {
-            if (_values == null)
-            {
-                _values = new List<String>();
+        private void EnsureValuesLoaded() {
+            if (_values == null) {
+                _values = new List<string>();
 
                 string str = Environment.GetEnvironmentVariable(_name, _target);
 
-                if (!string.IsNullOrEmpty(str))
-                {
-                    string[] parts = str.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-                    _values.AddRange(parts);
+                if (!string.IsNullOrEmpty(str)) {
+                    ISet<string> uniqueVals = new HashSet<string>();
+                    string[] parts = str.Split(Path.PathSeparator, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (string item in parts) {
+                        uniqueVals.Add(item);
+                    }
+                    _values.AddRange(uniqueVals);
                 }
             }
         }

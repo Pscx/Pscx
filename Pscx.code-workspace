@@ -1,0 +1,21 @@
+{
+	"name": "PSCX",
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "PowerShell: Launch Current File",
+				"type": "PowerShell",
+				"request": "launch",
+				"script": "ipmo ${file}; Set-PscxLocation T:/Temp; Set-PscxLocation %; Set-PscxLocation Bubbq; Set-PscxLocation",
+				"cwd": "${file}"
+			}
+		]
+	}
+}

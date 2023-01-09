@@ -11,7 +11,7 @@ using System.IO;
 using System.Management.Automation;
 using System.Text;
 using Microsoft.PowerShell.Commands;
-using Pscx.IO;
+using Pscx.Core.IO;
 
 namespace Pscx.Commands
 {

@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Management.Automation;
 
 namespace Pscx.Commands.EnvironmentBlock
@@ -16,7 +14,7 @@ namespace Pscx.Commands.EnvironmentBlock
         {
             if (String.IsNullOrEmpty(this.Name))
             {
-                this.Name = "Path";
+                this.Name = "PATH";
             }
         }
     }

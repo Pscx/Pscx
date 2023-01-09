@@ -7,6 +7,7 @@
 // Creation Date: September 12, 2007
 //---------------------------------------------------------------------
 
+using Pscx.Core.IO;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,7 +15,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Management.Automation;
 using System.Reflection;
-using Pscx.IO;
 using Pscx.Visitors;
 
 using Wintellect.PowerCollections;
@@ -136,8 +136,7 @@ namespace Pscx.Commands
                 else
                 {
                     // shouldexist not specified, so grab path type via invokeprovider
-                    pathType = this.InvokeProvider.Item.IsContainer(pscxPath.ToString())
-                                   ? PscxPathType.Container : PscxPathType.Leaf;
+                    pathType = this.InvokeProvider.Item.IsContainer(pscxPath.ToString()) ? PscxPathType.Container : PscxPathType.Leaf;
                 }
 
                 PscxPathType expectedPathType = pathAttrib.PathType;
@@ -150,6 +149,20 @@ namespace Pscx.Commands
             }
             else // shouldexist explicit false
             {
+                switch (pathAttrib.PathType)
+                {
+                    case PscxPathType.LeafOrContainer:
+                    case PscxPathType.Container:
+                    case PscxPathType.Leaf:
+                        //the should exist flag was explicitly set to false with a concrete path type - validate the provided path does not exist as the specified type
+                        WriteVerbose(String.Format("Asserting path '{0}' of type {1} does not exist", pscxPath, pathAttrib.PathType));
+                        ValidateNotExists(parameterName, pscxPath, pathAttrib.PathType);
+                        break;
+                    case PscxPathType.None:
+                        //warn the user that argument path is marked as should not exist - it's responsibility of the subclass to handle the situation, since the should exist flag was explicitly set to false
+                        WriteVerbose(String.Format("Path '{0}' of type {1} should not exist - not checked", pscxPath, pathAttrib.PathType));
+                        break;
+                    default:
                 // NOTE: for Pscx developers
                 Trace.Assert(pathAttrib.PathType == PscxPathType.None,
                     String.Format(
@@ -158,7 +171,9 @@ namespace Pscx.Commands
                              "the ShouldExist condition from the attribute, or set it " +
                              "explicitly to true.\n\nIf you are seeing this message " +
                              "as a Pscx end-user, please log an issue on " +
-                             "http://www.codeplex.com/powershellcx", CmdletName));
+                             "https://github.com/danluca/Pscx/issues", CmdletName));
+                        break;
+                 }
             }
 
             // any provider constraints defined on the PscxPath attribute,
@@ -178,13 +193,33 @@ namespace Pscx.Commands
             if (!exists)
             {
                 // TODO: localize
-                string description = String.Format(
-                    "The path '{0}' supplied for {1} must exist.",
-                    pscxPath, parameterName);
+                string description = String.Format("The path '{0}' supplied for {1} must exist.", pscxPath, parameterName);
 
                 // terminates by default (unless overridden)
-                OnPscxPathError(parameterName, description,
-                                PscxPathState.NotExist, pscxPath);
+                OnPscxPathError(parameterName, description, PscxPathState.NotExist, pscxPath);
+            }
+        }
+
+        private void ValidateNotExists(string parameterName, PscxPathInfo pscxPath, PscxPathType pathType = PscxPathType.None) {
+            WriteDebug("ValidateNotExists");
+
+            PscxPathType foundPathType = PscxPathType.Unknown;
+            bool exists = PscxPathInfo.Exists(pscxPath, ref foundPathType);
+
+            if (exists && (pathType == PscxPathType.Unknown || pathType == PscxPathType.None)) {
+                // TODO: localize
+                string description = String.Format("The path '{0}' supplied for {1} must NOT exist.", pscxPath, parameterName);
+
+                // terminates by default (unless overridden)
+                OnPscxPathError(parameterName, description, PscxPathState.Invalid, pscxPath);
+            }
+
+            if (exists && ((foundPathType & pathType) == foundPathType)) {
+                // TODO: localize
+                string description = String.Format("The path '{0}' supplied for {1} must NOT exist as {2}.", pscxPath, parameterName, pathType);
+
+                // terminates by default (unless overridden)
+                OnPscxPathError(parameterName, description, PscxPathState.Invalid, pscxPath);
             }
         }
 

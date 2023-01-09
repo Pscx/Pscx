@@ -5,10 +5,10 @@
 //
 // Creation Date: Dec 29, 2006
 //---------------------------------------------------------------------
+
+using Pscx.Core.IO;
 using System;
 using System.IO;
-
-using Pscx.IO;
 
 namespace Pscx.Commands
 {

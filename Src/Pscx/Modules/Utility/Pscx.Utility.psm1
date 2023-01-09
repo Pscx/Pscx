@@ -44,43 +44,19 @@ Set-Alias swr   Pscx\Set-Writable           -Description "PSCX alias"
     $Pscx:RegexLib = $RegexLib
 }
 
- $acceleratorsType = [psobject].Assembly.GetType('System.Management.Automation.TypeAccelerators')
+$acceleratorsType = [psobject].Assembly.GetType('System.Management.Automation.TypeAccelerators')
 
 # If these accelerators have already been defined, don't override (and don't error)
-function AddAccelerator($name, $type)
-{
-    if (!$acceleratorsType::Get.ContainsKey($name))
-    {
+function AddAccelerator($name, $type) {
+    if (!$acceleratorsType::Get.ContainsKey($name)) {
         $acceleratorsType::Add($name, $type)
     }
 }
 
 AddAccelerator "accelerators" $acceleratorsType
 AddAccelerator "hex"  ([Pscx.TypeAccelerators.Hex])
-
-<#
-.SYNOPSIS
-    Creates the registry entries required to create Windows Explorer context
-    menu "Open PowerShell Here" for both Directories and Drives
-.NOTES
-    Author: Keith Hill
-#>
-function Enable-OpenPowerShellHere
-{
-    function New-OpenPowerShellContextMenuEntry
-    {
-        param($Path)
-
-        New-Item $Path -ItemType RegistryKey -Force
-        New-ItemProperty $Path -Name '(Default)' -Value 'Open PowerShell Here'
-        New-Item $Path\Command -ItemType RegistryKey
-        New-ItemProperty $Path\Command -Name '(Default)' `
-            -Value "`"$pshome\powershell.exe`" -NoExit -Command [Environment]::CurrentDirectory=(Set-Location -LiteralPath:'%L' -PassThru).ProviderPath"
-    }
-
-    New-OpenPowerShellContextMenuEntry 'HKCU:\Software\Classes\Directory\shell\PowerShell'
-    New-OpenPowerShellContextMenuEntry 'HKCU:\Software\Classes\Drive\shell\PowerShell'
-}
+AddAccelerator "base64"  ([Pscx.TypeAccelerators.Base64])
+AddAccelerator "isodate"  ([Pscx.TypeAccelerators.IsoDateTime])
 
 <#
 .SYNOPSIS
@@ -107,154 +83,6 @@ filter New-HashObject {
     $hash.Keys | %{ $result | add-member NoteProperty "$_" $hash[$_] -force }
 
     $result
-}
-
-<#
-.SYNOPSIS
-    Similar to the C# ? : operator e.g. name = (value != null) ? String.Empty : value
-.DESCRIPTION
-    Similar to the C# ? : operator e.g. name = (value != null) ? String.Empty : value.
-    The first script block is tested. If it evaluates to $true then the second scripblock
-    is evaluated and its results are returned otherwise the third scriptblock is evaluated
-    and its results are returned.
-.PARAMETER Condition
-    The condition that determines whether the TrueBlock scriptblock is used or the FalseBlock
-    is used.
-.PARAMETER TrueBlock
-    This block gets evaluated and its contents are returned from the function if the Conditon
-    scriptblock evaluates to $true.
-.PARAMETER FalseBlock
-    This block gets evaluated and its contents are returned from the function if the Conditon
-    scriptblock evaluates to $false.
-.PARAMETER InputObject
-    Specifies the input object. Invoke-Ternary injects the InputObject into each scriptblock
-    provided via the Condition, TrueBlock and FalseBlock parameters.
-.EXAMPLE
-    C:\PS> $toolPath = ?: {[IntPtr]::Size -eq 4} {"$env:ProgramFiles(x86)\Tools"} {"$env:ProgramFiles\Tools"}
-    Each input number is evaluated to see if it is > 5.  If it is then "Greater than 5" is
-    displayed otherwise "Less than or equal to 5" is displayed.
-.EXAMPLE
-    C:\PS> 1..10 | ?: {$_ -gt 5} {"Greater than 5";$_} {"Less than or equal to 5";$_}
-    Each input number is evaluated to see if it is > 5.  If it is then "Greater than 5" is
-    displayed otherwise "Less than or equal to 5" is displayed.
-.NOTES
-    Aliases:  ?:
-    Author:   Karl Prosser
-#>
-function Invoke-Ternary {
-    param(
-        [Parameter(Mandatory, Position=0)]
-        [scriptblock]
-        $Condition,
-
-        [Parameter(Mandatory, Position=1)]
-        [scriptblock]
-        $TrueBlock,
-
-        [Parameter(Mandatory, Position=2)]
-        [scriptblock]
-        $FalseBlock,
-
-        [Parameter(ValueFromPipeline, ParameterSetName='InputObject')]
-        [psobject]
-        $InputObject
-    )
-
-    Process {
-        if ($pscmdlet.ParameterSetName -eq 'InputObject') {
-            Foreach-Object $Condition -input $InputObject | Foreach {
-                if ($_) {
-                    Foreach-Object $TrueBlock -InputObject $InputObject
-                }
-                else {
-                    Foreach-Object $FalseBlock -InputObject $InputObject
-                }
-            }
-        }
-        elseif (&$Condition) {
-            &$TrueBlock
-        }
-        else {
-            &$FalseBlock
-        }
-    }
-}
-
-<#
-.SYNOPSIS
-    Similar to the C# ?? operator e.g. name = value ?? String.Empty
-.DESCRIPTION
-    Similar to the C# ?? operator e.g. name = value ?? String.Empty;
-    where value would be a Nullable&lt;T&gt; in C#.  Even though PowerShell
-    doesn't support nullables yet we can approximate this behavior.
-    In the example below, $LogDir will be assigned the value of $env:LogDir
-    if it exists and it's not null, otherwise it get's assigned the
-    result of the second script block (C:\Windows\System32\LogFiles).
-    This behavior is also analogous to Korn shell assignments of this form:
-    LogDir = ${$LogDir:-$WinDir/System32/LogFiles}
-.PARAMETER PrimaryExpr
-    The condition that determines whether the TrueBlock scriptblock is used or the FalseBlock
-    is used.
-.PARAMETER AlternateExpr
-    This block gets evaluated and its contents are returned from the function if the Conditon
-    scriptblock evaluates to $true.
-.PARAMETER InputObject
-    Specifies the input object. Invoke-NullCoalescing injects the InputObject into each
-    scriptblock provided via the PrimaryExpr and AlternateExpr parameters.
-.EXAMPLE
-    C:\PS> $LogDir = ?? {$env:LogDir} {"$env:windir\System32\LogFiles"}
-    $LogDir is set to the value of $env:LogDir unless it doesn't exist, in which case it
-    will then default to "$env:windir\System32\LogFiles".
-.NOTES
-    Aliases:  ??
-    Author:   Keith Hill
-#>
-function Invoke-NullCoalescing {
-    param(
-        [Parameter(Mandatory, Position=0)]
-        [AllowNull()]
-        [scriptblock]
-        $PrimaryExpr,
-
-        [Parameter(Mandatory, Position=1)]
-        [scriptblock]
-        $AlternateExpr,
-
-        [Parameter(ValueFromPipeline, ParameterSetName='InputObject')]
-        [psobject]
-        $InputObject
-    )
-
-    Process {
-        if ($pscmdlet.ParameterSetName -eq 'InputObject') {
-            if ($PrimaryExpr -eq $null) {
-                Foreach-Object $AlternateExpr -InputObject $InputObject
-            }
-            else {
-                $result = Foreach-Object $PrimaryExpr -input $InputObject
-                if ($result -eq $null) {
-                    Foreach-Object $AlternateExpr -InputObject $InputObject
-                }
-                else {
-                    $result
-                }
-            }
-        }
-        else {
-            if ($PrimaryExpr -eq $null) {
-                &$AlternateExpr
-            }
-            else {
-                $result = &$PrimaryExpr
-                if ($result -eq $null) {
-                    &$AlternateExpr
-                }
-                else {
-                    $result
-                }
-            }
-        }
-    }
 }
 
 <#
@@ -426,8 +254,7 @@ function PscxLess
 {
     param([string[]]$Path, [string[]]$LiteralPath)
 
-    if ($host.Name -ne 'ConsoleHost')
-    {
+    if ($host.Name -ne 'ConsoleHost') {
         # The rest of this function only works well in PowerShell.exe
         $input
         return
@@ -436,22 +263,17 @@ function PscxLess
     $OutputEncoding = [System.Console]::OutputEncoding
 
     $resolvedPaths = $null
-    if ($LiteralPath)
-    {
+    if ($LiteralPath) {
         $resolvedPaths = $LiteralPath
     }
-    elseif ($Path)
-    {
+    elseif ($Path) {
         $resolvedPaths = @()
         # In the non-literal case we may need to resolve a wildcarded path
-        foreach ($apath in $Path)
-        {
-            if (Test-Path $apath)
-            {
+        foreach ($apath in $Path) {
+            if (Test-Path $apath) {
                 $resolvedPaths += @(Resolve-Path $apath | Foreach { $_.Path })
             }
-            else
-            {
+            else {
                 $resolvedPaths += $apath
             }
         }
@@ -464,12 +286,9 @@ function PscxLess
     # less *.txt      : Should bring up named txt file in less in succession, press q to go to next file
     # man gcm -full   : Should open help topic in less, press q to quit
     # man gcm -online : Should open help topic in web browser but not open less.exe
-    if ($resolvedPaths)
-    {
+    if ($resolvedPaths) {
         & "$Pscx:Home\Apps\less.exe" $resolvedPaths $lessPrompt
-    }
-    elseif ($input.MoveNext())
-    {
+    } elseif ($input.MoveNext()) {
         $input.Reset()
         $input | & "$Pscx:Home\Apps\less.exe" $lessPrompt
     }
@@ -509,98 +328,6 @@ function Edit-HostProfile {
 
 <#
 .SYNOPSIS
-    Runs the specified command in an elevated context.
-.DESCRIPTION
-    Runs the specified command in an elevated context.  This is useful on Windows Vista
-    and Windows 7 when you run with a standard user token but can elevate to Admin when needed.
-.EXAMPLE
-    C:\PS> Invoke-Elevated
-    Opens a new PowerShell instance as admin.
-.EXAMPLE
-    C:\PS> Invoke-Elevated Notepad C:\windows\system32\drivers\etc\hosts
-    Opens notepad elevated with the hosts file so that you can save changes to the file.
-.EXAMPLE
-    C:\PS> Invoke-Elevated {gci c:\windows\temp | export-clixml tempdir.xml; exit}
-    Executes the scriptblock in an elevated PowerShell instance.
-.EXAMPLE
-    C:\PS> Invoke-Elevated {gci c:\windows\temp | export-clixml tempdir.xml; exit} | %{$_.WaitForExit(5000)} | %{Import-Clixml tempdir.xml}
-    Executes the scriptblock in an elevated PowerShell instance, waits for that elevated process to execute, then
-    retrieves the results.
-.NOTES
-    Aliases:  su
-    Author:   Keith Hill
-#>
-function Invoke-Elevated()
-{
-    Write-Debug "`$MyInvocation:`n$($MyInvocation | Out-String)"
-
-    $escapedPath = [System.Management.Automation.Language.CodeGeneration]::EscapeSingleQuotedStringContent($pwd.ProviderPath)
-
-    $startProcessArgs = @{
-        FilePath     = "PowerShell.exe"
-        ArgumentList = "-NoExit", "-Command", "& {Set-Location '$escapedPath'}"
-        Verb         = "runas"
-        PassThru     = $true
-        WorkingDir   = $pwd
-    }
-
-    $OFS = " "
-    if ($args.Count -eq 0)
-    {
-        Write-Debug "  Starting Powershell without no supplied args"
-    }
-    elseif ($args[0] -is [Scriptblock])
-    {
-        $script = $args[0]
-        if ($script -match '(?si)\s*param\s*\(')
-        {
-            $startProcessArgs['ArgumentList'] = "-NoExit", "-Command", "& {$script}"
-        }
-        else
-        {
-            $startProcessArgs['ArgumentList'] = "-NoExit", "-Command", "& {Set-Location '$escapedPath'; $script}"
-        }
-        [string[]]$cmdArgs = @()
-        if ($args.Count -gt 1)
-        {
-            $cmdArgs = $args[1..$($args.Length-1)]
-            $startProcessArgs['ArgumentList'] += $cmdArgs
-        }
-        Write-Debug "  Starting PowerShell with scriptblock: {$script} and args: $cmdArgs"
-    }
-    else
-    {
-        $app = Get-Command $args[0] | Select-Object -First 1 | Where-Object {$_.CommandType -eq 'Application'}
-        [string[]]$cmdArgs = @()
-        if ($args.Count -gt 1)
-        {
-            $cmdArgs = $args[1..$($args.Length-1)]
-        }
-        if ($app) {
-            $startProcessArgs['FilePath'] = $app.Path
-            if ($cmdArgs.Count -eq 0)
-            {
-                $startProcessArgs.Remove('ArgumentList')
-            }
-            else
-            {
-                $startProcessArgs['ArgumentList'] = $cmdArgs
-            }
-            Write-Debug "  Starting app $app with args: $cmdArgs"
-        }
-        else {
-            $poshCmd = $args[0]
-            $startProcessArgs['ArgumentList'] = "-NoExit", "-Command", "& {Set-Location '$escapedPath'; $poshCmd $cmdArgs}"
-            Write-Debug "  Starting PowerShell command $poshCmd with args: $cmdArgs"
-        }
-    }
-
-    Write-Debug "  Invoking Start-Process with args: $($startProcessArgs | Format-List | Out-String)"
-    Microsoft.PowerShell.Management\Start-Process @startProcessArgs
-}
-
-<#
-.SYNOPSIS
     Resolves the PowerShell error code to a textual description of the error.
 .DESCRIPTION
     Use when reporting an error or ask a question about a exception you
@@ -616,8 +343,7 @@ function Invoke-Elevated()
 .NOTES
     Aliases:  rver
 #>
-function Resolve-ErrorRecord
-{
+function Resolve-ErrorRecord {
     param(
         [Parameter(Position=0, ValueFromPipeline=$true)]
         [ValidateNotNull()]
@@ -625,39 +351,30 @@ function Resolve-ErrorRecord
         $ErrorRecord
     )
 
-    Process
-    {
-        if (!$ErrorRecord)
-        {
-            if ($global:Error.Count -eq 0)
-            {
+    Process {
+        if (!$ErrorRecord) {
+            if ($global:Error.Count -eq 0) {
                 Write-Host "The `$Error collection is empty."
                 return
             }
-            else
-            {
+            else {
                 $ErrorRecord = @($global:Error[0])
             }
         }
-        foreach ($record in $ErrorRecord)
-        {
-            $txt =  @($record | Format-List * -Force | Out-String -Stream)
+        foreach ($record in $ErrorRecord) {
+            $txt = @($record | Format-List * -Force | Out-String -Stream)
             $txt += @($record.InvocationInfo | Format-List * | Out-String -Stream)
             $Exception = $record.Exception
-            for ($i = 0; $Exception; $i++, ($Exception = $Exception.InnerException))
-            {
+            for ($i = 0; $Exception; $i++, ($Exception = $Exception.InnerException)) {
                $txt += "Exception at nesting level $i ---------------------------------------------------"
                $txt += @($Exception | Format-List * -Force | Out-String -Stream)
             }
 
             $txt | Foreach {$prevBlank=$false} {
-                       if ($_.Trim().Length -gt 0)
-                       {
+                       if ($_.Trim().Length -gt 0) {
                            $_
                            $prevBlank = $false
-                       }
-                       elseif (!$prevBlank)
-                       {
+                       } elseif (!$prevBlank) {
                            $_
                            $prevBlank = $true
                        }
@@ -788,8 +505,7 @@ function QuoteString { "$args" }
     C:\PS> Invoke-GC
     Invokes a garbage collection to free up resources and memory.
 #>
-function Invoke-GC
-{
+function Invoke-GC {
     [System.GC]::Collect()
 }
 
@@ -811,8 +527,7 @@ function Invoke-GC
 .NOTES
     Author: Lee Holmes
 #>
-function Invoke-BatchFile
-{
+function Invoke-BatchFile {
     param([string]$Path, [string]$Parameters)
 
     $tempFile = [IO.Path]::GetTempFileName()
@@ -863,9 +578,8 @@ function Invoke-BatchFile
 .NOTES
     Author: Joris van Lier and Keith Hill
 #>
-function Get-ViewDefinition
-{
-    [CmdletBinding(DefaultParameterSetName="Name")]
+function Get-ViewDefinition {
+    [CmdletBinding(DefaultParameterSetName = "Name")]
     param(
         [Parameter(Position=0, ParameterSetName="Name")]
         [string]
@@ -884,21 +598,18 @@ function Get-ViewDefinition
         $IncludeSnapInFormatting
     )
 
-    Begin
-    {
+    Begin {
         # Setup arrays to hold Format XMLDocument objects and the paths to them
         $arrFormatFiles = @()
         $arrFormatFilePaths = @()
         # If a specific Path is specified, use that, otherwise load all defaults
         # which consist of the default formatting files, and exported format files
         # from modules
-        if ($Path.count -eq 0)
-        {
+        if ($Path.count -eq 0) {
             # Populate the arrays with the standard ps1xml format file information
             gci $PsHome *.format.ps1xml | % `
             {
-                if (Test-Path $_.fullname)
-                {
+                if (Test-Path $_.fullname) {
                     $x = New-Object xml.XmlDocument
                     $x.Load($_.fullname)
                     $arrFormatFiles += $x
@@ -908,8 +619,7 @@ function Get-ViewDefinition
             # Populate the arrays with format info from loaded modules
             Get-Module | Select-Object -ExpandProperty exportedformatfiles | % `
             {
-                if (Test-Path $_)
-                {
+                if (Test-Path $_) {
                     $x = New-Object xml.XmlDocument
                     $x.load($_)
                     $arrFormatFiles += $x
@@ -918,25 +628,20 @@ function Get-ViewDefinition
             }
             # Processing snapin formatting seems to be slow, and snapins are more or less
             # deprecated with modules in v2, so exclude them by default
-            if ($IncludeSnapInFormatting)
-            {
+            if ($IncludeSnapInFormatting) {
                 # Populate the arrays with format info from loaded snapins
                 Get-PSSnapin | ? { $_.name -notmatch "Microsoft\." } | Select-Object applicationbase,formats | % `
                 {
-                    foreach ($f in $_.formats)
-                    {
+                    foreach ($f in $_.formats) {
                         $x = New-Object xml.xmlDocument
-                        if ( test-path $f )
-                        {
+                        if ( test-path $f ) {
                             $x.load($f)
                             $arrFormatFiles += $x
                             $arrFormatFilePaths += $f
                         }
-                        else
-                        {
-                            $fpath = "{0}\{1}" -f $_.ApplicationBase,$f
-                            if (Test-Path $fpath)
-                            {
+                        else {
+                            $fpath = "{0}\{1}" -f $_.ApplicationBase, $f
+                            if (Test-Path $fpath) {
                                 $x.load($fpath)
                                 $arrFormatFiles += $x
                                 $arrFormatFilePaths += $fpath
@@ -946,13 +651,10 @@ function Get-ViewDefinition
                 }
             }
         }
-        else
-        {
-            foreach ($p in $path)
-            {
+        else {
+            foreach ($p in $path) {
                 $x = New-Object xml.xmldocument
-                if (Test-Path $p)
-                {
+                if (Test-Path $p) {
                     $x.load($p)
                     $arrFormatFiles += $x
                     $arrFormatFilePaths += $p
@@ -964,108 +666,84 @@ function Get-ViewDefinition
         # The functions below reference object members that may not exist
         Set-StrictMode -Version 1.0
 
-        function IsViewSelectedByTypeName($view, $typeName, $formatFile)
-        {
-            if ($view.ViewSelectedBy.TypeName)
-            {
-                foreach ($t in @($view.ViewSelectedBy.TypeName))
-                {
+        function IsViewSelectedByTypeName($view, $typeName, $formatFile) {
+            if ($view.ViewSelectedBy.TypeName) {
+                foreach ($t in @($view.ViewSelectedBy.TypeName)) {
                     if ($typeName -eq $t) { return $true }
                 }
                 $false
             }
-            elseif ($view.ViewSelectedBy.SelectionSetName)
-            {
+            elseif ($view.ViewSelectedBy.SelectionSetName) {
                 $typeNameNodes = $formatFile.SelectNodes('/Configuration/SelectionSets/SelectionSet/Types')
                 $typeNames = $typeNameNodes | foreach {$_.TypeName}
                 $typeNames -contains $typeName
             }
-            else
-            {
+            else {
                 $false
             }
         }
 
-        function GenerateViewDefinition($typeName, $view, $path)
-        {
+        function GenerateViewDefinition($typeName, $view, $path) {
             $ViewDefinition = new-object psobject
 
             Add-Member NoteProperty Name $view.Name -Input $ViewDefinition
             Add-Member NoteProperty Path $path -Input $ViewDefinition
             Add-Member NoteProperty TypeName $typeName -Input $ViewDefinition
             $selectedBy = ""
-            if ($view.ViewSelectedBy.TypeName)
-            {
+            if ($view.ViewSelectedBy.TypeName) {
                 $selectedBy = $view.ViewSelectedBy.TypeName
             }
-            elseif ($view.ViewSelectedBy.SelectionSetName)
-            {
+            elseif ($view.ViewSelectedBy.SelectionSetName) {
                 $selectedBy = $view.ViewSelectedBy.SelectionSetName
             }
             Add-Member NoteProperty SelectedBy $selectedBy -Input $ViewDefinition
             Add-Member NoteProperty GroupBy $view.GroupBy.PropertyName -Input $ViewDefinition
-            if ($view.TableControl)
-            {
+            if ($view.TableControl) {
                 Add-Member NoteProperty Style 'Table' -Input $ViewDefinition
             }
-            elseif ($view.ListControl)
-            {
+            elseif ($view.ListControl) {
                 Add-Member NoteProperty Style 'List' -Input $ViewDefinition
             }
-            elseif ($view.WideControl)
-            {
+            elseif ($view.WideControl) {
                 Add-Member NoteProperty Style 'Wide' -Input $ViewDefinition
             }
-            elseif ($view.CustomControl)
-            {
+            elseif ($view.CustomControl) {
                 Add-Member NoteProperty Style 'Custom' -Input $ViewDefinition
             }
-            else
-            {
+            else {
                 Add-Member NoteProperty Style 'Unknown' -Input $ViewDefinition
             }
 
             $ViewDefinition
         }
 
-        function GenerateViewDefinitions($typeName, $path)
-        {
-            for ($i = 0 ; $i -lt $arrFormatFiles.count ; $i++)
-            {
+        function GenerateViewDefinitions($typeName, $path) {
+            for ($i = 0 ; $i -lt $arrFormatFiles.count ; $i++) {
                 $formatFile = $arrFormatFiles[$i]
-                $path        = $arrFormatFilePaths[$i]
-                foreach ($view in $formatFile.Configuration.ViewDefinitions.View)
-                {
-                    if ($typeName)
-                    {
-                        if (IsViewSelectedByTypeName $view $typeName $formatFile)
-                        {
+                $path = $arrFormatFilePaths[$i]
+                foreach ($view in $formatFile.Configuration.ViewDefinitions.View) {
+                    if ($typeName) {
+                        if (IsViewSelectedByTypeName $view $typeName $formatFile) {
                             GenerateViewDefinition $typeName $view $path
                         }
                     }
-                    else
-                    {
-                    GenerateViewDefinition $typeName $view $path
+                    else {
+                        GenerateViewDefinition $typeName $view $path
                     }
                 }
             }
         }
     }
 
-    Process
-    {
-        if ($pscmdlet.ParameterSetName -eq 'Name')
-        {
+    Process {
+        if ($pscmdlet.ParameterSetName -eq 'Name') {
             GenerateViewDefinitions $TypeName #$Path
         }
-        elseif (!$TypesSeen[$InputObject.PSObject.TypeNames[0]])
-        {
-            if ($InputObject -is [string])
-            {
+        elseif (!$TypesSeen[$InputObject.PSObject.TypeNames[0]]) {
+            if ($InputObject -is [string]) {
                 GenerateViewDefinitions $InputObject
             }
-            else
-            {
+            else {
                 GenerateViewDefinitions $InputObject.PSObject.TypeNames[0]
             }
             $TypesSeen[$InputObject.PSObject.TypeNames[0]] = $true
@@ -1073,93 +751,6 @@ function Get-ViewDefinition
     }
 }
 
-<#
-.SYNOPSIS
-    Outputs text as spoken words.
-.DESCRIPTION
-    Outputs text as spoken words.
-.PARAMETER InputObject
-    One or more objects to speak.
-.PARAMETER Wait
-    Wait for the machine to read each item (NOT asynchronous).
-.PARAMETER Purge
-    Purge all other speech requests before making this call.
-.PARAMETER ReadFiles
-    Read the contents of the text files indicated.
-.PARAMETER ReadXml
-    Treat input as speech XML markup.
-.PARAMETER NotXml
-    Do NOT parse as XML (if text starts with "<" but is not XML).
-.EXAMPLE
-    C:\PS> Out-Speech "Hello World"
-    Speaks "hello world".
-.EXAMPLE
-    C:\PS> Get-Content quotes.txt | Get-Random | Out-Speech -wait
-    Speaks a random quote from a file.
-.EXAMPLE
-    C:\PS> Out-Speech -readfiles "Hitchhiker's Guide To The Galaxy.txt"
-    Speaks the entire contents of a file.
-.NOTES
-    Author: Joel "Jaykul" Bennett
-#>
-function Out-Speech
-{
-    param(
-        [Parameter(Position=0, Mandatory=$true, ValueFromPipeline=$true)]
-        [psobject[]]
-        $InputObject,
-
-        [switch]
-        $Wait,
-
-        [switch]
-        $Purge,
-
-        [switch]
-        $ReadFiles,
-
-        [switch]
-        $ReadXml,
-
-        [switch]
-        $NotXml
-    )
-
-    begin
-    {
-        # To override this default, use the other flag values given below.
-        $SPF_DEFAULT = 0          # Specifies that the default settings should be used.
-        ## The defaults are:
-        #~ * Speak the given text string synchronously
-        #~ * Not purge pending speak requests
-        #~ * Parse the text as XML only if the first character is a left-angle-bracket (<)
-        #~ * Not persist global XML state changes across speak calls
-        #~ * Not expand punctuation characters into words.
-        $SPF_ASYNC = 1            # Specifies that the Speak call should be asynchronous.
-        $SPF_PURGEBEFORESPEAK = 2 # Purges all pending speak requests prior to this speak call.
-        $SPF_IS_FILENAME = 4      # The string passed is a file name, and the file text should be spoken.
-        $SPF_IS_XML = 8           # The input text will be parsed for XML markup.
-        $SPF_IS_NOT_XML= 16       # The input text will not be parsed for XML markup.
-
-        $SPF = $SPF_DEFAULT
-        if (!$wait)    { $SPF += $SPF_ASYNC }
-        if ($purge)    { $SPF += $SPF_PURGEBEFORESPEAK }
-        if ($readfiles){ $SPF += $SPF_IS_FILENAME }
-        if ($readxml)  { $SPF += $SPF_IS_XML }
-        if ($notxml)   { $SPF += $SPF_IS_NOT_XML }
-
-        $Voice = New-Object -Com SAPI.SpVoice
-    }
-
-    process
-    {
-        foreach ($obj in $InputObject)
-        {
-            $str = $obj | Out-String
-            $exit = $Voice.Speak($str, $SPF)
-        }
-    }
-}
 
 <#
 .SYNOPSIS
@@ -1436,12 +1027,9 @@ function Invoke-Method {
         [switch]$Static
     )
 
-    Process
-    {
-        if ($InputObject)
-        {
-            if ($InputObject | Get-Member $methodname -static:$static)
-            {
+    Process {
+        if ($InputObject) {
+            if ($InputObject | Get-Member $methodname -static:$static) {
                 $flags = "ignorecase,public,invokemethod"
 
                 if ($Static) {
@@ -1517,52 +1105,140 @@ function Set-Writable
         $PassThru
     )
 
-    Process
-    {
+    Process {
         $resolvedPaths = @()
-        if ($psCmdlet.ParameterSetName -eq "Path")
-        {
+        if ($psCmdlet.ParameterSetName -eq "Path") {
             # In the non-literal case we may need to resolve a wildcarded path
-            foreach ($apath in $Path)
-            {
-                if (Test-Path $apath)
-                {
+            foreach ($apath in $Path) {
+                if (Test-Path $apath) {
                     $resolvedPaths += @(Resolve-Path $apath | Foreach { $_.Path })
                 }
-                else
-                {
+                else {
                     Write-Error "File $apath does not exist"
                 }
             }
         }
-        else
-        {
+        else {
             $resolvedPaths += $LiteralPath
         }
 
-        foreach ($rpath in $resolvedPaths)
-        {
+        foreach ($rpath in $resolvedPaths) {
             $PathIntrinsics = $ExecutionContext.SessionState.Path
-            if ($PathIntrinsics.IsProviderQualified($rpath))
-            {
+            if ($PathIntrinsics.IsProviderQualified($rpath)) {
                 $rpath = $PathIntrinsics.GetUnresolvedProviderPathFromPSPath($rpath)
             }
 
-            if (!(Test-Path $rpath -PathType Leaf))
-            {
-                Write-Error "$rpath is not a file."
+            if (!(Test-Path $rpath -PathType Any)) {
+                Write-Error "File/Folder $rpath does not exist!"
                 continue
             }
 
-            $fileInfo = New-Object System.IO.FileInfo $rpath
-            if ($pscmdlet.ShouldProcess("$fileInfo"))
-            {
-                $fileInfo.IsReadOnly = $false
+            $fsInfo = Get-Item $rpath
+            if ($pscmdlet.ShouldProcess($rpath)) {
+                $fsInfo.Attributes = $fsInfo.Attributes -band (-bnot [System.IO.FileAttributes]::ReadOnly)
             }
 
-            if ($PassThru)
-            {
-                $fileInfo
+            if ($PassThru) {
+                $fsInfo
+            }
+        }
+    }
+}
+
+<#
+.SYNOPSIS
+    Updates file or folder attributes.
+.DESCRIPTION
+    Sets a file/folder attributes
+.PARAMETER LiteralPath
+    Specifies the path to a file/folder to update attributes. Unlike Path, the value of LiteralPath is used exactly as it is typed.
+    No characters are interpreted as wildcards. If the path includes escape characters, enclose it in
+    single quotation marks. Single quotation marks tell Windows PowerShell not to interpret any characters
+    as escape sequences.
+.PARAMETER Path
+    The path to the file/folder to update attributes.  Wildcards are accepted.
+.PARAMETER PassThru
+    Passes the FileSystemInfo pipeline input object down the pipeline. By default, this cmdlet does not generate any output.
+.EXAMPLE
+    C:\PS> Set-FileAttributes foo.txt A
+    Marks foo.txt as Archived
+.EXAMPLE
+    C:\PS> Set-FileAttributes [a-h]*.txt R -passthru
+    Makes any .txt file start with the letters a thru h read-only and passes the corresponding FileSystemInfo objects down the pipeline.
+.EXAMPLE
+    C:\PS> Get-ChildItem bar[0-9].txt | Set-FileAttributes !R
+    Set-FileAttributes can accept pipeline input corresponding to files and make them all writable.
+#>
+function Set-FileAttributes {
+    [CmdletBinding(DefaultParameterSetName = "Path", SupportsShouldProcess = $true)]
+    param(
+        [Parameter(Position = 0, Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = "Path")]
+        [ValidateNotNullOrEmpty()]
+        [string[]]
+        $Path,
+
+        [Alias("PSPath")]
+        [Parameter(Position = 0, Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = "LiteralPath")]
+        [ValidateNotNullOrEmpty()]
+        [string[]]
+        $LiteralPath,
+
+        [Parameter(Position = 1, Mandatory = $true)]
+        [ValidateSet("ReadOnly", "Hidden", "System", "Archive", "Normal", "!ReadOnly", "!Hidden", "!System", "!Archive", "!Normal", "R", "H", "S", "A", "N", "!R", "!H", "!S", "!A", "!N")]
+        [string[]]$attributes,
+
+        [switch]
+        $PassThru
+    )
+
+    Process {
+        $resolvedPaths = @()
+        if ($psCmdlet.ParameterSetName -eq "Path") {
+            # In the non-literal case we may need to resolve a wildcarded path
+            foreach ($apath in $Path) {
+                if (Test-Path $apath) {
+                    $resolvedPaths += @(Resolve-Path $apath | Foreach { $_.Path })
+                }
+                else {
+                    Write-Error "File $apath does not exist"
+                }
+            }
+        }
+        else {
+            $resolvedPaths += $LiteralPath
+        }
+
+        foreach ($rpath in $resolvedPaths) {
+            $PathIntrinsics = $ExecutionContext.SessionState.Path
+            if ($PathIntrinsics.IsProviderQualified($rpath)) {
+                $rpath = $PathIntrinsics.GetUnresolvedProviderPathFromPSPath($rpath)
+            }
+
+            if (!(Test-Path $rpath -PathType Any)) {
+                Write-Error "File/Folder $rpath does not exist!"
+                continue
+            }
+
+            if ($psCmdlet.ShouldProcess($rpath)) {
+                $fsAttributes = [System.IO.File]::GetAttributes($rpath)
+                $origAttr = $fsAttributes.ToString("X")
+                foreach ($a in $attributes) {
+                    if ($a -match "^!") {
+                        $atr = [System.IO.FileAttributes]($a.Substring(1))
+                        $fsAttributes = $fsAttributes -band (-bnot $atr)
+                    }
+                    else {
+                        $atr = [System.IO.FileAttributes]$a
+                        $fsAttributes = $fsAttributes -bor $atr
+                    }
+                }
+                if ($origAttr -cne ($fsAttributes.ToString("X"))) {
+                    [System.IO.File]::SetAttributes($rpath, $fsAttributes)
+                }
+            }
+
+            if ($PassThru) {
+                Get-Item $rpath -Force
             }
         }
     }
@@ -1592,17 +1268,16 @@ function Set-Writable
     C:\PS> Get-ChildItem bar[0-9].txt | Set-ReadOnly
     Set-ReadOnly can accept pipeline input corresponding to files and make them all read only.
 #>
-function Set-ReadOnly
-{
-    [CmdletBinding(DefaultParameterSetName="Path", SupportsShouldProcess=$true)]
+function Set-ReadOnly {
+    [CmdletBinding(DefaultParameterSetName = "Path", SupportsShouldProcess = $true)]
     param(
-        [Parameter(Position=0, Mandatory=$true, ValueFromPipeline=$true, ParameterSetName="Path")]
+        [Parameter(Position = 0, Mandatory = $true, ValueFromPipeline = $true, ParameterSetName = "Path")]
         [ValidateNotNullOrEmpty()]
         [string[]]
         $Path,
 
         [Alias("PSPath")]
-        [Parameter(Position=0, Mandatory=$true, ValueFromPipelineByPropertyName=$true, ParameterSetName="LiteralPath")]
+        [Parameter(Position = 0, Mandatory = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = "LiteralPath")]
         [ValidateNotNullOrEmpty()]
         [string[]]
         $LiteralPath,
@@ -1611,52 +1286,41 @@ function Set-ReadOnly
         $PassThru
     )
 
-    Process
-    {
+    Process {
         $resolvedPaths = @()
-        if ($psCmdlet.ParameterSetName -eq "Path")
-        {
+        if ($psCmdlet.ParameterSetName -eq "Path") {
             # In the non-literal case we may need to resolve a wildcarded path
-            foreach ($apath in $Path)
-            {
-                if (Test-Path $apath)
-                {
+            foreach ($apath in $Path) {
+                if (Test-Path $apath) {
                     $resolvedPaths += @(Resolve-Path $apath | Foreach { $_.Path })
                 }
-                else
-                {
-                    Write-Error "File $apath does not exist"
+                else {
+                    Write-Error "File/Folder $apath does not exist"
                 }
             }
         }
-        else
-        {
+        else {
             $resolvedPaths += $LiteralPath
         }
 
-        foreach ($rpath in $resolvedPaths)
-        {
+        foreach ($rpath in $resolvedPaths) {
             $PathIntrinsics = $ExecutionContext.SessionState.Path
-            if ($PathIntrinsics.IsProviderQualified($rpath))
-            {
+            if ($PathIntrinsics.IsProviderQualified($rpath)) {
                 $rpath = $PathIntrinsics.GetUnresolvedProviderPathFromPSPath($rpath)
             }
 
-            if (!(Test-Path $rpath -PathType Leaf))
-            {
-                Write-Error "$rpath is not a file."
+            if (!(Test-Path $rpath -PathType Any)) {
+                Write-Error "'$rpath' does not exist!"
                 continue
             }
 
-            $fileInfo = New-Object System.IO.FileInfo $rpath
-            if ($pscmdlet.ShouldProcess("$fileInfo"))
-            {
-                $fileInfo.IsReadOnly = $true
+            $fsInfo = Get-Item $rpath
+            if ($pscmdlet.ShouldProcess($rpath)) {
+                $fsInfo.Attributes = $fsInfo -bor [System.IO.FileAttributes]::ReadOnly
             }
 
-            if ($PassThru)
-            {
-                $fileInfo
+            if ($PassThru) {
+                $fsInfo
             }
         }
     }
@@ -1699,22 +1363,21 @@ function Set-ReadOnly
     C:\PS> Show-Tree WSMan: -ShowLeaf
     Shows all the container and leaf items in the WSMan: drive.
 #>
-function Show-Tree
-{
-    [CmdletBinding(DefaultParameterSetName="Path")]
+function Show-Tree {
+    [CmdletBinding(DefaultParameterSetName = "Path")]
     param(
-        [Parameter(Position=0,
-                   ParameterSetName="Path",
-                   ValueFromPipeline=$true,
-                   ValueFromPipelineByPropertyName=$true)]
+        [Parameter(Position = 0,
+            ParameterSetName = "Path",
+            ValueFromPipeline = $true,
+            ValueFromPipelineByPropertyName = $true)]
         [ValidateNotNullOrEmpty()]
         [string[]]
         $Path,
 
         [Alias("PSPath")]
-        [Parameter(Position=0,
-                   ParameterSetName="LiteralPath",
-                   ValueFromPipelineByPropertyName=$true)]
+        [Parameter(Position = 0,
+            ParameterSetName = "LiteralPath",
+            ValueFromPipelineByPropertyName = $true)]
         [ValidateNotNullOrEmpty()]
         [string[]]
         $LiteralPath,
@@ -1755,18 +1418,15 @@ function Show-Tree
         $UseAsciiLineArt
     )
 
-    Begin
-    {
+    Begin {
         Set-StrictMode -Version Latest
 
         # Set default path if not specified
-        if (!$Path -and $psCmdlet.ParameterSetName -eq "Path")
-        {
+        if (!$Path -and $psCmdlet.ParameterSetName -eq "Path") {
             $Path = Get-Location
         }
 
-        if ($Width -eq 0)
-        {
+        if ($Width -eq 0) {
             $Width = $host.UI.RawUI.BufferSize.Width
         }
 
@@ -1784,53 +1444,42 @@ function Show-Tree
             VerticalBar   = '│'
         }
 
-        if ($UseAsciiLineArt)
-        {
+        if ($UseAsciiLineArt) {
             $lineChars = $asciiChars
         }
-        else
-        {
+        else {
             $lineChars = $unicodeChars
         }
 
-        function GetIndentString([bool[]]$IsLast)
-        {
+        function GetIndentString([bool[]]$IsLast) {
             $str = ''
-            for ($i=0; $i -lt $IsLast.Count - 1; $i++)
-            {
-                $str += if ($IsLast[$i]) {' '} else {$lineChars.VerticalBar}
+            for ($i = 0; $i -lt $IsLast.Count - 1; $i++) {
+                $str += if ($IsLast[$i]) { ' ' } else { $lineChars.VerticalBar }
                 $str += " " * ($IndentSize - 1)
             }
-            $str += if ($IsLast[-1]) {$lineChars.EndCap} else {$lineChars.Junction}
+            $str += if ($IsLast[-1]) { $lineChars.EndCap } else { $lineChars.Junction }
             $str += $lineChars.HorizontalBar * ($IndentSize - 1)
             $str
         }
 
-        function CompactString([string]$String, [int]$MaxWidth = $Width)
-        {
+        function CompactString([string]$String, [int]$MaxWidth = $Width) {
             $updatedString = $String
-            if ($String.Length -ge $MaxWidth)
-            {
+            if ($String.Length -ge $MaxWidth) {
                 $ellipsis = '...'
                 $updatedString = $String.Substring(0, $MaxWidth - $ellipsis.Length - 1) + $ellipsis
             }
             $updatedString
         }
 
-        function ShowItemText([string]$ItemPath, [string]$ItemName, [bool[]]$IsLast)
-        {
-            if ($IsLast.Count -eq 0)
-            {
-                $itemText = Resolve-Path -LiteralPath $ItemPath | Foreach {$_.Path}
+        function ShowItemText([string]$ItemPath, [string]$ItemName, [bool[]]$IsLast) {
+            if ($IsLast.Count -eq 0) {
+                $itemText = Resolve-Path -LiteralPath $ItemPath | Foreach { $_.Path }
                 CompactString $itemText
             }
-            else
-            {
+            else {
                 $itemText = $ItemName
-                if (!$itemText)
-                {
-                    if ($ExecutionContext.SessionState.Path.IsProviderQualified($ItemPath))
-                    {
+                if (!$itemText) {
+                    if ($ExecutionContext.SessionState.Path.IsProviderQualified($ItemPath)) {
                         $itemText = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($ItemPath)
                     }
                 }
@@ -1838,17 +1487,14 @@ function Show-Tree
             }
         }
 
-        function ShowPropertyText ([string]$Name, [string]$Value, [bool[]]$IsLast)
-        {
+        function ShowPropertyText ([string]$Name, [string]$Value, [bool[]]$IsLast) {
             $cookedValue = @($Value -split "`n")[0].Trim()
             CompactString "$(GetIndentString $IsLast)Property: $Name = $cookedValue"
         }
 
-        function ShowItem([string]$ItemPath, [string]$ItemName='', [bool[]]$IsLast=@())
-        {
+        function ShowItem([string]$ItemPath, [string]$ItemName = '', [bool[]]$IsLast = @()) {
             $isContainer = Test-Path -LiteralPath $ItemPath -Type Container
-            if (!($isContainer -or $ShowLeaf))
-            {
+            if (!($isContainer -or $ShowLeaf)) {
                 Write-Warning "Path is not a container, use the ShowLeaf parameter to show leaf items."
                 return
             }
@@ -1859,8 +1505,7 @@ function Show-Tree
             # If the item is a container, grab its children.  This let's us know if there
             # will be items after the last property at the same level.
             $childItems = @()
-            if ($isContainer -and ($IsLast.Count -lt $Depth))
-            {
+            if ($isContainer -and ($IsLast.Count -lt $Depth)) {
                 $childItems = @(Get-ChildItem -LiteralPath $ItemPath -Force:$Force -ErrorAction $ErrorActionPreference |
                                 Where-Object {$ShowLeaf -or $_.PSIsContainer} | Select-Object PSPath, PSChildName)
             }
@@ -1869,9 +1514,8 @@ function Show-Tree
             $IsLast += @($false)
 
             # If requested, show item properties
-            if ($ShowProperty)
-            {
-                $excludedProviderNoteProps =  'PSIsContainer','PSChildName','PSDrive','PSParentPath','PSPath','PSProvider','Name','Property'
+            if ($ShowProperty) {
+                $excludedProviderNoteProps = 'PSIsContainer', 'PSChildName', 'PSDrive', 'PSParentPath', 'PSPath', 'PSProvider', 'Name', 'Property'
                 $excludedProviderNoteProps += $ExcludeProperty
                 $props = @()
                 $itemProp = Get-ItemProperty -LiteralPath $ItemPath -ErrorAction SilentlyContinue
@@ -1879,8 +1523,7 @@ function Show-Tree
                 {
                     $props = @($itemProp.psobject.properties | Sort-Object Name | Where-Object {$excludedProviderNoteProps -notcontains $_.Name})
                 }
-                else
-                {
+                else {
                     $item = $null
                     # Have to use try/catch here because Get-Item cert: error caught be caught with -EA
                     try { $item = Get-Item -LiteralPath $ItemPath -ErrorAction SilentlyContinue } catch {}
@@ -1890,9 +1533,8 @@ function Show-Tree
                     }
                 }
 
-                for ($i=0; $i -lt $props.Count; $i++)
-                {
-                    $IsLast[-1] = ($i -eq $props.count -1) -and ($childItems.Count -eq 0)
+                for ($i = 0; $i -lt $props.Count; $i++) {
+                    $IsLast[-1] = ($i -eq $props.count - 1) -and ($childItems.Count -eq 0)
 
                     $prop = $props[$i]
                     ShowPropertyText $prop.Name $prop.Value $IsLast
@@ -1900,34 +1542,28 @@ function Show-Tree
             }
 
             # Recurse through child items
-            for ($i=0; $i -lt $childItems.Count; $i++)
-            {
+            for ($i = 0; $i -lt $childItems.Count; $i++) {
                 $childItemPath = $childItems[$i].PSPath
                 $childItemName = $childItems[$i].PSChildName
                 $IsLast[-1] = ($i -eq $childItems.Count - 1)
-                if ($ShowLeaf -or (Test-Path -LiteralPath $childItemPath -Type Container))
-                {
+                if ($ShowLeaf -or (Test-Path -LiteralPath $childItemPath -Type Container)) {
                     ShowItem $childItemPath $childItemName $IsLast
                 }
             }
         }
     }
 
-    Process
-    {
-        if ($psCmdlet.ParameterSetName -eq "Path")
-        {
+    Process {
+        if ($psCmdlet.ParameterSetName -eq "Path") {
             # In the -Path (non-literal) resolve path in case it is wildcarded.
             $resolvedPaths = @($Path | Resolve-Path | Foreach {"$_"})
         }
-        else
-        {
+        else {
             # Must be -LiteralPath
             $resolvedPaths = @($LiteralPath)
         }
 
-        foreach ($rpath in $resolvedPaths)
-        {
+        foreach ($rpath in $resolvedPaths) {
             Write-Verbose "Processing $rpath"
             ShowItem $rpath
         }
@@ -2267,8 +1903,7 @@ function Get-Parameter {
     To see a full list of available workloads, execute:
     Get-VSSetupInstance | Foreach-Object Packages | Foreach-Object Id | Sort-Object
 #>
-function Import-VisualStudioVars
-{
+function Import-VisualStudioVars {
     param
     (
         [Parameter(Position = 0)]
@@ -2367,10 +2002,8 @@ function Import-VisualStudioVars
         }
     }
 
-    end
-    {
-        switch -regex ($VisualStudioVersion)
-        {
+    end {
+        switch -regex ($VisualStudioVersion) {
             '90|2008' {
                 Push-EnvironmentBlock -Description "Before importing VS 2008 $Architecture environment variables"
                 Write-Verbose "Invoking ${env:VS90COMNTOOLS}..\..\VC\vcvarsall.bat $Architecture"
@@ -2454,341 +2087,6 @@ function Import-VisualStudioVars
 
 <#
 .SYNOPSIS
-    Starts a new Windows PowerShell process.
-.DESCRIPTION
-    Starts a new Windows PowerShell process using PowerShell's parameter
-    parsing engine to parse the parameters for the PowerShell executable.
-    This command exposes a few of the Start-Process commands it uses such as
-    -Wait, -Credential and -WorkingDirectory.  Note: If -NoNewWindow is
-    specified, PowerShell is invoked using the call operator (&) instead of
-    with the Start-Process cmdlet.
-.PARAMETER PSConsoleFile
-    Loads the specified Windows PowerShell console file. To create a console
-    file, use Export-Console in Windows PowerShell.
-.PARAMETER Version
-    Starts the specified version of Windows PowerShell.
-    Enter a version number with the parameter, such as "-version 2.0".
-.PARAMETER ExecutionPolicy
-    Sets the default execution policy for the current session and saves it
-    in the $env:PSExecutionPolicyPreference environment variable.
-    This parameter does not change the Windows PowerShell execution policy
-    that is set in the registry.
-.PARAMETER Architecture
-    Starts PowerShell with the desired architecture: x86, x64 or same
-    architecture as the launching PowerShell process.
-    Valid values are: x86, x64 and Same.
-.PARAMETER NoLogo
-    Hides the copyright banner at startup.
-.PARAMETER NoExit
-    Does not exit after running startup commands.
-.PARAMETER Sta
-    Starts the shell using a single-threaded apartment.
-    Single-threaded apartment (STA) is the default.
-.PARAMETER Mta
-    Start the shell using a multithreaded apartment.
-.PARAMETER NoProfile
-    Does not load the Windows PowerShell profile.
-.PARAMETER NonInteractive
-    Does not present an interactive prompt to the user.
-.PARAMETER InputFormat
-    Describes the format of data sent to Windows PowerShell. Valid values are
-    "Text" (text strings) or "XML" (serialized CLIXML format).
-.PARAMETER OutputFormat
-    Determines how output from Windows PowerShell is formatted. Valid values
-    are "Text" (text strings) or "XML" (serialized CLIXML format).
-.PARAMETER Credential
-    Specifies a user account that has permission to perform this action. Type
-    a user-name, such as "User01" or "Domain01\User01", or enter a
-    PSCredential object, such as one from the Get-Credential cmdlet. By
-    default, the cmdlet uses the credentials of the current user.
-    This parameter can't be used in conjunction with the NoNewWindow parameter.
-.PARAMETER WindowStyle
-    Sets the window style to Normal, Minimized, Maximized or Hidden.
-    This parameter can't be used in conjunction with the NoNewWindow parameter.
-.PARAMETER NoNewWindow
-    Uses the call invocation operator to start PowerShell instead of Start-Process.
-    This parameter can't be used in conjunction with the WindowStyle parameter.
-.PARAMETER WorkingDirectory
-    Specifies the location of the executable file or document that runs in the
-    process.  The default is the current directory.
-.PARAMETER Wait
-    Waits for the specified process to complete before accepting more input.
-    This parameter suppresses the command prompt or retains the window until
-    the process completes.
-.PARAMETER EncodedCommand
-    Accepts a base-64-encoded string version of a command. Use this parameter
-    to submit commands to Windows PowerShell that require complex quotation
-    marks or curly braces.
-.PARAMETER File
-    Runs the specified script in the local scope ("dot-sourced"), so that the
-    functions and variables that the script creates are available in the
-    current session. Enter the script file path and any parameters.
-    File must be the last parameter in the command, because all characters
-    typed after the File parameter name are interpreted
-    as the script file path followed by the script parameters.
-.PARAMETER Command
-    Executes the specified commands (and any parameters) as though they were
-    typed at the Windows PowerShell command prompt, and then exits, unless
-    NoExit is specified. The value of Command can be "-", a string. or a
-    script block.
-
-    If the value of Command is "-", the command text is read from standard
-    input.
-
-    If the value of Command is a script block, the script block must be enclosed
-    in braces ({}). You can specify a script block only when running PowerShell.exe
-    in Windows PowerShell. The results of the script block are returned to the
-    parent shell as deserialized XML objects, not live objects.
-
-    If the value of Command is a string, Command must be the last parameter
-    in the command , because any characters typed after the command are
-    interpreted as the command arguments.
-
-    To write a string that runs a Windows PowerShell command, use the format:
-    "& {<command>}"
-    where the quotation marks indicate a string and the invoke operator (&)
-    causes the command to be executed.
-.EXAMPLE
-    C:\PS> Start-PowerShell -NoProfile -NoExit -File $pwd\foo.ps1
-.EXAMPLE
-    C:\PS> Start-PowerShell -NoProfile -NoLogo -Credential (Get-Credential)
-.EXAMPLE
-    C:\PS> Start-PowerShell -NoProfile -NoNewWindow -File $pwd\foo.ps1
-.EXAMPLE
-    C:\PS> Start-PowerShell -Architecture x64 -NoNewWindow -Command {[IntPtr]::Size}
-.EXAMPLE
-    C:\PS> Start-PowerShell -Architecture x86 -NoNewWindow -Command {[IntPtr]::Size}
-#>
-function Start-PowerShell
-{
-    param(
-        [Parameter(Position = 0)]
-        [ValidateSet(2.0,3.0)]
-        [double]
-        $Version,
-
-        [Parameter()]
-        [ValidateSet('x86','x64','Same')]
-        [string]
-        $Architecture,
-
-        [Parameter()]
-        $Command,
-
-        [Parameter()]
-        [PSCredential]
-        $Credential,
-
-        [Parameter()]
-        [string]
-        $WorkingDirectory,
-
-        [Parameter()]
-        [switch]
-        $Wait,
-
-        [Parameter()]
-        [string]
-        $PSConsoleFile,
-
-        [Parameter()]
-        [Microsoft.PowerShell.ExecutionPolicy]
-        $ExecutionPolicy,
-
-        [Parameter()]
-        [Alias('PSPath')]
-        [string]
-        $File,
-
-        [Parameter()]
-        [string]
-        $EncodedCommand,
-
-        [Parameter()]
-        [ValidateSet('text','xml')]
-        [string]
-        $InputFormat,
-
-        [Parameter()]
-        [ValidateSet('text','xml')]
-        [string]
-        $OutputFormat,
-
-        [Parameter()]
-        [ValidateSet('Normal','Minimized','Maximized','Hidden')]
-        [string]
-        $WindowStyle,
-
-        [Parameter()]
-        [Alias('NE')]
-        [switch]
-        $NoExit,
-
-        [Parameter()]
-        [Alias('NL')]
-        [switch]
-        $NoLogo,
-
-        [Parameter()]
-        [Alias('NP')]
-        [switch]
-        $NoProfile,
-
-        [Parameter()]
-        [switch]
-        $NoNewWindow,
-
-        [Parameter()]
-        [Alias('NI')]
-        [switch]
-        $NonInteractive,
-
-        [Parameter()]
-        [switch]
-        $Mta,
-
-        [Parameter()]
-        [switch]
-        $Sta,
-
-        [Parameter(ValueFromRemainingArguments=$true)]
-        [string[]]
-        $Arguments
-    )
-
-    Begin
-    {
-        Set-StrictMode -Version Latest
-
-        $PowerShellPath = "$env:windir\System32\WindowsPowerShell\v1.0\powershell.exe"
-        if ($pscx:IsWow64Process -and ($Architecture -eq 'x64'))
-        {
-            $PowerShellPath = "$env:windir\SysNative\WindowsPowerShell\v1.0\powershell.exe"
-        }
-        if ($pscx:Is64BitProcess -and ($Architecture -eq 'x86'))
-        {
-            $PowerShellPath = "$env:windir\SysWow64\WindowsPowerShell\v1.0\powershell.exe"
-        }
-    }
-
-    End
-    {
-        [string[]]$arglist = @()
-
-        if ($PSConsoleFile)
-        {
-            $arglist += '-PSConsoleFile',$PSConsoleFile
-        }
-
-        if ($Version)
-        {
-            $arglist += '-Version',$Version
-        }
-
-        if ($NoLogo)
-        {
-            $arglist += '-NoLogo'
-        }
-
-        if ($NoExit)
-        {
-            $arglist += '-NoExit'
-        }
-
-        if ($Sta)
-        {
-            $arglist += '-Sta'
-        }
-
-        if ($Mta)
-        {
-            $arglist += '-Mta'
-        }
-
-        if ($NoProfile)
-        {
-            $arglist += '-NoProfile'
-        }
-
-        if ($NonInteractive)
-        {
-            $arglist += '-NonInteractive'
-        }
-
-        if ($WindowStyle)
-        {
-            $arglist += '-WindowStyle',$WindowStyle
-        }
-
-        if ($ExecutionPolicy)
-        {
-            $arglist += '-ExecutionPolicy',$ExecutionPolicy
-        }
-
-        if ($File)
-        {
-            $arglist += '-File',$File
-            if ($Arguments -and $Arguments.Count -gt 0)
-            {
-                $arglist += $Arguments
-            }
-        }
-        elseif ($Command)
-        {
-            $arglist += '-Command',$Command
-            if ($Arguments -and $Arguments.Count -gt 0)
-            {
-                $arglist += $Arguments
-            }
-        }
-        elseif ($EncodedCommand)
-        {
-            $arglist += '-EncodedCommand',$EncodedCommand
-        }
-
-        $pscmdlet.WriteDebug("Start-PowerShell: Path to PowerShell - $PowerShellPath")
-
-        if ($NoNewWindow)
-        {
-            $OFS = "`n"
-            $pscmdlet.WriteDebug("Start-PowerShell: Call operator arguments -`n$($arglist | Out-String)")
-
-            # Doing a start-process -NoNewWindow on PowerShell results in a shell that doesn't want to exit on V3 at least.
-            & $PowerShellPath $arglist
-        }
-        else
-        {
-            $startProcessArgs = @{}
-
-            if ($arglist.Count -gt 0)
-            {
-                $startProcessArgs['ArgumentList'] = $arglist
-            }
-
-            if ($Credential)
-            {
-                $startProcessArgs['Credential'] = $Credential
-            }
-
-            if ($WorkingDirectory)
-            {
-                $startProcessArgs['WorkingDirectory'] = $WorkingDirectory
-            }
-
-            if ($Wait)
-            {
-                $startProcessArgs['Wait'] = $true
-            }
-
-            $pscmdlet.WriteDebug("Start-PowerShell: Arguments to Start-Process - $($startProcessArgs | Out-String)")
-
-            Microsoft.PowerShell.Management\Start-Process $PowerShellPath @startProcessArgs
-        }
-    }
-}
-
-<#
-.SYNOPSIS
     Gets the execution time for the specified Id of a command in the current
     session history.
 .DESCRIPTION
@@ -2807,8 +2105,7 @@ function Start-PowerShell
 
     Gets the execution time for all commands in the session history.
 #>
-function Get-ExecutionTime
-{
+function Get-ExecutionTime {
     param(
         [Parameter(Position = 0)]
         [ValidateScript({$_ -ge 1})]
@@ -2816,13 +2113,12 @@ function Get-ExecutionTime
         $Id
     )
 
-    End
-    {
+    End {
         Get-History @PSBoundParameters | Foreach {
             $obj = new-object psobject -Property @{
-                    Id = $_.Id
-                    ExecutionTime = ($_.EndExecutionTime - $_.StartExecutionTime)
-                    HistoryInfo = $_
+                Id            = $_.Id
+                ExecutionTime = ($_.EndExecutionTime - $_.StartExecutionTime)
+                HistoryInfo   = $_
             }
             $obj.PSTypeNames.Insert(0, 'Pscx.Commands.Modules.Utility.ExecutionTimeInfo')
             $obj

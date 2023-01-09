@@ -7,10 +7,9 @@
 //---------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Pscx.Reflection {
+namespace Pscx.Reflection
+{
     [Serializable]
     public class InvalidPEFileException : Exception {
 

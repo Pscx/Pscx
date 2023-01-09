@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Pscx.Core.IO;
+using System;
 using System.Management.Automation;
-using System.Text;
-using Pscx.IO;
 
 namespace Pscx.Validation
 {

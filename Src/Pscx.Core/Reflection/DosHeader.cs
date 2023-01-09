@@ -6,10 +6,10 @@
 // Creation Date: Dec 24, 2006
 //---------------------------------------------------------------------
 
-using System;
 using System.IO;
 
-namespace Pscx.Reflection {
+namespace Pscx.Reflection
+{
 
     public sealed class DosHeader {
         const ushort DosSignature = 0x5a4d; // MZ

@@ -7,14 +7,12 @@
 //
 // Creation Date: Nov 12, 2006
 //---------------------------------------------------------------------
+
+using Pscx.Core.IO;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Management.Automation;
-using System.Security;
 using System.Text;
-using Pscx;
-using Pscx.IO;
 
 namespace Pscx.Commands.Text
 {

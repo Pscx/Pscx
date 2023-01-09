@@ -1,0 +1,89 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>  
+    <AssemblyVersion>3.6.4</AssemblyVersion>
+    <FileVersion>$(AssemblyVersion)</FileVersion>
+    <Version>$(AssemblyVersion)</Version>
+    <Company>PowerShell Core Community Team</Company>
+    <Product>PowerShell Core Community Windows Extensions</Product>
+    <Description>Set of Windows OS specific PowerShell extensions</Description>
+    <Copyright>Copyright © 2005-2023 Keith Hill, Oisin Grehan, Dan Luca, and contributors</Copyright>
+    <Authors>https://github.com/pscx/Pscx; fork https://github.com/danluca/Pscx</Authors>
+    <PackageId>Pscx.Win</PackageId>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="FormatData\Pscx.TerminalServices.Format.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\DirectoryServices\Pscx.DirectoryServices.Format.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\DirectoryServices\Pscx.DirectoryServices.psd1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\DirectoryServices\Pscx.DirectoryServices.Type.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Wmi\Pscx.Wmi.psm1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Wmi\Pscx.Wmi.psd1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PscxWin.psd1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PscxWin.psm1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TypeData\Pscx.TerminalServices.Type.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TypeData\Pscx.Wmi.Type.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.Platforms" Version="6.0.7" />
+    <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.2.8" />
+    <PackageReference Include="System.DirectoryServices" Version="6.0.0" />
+    <PackageReference Include="System.Reflection.MetadataLoadContext" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Pscx.Core\Pscx.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+	  <Compile Include="..\AssemblyInfo.Shared.cs">
+		  <Link>Properties\AssemblyInfo.Shared.cs</Link>
+	  </Compile>
+    <Compile Update="Properties\Errors.Designer.cs">
+      <DependentUpon>Errors.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Errors.resx">
+      <SubType>Designer</SubType>
+      <LastGenOutput>Errors.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="pwsh.exe -NoProfile -ExecutionPolicy RemoteSigned -NonInteractive -File ..\Tools\pscxwin-postbuild.ps1 -outDir $(TargetDir) -configuration $(Configuration)" WorkingDirectory="$(SolutionDir)" />
+  </Target>
+
+</Project>

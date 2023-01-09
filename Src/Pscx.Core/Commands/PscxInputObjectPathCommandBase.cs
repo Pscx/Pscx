@@ -10,37 +10,26 @@
 //           * modified RegisterInputType<T> to also call ProcessPath(PscxPathInfoImpl)
 //           * need to remove ProcessPath(string) when all dependents are removed.
 //---------------------------------------------------------------------
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+
+using Pscx.Core.IO;
 using System.IO;
 using System.Management.Automation;
-using System.Reflection;
-using Pscx.IO;
 
-namespace Pscx.Commands
-{
+namespace Pscx.Commands {
     /// <summary>
     /// 
     /// </summary>
-    public abstract class PscxInputObjectPathCommandBase : PscxPathCommandBase
-    {
+    public abstract class PscxInputObjectPathCommandBase : PscxPathCommandBase {
         public const string ParameterSetObject = "Object";
 
         private readonly PscxInputObjectPathSettings _settings;
         private PSObject _inputObject;
 
-        [Parameter(ParameterSetName = ParameterSetPath,
-                   Position = 0,
-                   Mandatory = true,
-                   ValueFromPipeline = false,
-                   ValueFromPipelineByPropertyName = true,
-                   HelpMessage = "Specifies the path to the file to process. Wildcard syntax is allowed.")]
+        [Parameter(ParameterSetName = ParameterSetPath, Position = 0, Mandatory = true, ValueFromPipeline = false, ValueFromPipelineByPropertyName = true, 
+            HelpMessage = "Specifies the path to the file to process. Wildcard syntax is allowed.")]
         [AcceptsWildcards(true)]
-        [PscxPath(Tag="InputObjectPathCommand.Path")]
-        public override PscxPathInfo[] Path
-        {
+        [PscxPath(Tag = "InputObjectPathCommand.Path")]
+        public override PscxPathInfo[] Path {
             get { return _paths; }
             set { _paths = value; }
         }
@@ -49,29 +38,24 @@ namespace Pscx.Commands
                    HelpMessage = "Accepts an object as input to the cmdlet. Enter a variable that contains the objects or type a command or expression that gets the objects.")]
         [AllowNull]
         [AllowEmptyString]
-        public PSObject InputObject
-        {
+        public PSObject InputObject {
             get { return _inputObject; }
             set { _inputObject = value; }
         }
 
-        protected PscxInputObjectPathCommandBase()
-        {
+        protected PscxInputObjectPathCommandBase() {
             _settings = InputSettings; // virtual member call in .ctor
         }
 
-        protected virtual PscxInputObjectPathSettings InputSettings
-        {
+        protected virtual PscxInputObjectPathSettings InputSettings {
             get { return new PscxInputObjectPathSettings(true, true); }
         }
 
-        protected override void BeginProcessing()
-        {
+        protected override void BeginProcessing() {
             base.BeginProcessing();
 
             // FIXME: this probably belongs somewhere else.
-            if (_settings.ProcessFileInfoAsPath)
-            {
+            if (_settings.ProcessFileInfoAsPath) {
                 //RegisterInputType<FileInfo>(delegate(FileInfo fileInfo)
                 //{
                 //    WriteVerbose(CmdletName + " processing file " + fileInfo.FullName);
@@ -82,8 +66,7 @@ namespace Pscx.Commands
                 RegisterPathInputType<DirectoryInfo>();
             }
 
-            if (_settings.ProcessDirectoryInfoAsPath)
-            {
+            if (_settings.ProcessDirectoryInfoAsPath) {
                 //RegisterInputType<DirectoryInfo>(delegate(DirectoryInfo dirInfo)
                 //{
                 //    WriteVerbose(CmdletName + " processing directory " + dirInfo.FullName);
@@ -92,29 +75,22 @@ namespace Pscx.Commands
             }
         }
 
-        protected override void ProcessRecord()
-        {
-            if (ParameterSetName == ParameterSetObject)
-            {
+        protected override void ProcessRecord() {
+            if (ParameterSetName == ParameterSetObject) {
                 ProcessInputObject(_inputObject);
-            }
-            else
-            {
+            } else {
                 // Chain up to PscxPathCommandBase so that paths can be processed.
                 base.ProcessRecord();
             }
         }
 
-        protected void RegisterPathInputType<T>()
-        {
-            RegisterInputType<T>(delegate
-            {
+        protected void RegisterPathInputType<T>() {
+            RegisterInputType<T>(delegate {
                 if (CurrentInputObjectPath == null) return;
 
                 PscxPathInfo pscxPath = GetPscxPathInfoFromPSPath(CurrentInputObjectPath);
-                if (InputSettings.ConstrainInputObjectByPSPath)
-                {
-                    CheckProviderConstraints(pscxPath, null, "InputObject");                        
+                if (InputSettings.ConstrainInputObjectByPSPath) {
+                    CheckProviderConstraints(pscxPath, null, "InputObject");
                 }
                 ProcessPath(pscxPath);
             });

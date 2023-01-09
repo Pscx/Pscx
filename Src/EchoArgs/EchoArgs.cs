@@ -8,6 +8,7 @@
 // Creation Date: March 06, 2006
 //---------------------------------------------------------------------
 using System;
+using System.Collections.Generic;
 
 namespace Pscx.Applications
 {
@@ -25,4 +26,5 @@ namespace Pscx.Applications
             Console.WriteLine();
         }
     }
+
 }

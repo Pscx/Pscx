@@ -1,0 +1,81 @@
+TOPIC
+    PowerShell Community Extensions (version <VERSION_NUMBER>)
+
+SHORT DESCRIPTION
+    Describes the Windows PowerShell Community Extensions (PSCX) module and 
+    how to use the contained cmdlets and functions.
+
+LONG DESCRIPTION
+    PowerShell Community Extensions is a PowerShell module that provides a
+    number of widely useful cmdlets.  PSCX is not affiliated with Microsoft 
+    or the Windows PowerShell team at Microsoft.  We are a few (at the moment)
+    passionate PowerShell users who wanted more cmdlets than Microsoft was 
+    able to deliver in v1 and v2.  So we have taken it upon ourselves to
+    create some of those cmdlets and make them available to the community.
+        
+POWERSHELL COMPATIBILITY
+    PSCX 3.x is compiled against .NET 4 and consequently works only in 
+    Windows PowerShell 3.0 and above. If you need Windows PowerShell 2.0 
+    support, download PSCX 2.1.  If you need Windows PowerShell 1.0 support, 
+    download PSCX 1.2.
+    
+PREFERENCE VARIABLES
+    Previous versions of PSCX used global variables to store preference 
+    information and variables created by PSCX functions.  Those have been 
+    moved to the PSCX settings provider.  PSCX will no longer create any 
+    variables in your global variable scope.  All PSCX preference settings 
+    are now specified using the Pscx.UserPreferencs.ps1 file.  The file is 
+    located in the root of the PSCX module folder.  Its default values 
+    indicate the defaults used if no preference file is specified during 
+    import of the PSCX module.  If you want to change any of the defaults, 
+    then copy this file to your home dir, edit it and then import PSCX using 
+    the -ArgumentList to specify the path to your updated 
+    Pscx.UserPreferences.ps1 file e.g.:
+    
+    Import-Module Pscx -arg ~\Pscx.UserPreferences.ps1
+    
+    The preference variables and default values are:
+    
+    ShowModuleLoadDetails = $false # Display module load details during 
+                                   # Import-Module.
+    
+    CD_GetChildItem = $false       # Display the contents of new provider 
+                                   # location after using cd (Set-LocationEx).
+                                   # Mutually exclusive with 
+                                   # CD_EchoNewLocation.
+                                   
+    CD_EchoNewLocation = $false    # Display new provider location after using 
+                                   # cd (Set-LocationEx).
+                                   # Mutually exclusive with CD_GetChildItem.
+    
+    TextEditor = 'Notepad.exe'     # Default text editor used by the Edit-File
+                                   # function.
+    
+    PageHelpUsingLess = $true      # Pscx replaces PowerShell's More function.
+                                   # When this setting is set to $true, 
+                                   # less.exe is used to page items piped to 
+                                   # the More function. Less.exe is powerful 
+                                   # paging app that allows advanced 
+                                   # navigation and search. Press 'h' to 
+                                   # access help inside less.exe and 'q' to 
+                                   # exit less.exe. Set this setting to $false
+                                   # to use more.com for paging.
+                                   
+    SmtpFrom = $null               # These settings are used by the PSCX 
+                                   # Send-SmtpMail cmdlet.
+    SmtpHost = $null               # Specify a default SMTP server.
+    SmtpPort = $null               # Specify a default port number.  If not 
+                                   # specified port 25 is used.
+                                   
+    FileSizeInUnits = $false       # Pscx can prepend format data for the 
+                                   # display of file information. If this 
+                                   # value is set to $true, file sizes are 
+                                   # displayed in using KB,MG,GB and TB units.
+
+    EditFileBackingFileThreshold = 84000
+                                   # Edit-File will switch from an in-memory
+                                   # buffer to a temp file when editing a file
+                                   # that is larger than this value.  This
+                                   # setting does not apply when the 
+                                   # SingleString parameter is used.  
+                                      

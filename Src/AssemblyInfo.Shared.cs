@@ -1,3 +1,4 @@
+using Pscx.Properties;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
@@ -7,3 +8,5 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyProduct(PscxAssemblyInfo.Product)]
 [assembly: AssemblyCopyright(PscxAssemblyInfo.Copyright)]
+[assembly: AssemblyDescription(PscxAssemblyInfo.Description)]
+[assembly: AssemblyCompany(PscxAssemblyInfo.Company)]

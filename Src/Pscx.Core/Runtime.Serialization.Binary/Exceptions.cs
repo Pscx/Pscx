@@ -7,10 +7,9 @@
 //---------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Pscx.Runtime.Serialization.Binary {
+namespace Pscx.Runtime.Serialization.Binary
+{
 
     [Serializable]
     public class BinaryParserException : Exception {

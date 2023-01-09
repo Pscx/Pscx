@@ -17,6 +17,7 @@ using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 using NUnit.Framework;
 using System.Text;
+using Microsoft.PowerShell;
 
 namespace PscxUnitTests
 {
@@ -67,7 +68,7 @@ namespace PscxUnitTests
     public class PscxCmdletTest
     {
         private Runspace _runspace;
-        private RunspaceInvoke _runspaceInvoke;
+        private PowerShell _runspaceInvoke;
 
         public Runspace Runspace
         {
@@ -76,8 +77,9 @@ namespace PscxUnitTests
 
         public Collection<PSObject> Invoke(string script, params object[] input)
         {
-            IList errors;
-            Collection<PSObject> output = _runspaceInvoke.Invoke(script, input, out errors);
+            _runspaceInvoke.AddScript(script);
+            Collection<PSObject> output = _runspaceInvoke.Invoke(input);
+            IList errors = _runspaceInvoke.Streams.Error;
 
             if (errors != null && errors.Count > 0)
             {
@@ -92,7 +94,7 @@ namespace PscxUnitTests
             get
             {
 #if DEBUG
-                return "Debug";
+                return "Debug\\net5.0";
 #else
                 return "Release";
 #endif
@@ -103,12 +105,12 @@ namespace PscxUnitTests
         {
             get
             {
-                string testDllPath = this.GetType().Assembly.CodeBase;
+                string testDllPath = this.GetType().Assembly.Location;
                 if (testDllPath.StartsWith("file:///", StringComparison.OrdinalIgnoreCase))
                 {
                     testDllPath = testDllPath.Remove(0, 8);
                 }
-                string projectDir = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(testDllPath), @"..\.."));
+                string projectDir = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(testDllPath), @"..\..\.."));
                 return projectDir;
             }
         }
@@ -117,12 +119,12 @@ namespace PscxUnitTests
         {
             get
             {
-                string testDllPath = this.GetType().Assembly.CodeBase;
+                string testDllPath = this.GetType().Assembly.Location;
                 if (testDllPath.StartsWith("file:///", StringComparison.OrdinalIgnoreCase))
                 {
                     testDllPath = testDllPath.Remove(0, 8);
                 }
-                string solutionDir = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(testDllPath), @"..\..\.."));
+                string solutionDir = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(testDllPath), @"..\..\..\.."));
                 return solutionDir;
             }
         }
@@ -194,18 +196,19 @@ namespace PscxUnitTests
             Assert.IsFalse(collection.Contains(expected));
         }
 
-        [TestFixtureSetUp]
+        [OneTimeSetUpAttribute]
         public virtual void SetUp()
         {
-            string pathToModule = Path.Combine(this.SolutionDir, @"Pscx\Bin\" + this.Configuration + @"\Pscx.psd1");
+            string pathToModule = Path.Combine(this.ProjectDir, @"bin\" + this.Configuration + @"\Pscx.psd1");
             var initialSession = InitialSessionState.CreateDefault();
+            initialSession.ExecutionPolicy = ExecutionPolicy.RemoteSigned;
             initialSession.ImportPSModule(new[] {pathToModule});
             _runspace = RunspaceFactory.CreateRunspace(initialSession);
             _runspace.Open();
-            _runspaceInvoke = new RunspaceInvoke(_runspace);
+            _runspaceInvoke = PowerShell.Create(_runspace);
         }
 
-        [TestFixtureTearDown]
+        [OneTimeTearDown]
         public virtual void TearDown()
         {
             _runspace.Close();

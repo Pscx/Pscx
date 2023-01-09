@@ -6,10 +6,9 @@
 // Creation Date: Dec 24, 2006
 //---------------------------------------------------------------------
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Pscx.Runtime.Serialization.Binary {
+namespace Pscx.Runtime.Serialization.Binary
+{
     public enum BinaryFieldType {
         StringAsciiZ,
         UnixTime,

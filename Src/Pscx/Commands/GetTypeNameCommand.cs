@@ -5,7 +5,6 @@
 //
 // Creation Date: Sept 6, 2009
 //---------------------------------------------------------------------
-using System;
 using System.Management.Automation;
 
 namespace Pscx.Commands

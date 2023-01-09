@@ -1,252 +1,64 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{2527CA26-82B6-4E2C-8199-25E5986A8AA2}</ProjectGuid>
+    <TargetFramework>net6.0</TargetFramework>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Pscx</RootNamespace>
-    <AssemblyName>Pscx.Core</AssemblyName>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AssemblyVersion>3.6.4</AssemblyVersion>
+    <Version>$(AssemblyVersion)</Version>
+    <FileVersion>$(AssemblyVersion)</FileVersion>
+    <Authors>https://github.com/pscx/Pscx; fork https://github.com/danluca/Pscx</Authors>
+    <Copyright>Copyright © 2005-2023 Keith Hill, Oisin Grehan, Dan Luca, and contributors</Copyright>
+    <RepositoryUrl>git@gitlab.com:danluca/pscx-light.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <Title>Pscx.Core module</Title>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <BaseAddress>1752891392</BaseAddress>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
+    <DefineConstants />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-Signed|AnyCPU'">
     <OutputPath>bin\Release-Signed\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="SoftUni.Wintellect.PowerCollections, Version=1.1.5733.22550, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SoftUni.Wintellect.PowerCollections.1.1.5733.22550\lib\net20\SoftUni.Wintellect.PowerCollections.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.DirectoryServices" />
-    <Reference Include="System.DirectoryServices.Protocols" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.PowerShell.3.ReferenceAssemblies.1.0.0\lib\net4\System.Management.Automation.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
   <ItemGroup>
     <Compile Include="..\AssemblyInfo.Shared.cs">
       <Link>Properties\AssemblyInfo.Shared.cs</Link>
     </Compile>
-    <Compile Include="Collections\InterlockedStack.cs" />
-    <Compile Include="Commands\PscxCmdlet.PscxPathInfo.cs" />
-    <Compile Include="DirectoryServices\LdapPath.cs" />
-    <Compile Include="EncodingConversion.cs" />
-    <Compile Include="EnvironmentBlock\EnvironmentFrame.cs" />
-    <Compile Include="EnvironmentBlock\PathVariable.cs" />
-    <Compile Include="GenericDisposable.cs" />
-    <Compile Include="Interop\Console\ConsoleFontInfo.cs" />
-    <Compile Include="Interop\RunningObjectTable\RunningObjectTableHelper.cs" />
-    <Compile Include="OutStringFormatter.cs" />
-    <Compile Include="PscxContext.cs" />
-    <Compile Include="PscxDelegates.cs" />
-    <Compile Include="Commands\PscxCmdlet.cs" />
-    <Compile Include="Commands\PscxCmdlet.IPscxErrorHandler.cs" />
-    <Compile Include="Commands\PscxCmdlet.IPscxFileHandler.cs" />
-    <Compile Include="Commands\PscxInputObjectPathCommandBase.cs" />
-    <Compile Include="Commands\PscxPathCommandBase.cs" />
-    <Compile Include="DirectoryServices\ActiveDirectory\UserClass.UacProperty.cs" />
-    <Compile Include="DirectoryServices\ActiveDirectory\GroupClass.cs" />
-    <Compile Include="DirectoryServices\DirectoryEntryProperties\DistinguishedNameProperties.cs" />
-    <Compile Include="DirectoryServices\DirectoryEntryProperties\ListDirectoryEntryProperty.cs" />
-    <Compile Include="DirectoryServices\DirectoryEntryProperties\SetMethodDirectoryEntryProperty.cs" />
-    <Compile Include="DirectoryServices\DirectoryEntryProperties\SimpleDirectoryEntryProperty.cs" />
-    <Compile Include="DirectoryServices\DirectoryEntryProperty.cs">
-    </Compile>
-    <Compile Include="DirectoryServices\ActiveDirectory\OrganizationalUnitClass.cs" />
-    <Compile Include="DirectoryServices\DirectoryEntryPropertyDictionary.cs" />
-    <Compile Include="DirectoryServices\DirectoryEntryTypeCollection.cs" />
-    <Compile Include="DirectoryServices\DirectoryUtils.cs" />
-    <Compile Include="DirectoryServices\DirectoryEntryType.cs" />
-    <Compile Include="DirectoryServices\ActiveDirectory\UserClass.cs" />
-    <Compile Include="DirectoryServices\NameTranslator.cs" />
-    <Compile Include="StringEncodingParameter.cs" />
-    <Compile Include="Interop\Console\Coordinates.cs" />
-    <Compile Include="Interop\Console\InputRecord.cs" />
-    <Compile Include="Interop\DirectoryServices\DsCrackNames.cs" />
-    <Compile Include="Reflection\AssemblyNameConvertor.cs" />
-    <Compile Include="Interop\DirectoryServices\IADsLargeInteger.cs" />
-    <Compile Include="Reflection\AssemblyCache.cs" />
-    <Compile Include="Interop\Fusion\IAssemblyCache.cs" />
-    <Compile Include="Interop\Fusion\IAssemblyCacheItem.cs" />
-    <Compile Include="Interop\Fusion\IAssemblyEnum.cs" />
-    <Compile Include="Interop\Fusion\IAssemblyName.cs" />
-    <Compile Include="Interop\Fusion\IInstallReferenceEnum.cs" />
-    <Compile Include="Interop\Fusion\IInstallReferenceItem.cs" />
-    <Compile Include="Reflection\AssemblyCacheEnumerator.cs" />
-    <Compile Include="Reflection\CoffHeader.cs" />
-    <Compile Include="Reflection\DosHeader.cs" />
-    <Compile Include="Reflection\AssemblyCacheSearcher.cs" />
-    <Compile Include="Reflection\InvalidPEFileException.cs" />
-    <Compile Include="Reflection\PEHeader.cs" />
-    <Compile Include="Reflection\PESection.cs" />
-    <Compile Include="Reflection\PortableExecutable.cs" />
-    <Compile Include="Interop\Shell\IPersistFile.cs" />
-    <Compile Include="Interop\Shell\IShellLink.cs" />
-    <Compile Include="Interop\NativeMethods.cs" />
-    <Compile Include="Interop\Console\RectangleShort.cs" />
-    <Compile Include="Interop\Security.Privileges\SafeTokenHandle.cs" />
-    <Compile Include="Interop\Console\Size.cs" />
-    <Compile Include="IO\Ntfs\ReparsePointHelper.cs" />
-    <Compile Include="IO\Ntfs\ReparsePointInfo.cs" />
-    <Compile Include="PscxDependency.cs" />
-    <Compile Include="TerminalServices\TerminalServer.cs" />
-    <Compile Include="Interop\Security.Privileges\TokenPrivilege.cs" />
-    <Compile Include="Interop\Security.Privileges\TokenPrivilegeCollection.cs" />
-    <Compile Include="Interop\UnsafeNativeMethods.cs" />
-    <Compile Include="IO\StreamDecorator.cs" />
-    <Compile Include="PscxErrorRecord.cs" />
-    <Compile Include="PscxHelpAttributes.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PscxException.cs" />
-    <Compile Include="Resources\Errors.Designer.cs">
+    <Compile Update="Resources\Errors.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Errors.resx</DependentUpon>
     </Compile>
-    <Compile Include="Runtime.Serialization.Binary\Attributes.cs" />
-    <Compile Include="Runtime.Serialization.Binary\BinaryParser.cs" />
-    <Compile Include="Runtime.Serialization.Binary\Exceptions.cs" />
-    <Compile Include="Runtime.Serialization.Binary\UnixTime.cs" />
-    <Compile Include="TerminalServices\TerminalSession.cs" />
-    <Compile Include="Utils.cs" />
-    <Compile Include="Visitors\CmdletReflectionVisitor.cs" />
-    <Compile Include="Visitors\ReflectionVisitor.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Errors.resx">
+    <EmbeddedResource Update="Resources\Errors.resx">
       <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Errors.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IO\PscxPathInfo.cs" />
-    <Compile Include="IO\PscxPathInfo.InvalidPscxPathImpl.cs" />
-    <Compile Include="IO\PscxPathInfo.ResolvedPscxPathImpl.cs" />
-    <Compile Include="Reflection\FastInvoke.cs" />
+    <PackageReference Include="Microsoft.NETCore.Platforms" Version="6.0.7" />
+    <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.2.8" />
+    <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Annotations.cs" />
-    <Compile Include="Collections\ExtensionMethods.cs" />
-    <Compile Include="Commands\ProviderConstraintPolicy.cs" />
-    <Compile Include="Commands\PscxInputObjectPathSettings.cs" />
-    <Compile Include="EncodingParameter.cs" />
-    <Compile Include="Interop\PropVariant.cs" />
-    <Compile Include="Interop\SafeLibraryHandle.cs" />
-    <Compile Include="Interop\SevenZip\ArchivePropId.cs" />
-    <Compile Include="Interop\SevenZip\AskMode.cs" />
-    <Compile Include="Interop\SevenZip\CompressionLevel.cs" />
-    <Compile Include="Interop\SevenZip\CompressionMethod.cs" />
-    <Compile Include="Interop\SevenZip\EncryptionMethod.cs" />
-    <Compile Include="Interop\SevenZip\FileTimeType.cs" />
-    <Compile Include="Interop\SevenZip\InStreamTimedWrapper.cs" />
-    <Compile Include="Interop\SevenZip\InStreamWrapper.cs" />
-    <Compile Include="Interop\SevenZip\ItemPropId.cs" />
-    <Compile Include="Interop\SevenZip\KnownSevenZipFormat.cs" />
-    <Compile Include="Interop\SevenZip\OperationResult.cs" />
-    <Compile Include="Interop\SevenZip\OutStreamWrapper.cs" />
-    <Compile Include="Interop\SevenZip\SevenZipInterfaces.cs" />
-    <Compile Include="Interop\SevenZip\StreamWrapper.cs" />
-    <Compile Include="Interop\SimpleComWrapper.cs" />
-    <Compile Include="IO\ImageMastering\ImapiProfileTypes.cs" />
-    <Compile Include="IO\PscxPathInfo.UnresolvedPscxPathImpl.cs" />
-    <Compile Include="IO\IPscxPathSettings.cs" />
-    <Compile Include="SIUnits\Pressure.cs" />
-    <Compile Include="SIUnits\Energy.cs" />
-    <Compile Include="SIUnits\Length.cs" />
-    <Compile Include="SIUnits\Mass.cs" />
-    <Compile Include="SIUnits\NonSIUnit.cs" />
-    <Compile Include="SIUnits\NonSIUnitConverter.cs" />
-    <Compile Include="SIUnits\NonSIUnit`1.cs" />
-    <Compile Include="SIUnits\SIPrefixes.cs" />
-    <Compile Include="SIUnits\SIUnit.cs" />
-    <Compile Include="PipelineHelper.cs" />
-    <Compile Include="PreferenceVariableAttribute.cs" />
-    <Compile Include="ProviderConstraintAttribute.cs" />
-    <Compile Include="Providers\DynamicParameterBuilder.cs" />
-    <Compile Include="Providers\PscxNavigationCmdletProvider.cs" />
-    <Compile Include="Providers\PscxObjectDriveInfo.cs" />
-    <Compile Include="Providers\PscxObjectProviderBase.cs" />
-    <Compile Include="Providers\PscxObjectProviderContent.cs" />
-    <Compile Include="Providers\PscxProviderContext.cs" />
-    <Compile Include="PscxCallbackEventBridge.cs" />
-    <Compile Include="PscxPathAttribute.cs" />
-    <Compile Include="Reflection\DynamicType\DataReaderIndexer.cs" />
-    <Compile Include="Reflection\DynamicType\DataReaderObjectFactory.cs" />
-    <Compile Include="Reflection\DynamicType\DataRowIndexer.cs" />
-    <Compile Include="Reflection\DynamicType\DataTableObjectFactory.cs" />
-    <Compile Include="Reflection\DynamicType\DataTypeBuilder.cs" />
-    <Compile Include="Reflection\DynamicType\PropertySetter.cs" />
-    <Compile Include="Reflection\DynamicType\IIndexedByName.cs" />
-    <Compile Include="Runtime.Serialization.Binary\RecordParser.cs" />
-    <Compile Include="TerminalServices\TerminalSessionClientInfo.cs" />
-    <Compile Include="TerminalServices\TerminalSessionState.cs" />
-    <Compile Include="Validation\ValidatePathAttribute.cs" />
+    <Compile Remove="SIUnits\NonSIUnitTypeConverter.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>if "$(ConfigurationName)" == "Release-Signed" (
-    @echo "C:\Program Files (x86)\Windows Kits\8.0\bin\x86\signtool.exe" sign /t http://timestamp.digicert.com /sha1 BB25149CDAF879A29DB6A011F6FC874AF32CBF51 "$(TargetPath)"
-    "C:\Program Files (x86)\Windows Kits\8.0\bin\x86\signtool.exe" sign /t http://timestamp.digicert.com /sha1 BB25149CDAF879A29DB6A011F6FC874AF32CBF51 "$(TargetPath)"
-)
-</PostBuildEvent>
-  </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="pwsh.exe -NoProfile -ExecutionPolicy RemoteSigned -NonInteractive -File ..\Tools\pscxcore-postbuild.ps1 -outDir $(TargetDir) -configuration $(Configuration)" WorkingDirectory="$(SolutionDir)" />
   </Target>
-  <Target Name="AfterBuild">
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+	<Exec Command="pwsh.exe -NoProfile -ExecutionPolicy RemoteSigned -NonInteractive -File ..\Tools\pscxcore-prebuild.ps1 -outDir $(TargetDir) -configuration $(Configuration)" WorkingDirectory="$(SolutionDir)" />
   </Target>
-  -->
 </Project>

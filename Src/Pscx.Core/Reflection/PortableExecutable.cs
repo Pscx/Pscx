@@ -5,12 +5,9 @@
 //
 // Creation Date: Dec 24, 2006
 //---------------------------------------------------------------------
-using System;
+using Pscx.Runtime.Serialization.Binary;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
-
-using Pscx.Runtime.Serialization.Binary;
 
 namespace Pscx.Reflection
 {

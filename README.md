@@ -1,32 +1,38 @@
-# Pscx - PowerShell Community Extensions
+# Pscx - PowerShell Community Extensions Light
 
-This PowerShell module is aimed at providing a widely useful set of additional cmdlets, providers, aliases, filters,
-functions and scripts for PowerShell that members of the community have expressed interest in.
+This PowerShell module is aimed at providing a widely useful set of additional cmdlets, providers, aliases, filters, functions and
+scripts for PowerShell Core that members of the community have expressed interest in.
+
+This repository is a fork of the official PowerShell Community Extensions hosted and [maintained](https://github.com/Pscx/Pscx#maintainers) at GitHub. The fork has been made from 
+version [3.3.2](https://github.com/Pscx/Pscx/releases/tag/v3.3.2) (commit [81b76cf](https://github.com/Pscx/Pscx/commit/81b76cfdb1343f84880e0e2cd647db5c56cf354b)).
+
+The customizations made in this fork include:
+* upgrade to PowerShell Core 7.x, .Net (Core) 5.0
+* compatibility with MacOS and other *nix OS
+* build upgraded to VS2019
+* packaging and build improvements throughout
+* removed cmdlets with low value, seldomly used
 
 ## Release notes
 
-See [ReleaseNotes.txt](ReleaseNotes.txt).
+See [Changelog.md](CHANGELOG.md).
 
 ## Install Pscx
 
-Pscx is hosted on the PowerShell Gallery.  You can install Pscx with the following command:
+### Pre-requisites
 
-```powershell
-Install-Module Pscx -Scope CurrentUser
-```
+* Install [latest PowerShell Core version](https://github.com/PowerShell/PowerShell/releases/latest)
+* Create a profile - may also want to have a look at [ompgit](https://gitlab.com/danluca/ohmyposhgit) profile enhancer
 
-You may be prompted to trust the PSGallery.  Respond with a 'y' (for yes) to proceed with the install.
+### Installation
 
-If you already have installed Pscx from the PowerShell Gallery, you can update Pscx with the command:
-
-```powershell
-Update-Module Pscx
-```
+* Download the [latest artifact](https://gitlab.com/danluca/pscx-light/releases/latest) from Package Registry
+* Unzip to `~/Documents/PowerShell/Modules` folder
+* Import module PSCX in your PowerShell profile file `import-module pscx`
 
 ## Maintainers
+ - @danluca and other maintainers in this GitLab repository
 
-- [Keith Hill](https://github.com/rkeithhill) - [@r_keith_hill](http://twitter.com/r_keith_hill)
-- [Oisin Grehan](https://github.com/oising) - [@oising](http://twitter.com/oising)
 
 ## Included cmdlets and functions
 
@@ -38,51 +44,15 @@ Cmdlets and functions below are sorted by noun. As always, you can get full Powe
 
 Search for objects in the Active Directory/Global Catalog.
 
-### AdoCommand
+### Archive
 
-#### `Invoke-AdoCommand`
-
-Execute a SQL query against an ADO.NET datasource.
-
-### AdoConnection
-
-#### `Get-AdoConnection`
-
-Create an ADO connection to any database supported by .NET on the current machine. You can enumerate available ADO.NET Data Providers with the Get-AdoDataProvider Cmdlet.
-
-### AdoDataProvider
-
-#### `Get-AdoDataProvider`
-
-List all registered ADO.NET Data Providers on the current machine.
-
-### AlternateDataStream
-
-#### `Test-AlternateDataStream`
-
-Tests for the existence of the specified alternate data stream from an NTFS file.
-
-### Apartment
-
-#### `Invoke-Apartment`
-
-PSCX Cmdlet:
-
-### PscxArchive
-
-#### `Expand-PscxArchive`
+#### `Expand-Archive`
 
 Expands a compressed archive file, or ArchiveEntry object, to its constituent file(s).
 
-#### `Read-PscxArchive`
+#### `Read-Archive`
 
 Enumerates compressed archives such as 7z or rar, emitting ArchiveEntry objects representing records in the archive.
-
-### Assembly
-
-#### `Test-Assembly`
-
-Tests whether or not the specified file is a .NET assembly.
 
 ### Base64
 
@@ -98,24 +68,6 @@ Converts byte array or specified file contents to base64 string.
 
 #### `Invoke-BatchFile`
 
-Invokes the specified batch file and retains any environment variable changes it makes.
-
-### Bitmap
-
-#### `Export-Bitmap`
-
-Exports bitmap objects to various formats.
-
-#### `Import-Bitmap`
-
-Loads bitmap files.
-
-### BitmapSize
-
-#### `Set-BitmapSize`
-
-Sets the size of the specified bitmap.
-
 ### Byte
 
 #### `Format-Byte`
@@ -126,23 +78,23 @@ Displays numbers in multiples of byte units.
 
 #### `Write-BZip2`
 
-Create BZIP2 format archive files from pipeline or parameter input.
+Create BZIP2 format archive files from pipline or parameter input.
 
-### PscxClipboard
+### Clipboard
 
-#### `Get-PscxClipboard`
+#### `Get-Clipboard`
 
 Gets data from the clipboard.
 
-#### `Out-PscxClipboard`
+#### `Out-Clipboard`
 
 Formats text via Out-String before placing in clipboard. Can also place string in clipboard as a file.
 
-#### `Set-PscxClipboard`
+#### `Set-Clipboard`
 
 Puts the specified object into the system clipboard.
 
-#### `Write-PscxClipboard`
+#### `Write-Clipboard`
 
 Writes objects to the clipboard using their string representation, bypassing the default PowerShell formatting.
 
@@ -268,9 +220,9 @@ Gets the hash value for the specified file or byte array via the pipeline.
 
 Create a PSObject from a dictionary such as a hashtable.
 
-### PscxHex
+### Hex
 
-#### `Format-PsxHex`
+#### `Format-Hex`
 
 System.Object[]
 
@@ -308,9 +260,9 @@ Gets an HTTP resource or optionally the headers associated with the resource.
 
 Creates NTFS directory junctions.
 
-### PscxLocation
+### LocationEx
 
-#### `Set-PscxLocation`
+#### `Set-LocationEx`
 
 CD function that tracks location history allowing easy navigation to previous locations.
 
@@ -348,32 +300,6 @@ Returns all mount points defined for a specific root path.
 
 Removes a mount point, dismounting the current media if any. If used against the root of a fixed drive, removes the drive letter assignment.
 
-### MSMQueue
-
-#### `Clear-MSMQueue`
-
-Purges all messages from a queue
-
-#### `Get-MSMQueue`
-
-Returns a list of all queues matching the filter parameters
-
-#### `New-MSMQueue`
-
-Creates a new queue object with the defined properties
-
-#### `Receive-MSMQueue`
-
-Receives the first message available in the queue. This call is synchronous, and blocks the current thread of execution until a message is available.
-
-#### `Send-MSMQueue`
-
-Wraps an object in a Message, and places it onto the defined queue.
-
-#### `Test-MSMQueue`
-
-PSCX Cmdlet:
-
 ### NullCoalescing
 
 #### `Invoke-NullCoalescing`
@@ -385,13 +311,6 @@ Similar to the C# ?? operator e.g. name = value ?? String.Empty
 #### `Skip-Object`
 
 Skips the specified objects in the pipeline.
-
-### OpenPowerShellHere
-
-#### `Enable-OpenPowerShellHere`
-
-Creates the registry entries required to create Windows Explorer context
-menu "Open PowerShell Here" for both Directories and Drives
 
 ### OpticalDriveInfo
 
@@ -425,12 +344,6 @@ Sets the specified path-oriented environment variable.
 
 Gets the Portable Header information from an executable file.
 
-### PowerShell
-
-#### `Start-PowerShell`
-
-Starts a new Windows PowerShell process.
-
 ### Privilege
 
 #### `Get-Privilege`
@@ -447,23 +360,11 @@ Adjusts privileges associated with a user (identity).
 
 Opens the current user's "all hosts" profile in a text editor.
 
-### PSSnapinHelp
-
-#### `Get-PSSnapinHelp`
-
-Generates a XML file containing all documentation data.
-
 ### ReadOnly
 
 #### `Set-ReadOnly`
 
 Sets a file's read only status to true making it read only.
-
-### RemoteProcess
-
-#### `Stop-RemoteProcess`
-
-Stops a process on a remote machine.
 
 ### ReparsePoint
 
@@ -478,20 +379,6 @@ Removes NTFS reparse junctions and symbolic links.
 ### RunningObject
 
 #### `Get-RunningObject`
-
-PSCX Cmdlet:
-
-### ScreenCss
-
-#### `Get-ScreenCss`
-
-Generate CSS header for HTML "screen shot" of the host buffer.
-
-### ScreenHtml
-
-#### `Get-ScreenHtml`
-
-Functions to generate HTML "screen shot" of the host buffer.
 
 ### Script
 
@@ -515,21 +402,9 @@ Adds the file or directory's short path as a "ShortPath" NoteProperty to each in
 
 Gets the short, 8.3 name for the given path.
 
-### SmtpMail
-
-#### `Send-SmtpMail`
-
-Sends email via specified SMTP server to specified recipients.
-
-### Speech
-
-#### `Out-Speech`
-
-Outputs text as spoken words.
-
 ### String
 
-#### `Join-PscxString`
+#### `Join-String`
 
 Joins an array of strings into a single string.
 
@@ -563,12 +438,6 @@ Gets information on terminal services sessions.
 
 Logs off a specific remote desktop session on a system running Terminal Services/Remote Desktop
 
-### Ternary
-
-#### `Invoke-Ternary`
-
-Similar to the C# ? : operator e.g. name = (value != null) ? String.Empty : value
-
 ### Tree
 
 #### `Show-Tree`
@@ -587,9 +456,9 @@ Get-TypeName displays the typename of the input object.
 
 Converts the line endings in the specified file to Unix line endings "\n".
 
-### PscxUptime
+### Uptime
 
-#### `Get-PscxUptime`
+#### `Get-Uptime`
 
 Gets the operating system's uptime and last bootup time.
 
@@ -598,16 +467,6 @@ Gets the operating system's uptime and last bootup time.
 #### `Test-UserGroupMembership`
 
 Tests whether or not a user (current user by default) is a member of the specified group name.
-
-### VHD
-
-#### `Dismount-VHD`
-
-Dismounts a Virtual Hard Drive (VHD) file.
-
-#### `Mount-VHD`
-
-Mounts a Virtual Hard Drive (VHD) file.
 
 ### ViewDefinition
 
@@ -663,4 +522,4 @@ Tests for well formedness and optionally validates against XML Schema.
 
 #### `Write-Zip`
 
-Create ZIP format archive files from pipeline or parameter input.
+Create ZIP format archive files from pipline or parameter input.

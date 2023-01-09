@@ -5,12 +5,11 @@
 //
 // Creation Date: Dec 24, 2006
 //---------------------------------------------------------------------
-using System;
+using Microsoft.PowerShell.Commands;
+using Pscx.Core.IO;
 using System.Diagnostics;
 using System.IO;
 using System.Management.Automation;
-using Microsoft.PowerShell.Commands;
-using Pscx.IO;
 
 
 namespace Pscx.Commands

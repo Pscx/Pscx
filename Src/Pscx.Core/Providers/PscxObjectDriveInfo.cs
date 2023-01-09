@@ -6,7 +6,6 @@
 // Creation Date: Feb 14, 2008
 //---------------------------------------------------------------------
 
-using System;
 using System.Management.Automation;
 
 namespace Pscx.Providers

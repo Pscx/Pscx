@@ -5,6 +5,8 @@
 //
 // Creation Date: Feb 14, 2008
 //---------------------------------------------------------------------
+
+using Pscx.Core;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

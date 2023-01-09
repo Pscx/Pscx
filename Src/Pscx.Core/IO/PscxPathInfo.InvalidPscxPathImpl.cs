@@ -7,12 +7,8 @@
 // Creation Date: September 12, 2007
 //---------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Management.Automation;
-using System.Text;
 
-namespace Pscx.IO
+namespace Pscx.Core.IO
 {
     partial class PscxPathInfo
     {

@@ -1,12 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Management.Automation;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Text;
-using Pscx.IO;
 using Pscx.Resources;
+using System;
+using System.Management.Automation;
 
 namespace Pscx
 {

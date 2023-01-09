@@ -6,7 +6,6 @@
 // Creation Date: Feb 14, 2008
 //---------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 using System.Management.Automation;
 using System.Management.Automation.Provider;

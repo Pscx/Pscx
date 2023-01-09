@@ -11,7 +11,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Management.Automation;
 using System.Security;
-using System.Text;
 using System.Net.Mail;
 using System.Xml.XPath;
 

@@ -1,7 +1,7 @@
 //---------------------------------------------------------------------
 // Author: Keith Hill
 //
-// Description: Class to implement the Convert-ToBase64 cmdlet.
+// Description: Class to implement the ConvertTo-Base64 cmdlet.
 //
 // Creation Date: Aug 20, 2006
 //---------------------------------------------------------------------
@@ -11,7 +11,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Management.Automation;
 using Microsoft.PowerShell.Commands;
-using Pscx.IO;
+using Pscx.Core.IO;
 
 namespace Pscx.Commands.Text
 {

@@ -1,0 +1,48 @@
+plugins {
+	id 'maven-publish'
+}
+
+group = "org.powershell.pscx"
+version = "3.6.0"
+
+task unzip(type: Copy) {
+	def zipFile = file("Output/Pscx-${project.version}.zip")
+	def outputDir = file("Output")
+
+	from zipTree(zipFile)
+	into outputDir
+}
+
+task distro(type: Zip) {
+	dependsOn unzip
+	destinationDirectory = file(project.buildDir)
+	archiveFileName = "pscx-${project.version}.zip"
+	from "Output/Pscx/"
+	into "Pscx"
+}
+
+publishing {
+	publications {
+		maven(MavenPublication) {
+			artifactId = "pscx-light"
+			version = "${project.version}.${System.getenv('CI_PIPELINE_IID')}"
+
+			artifact(distro) {
+				extension 'zip'
+			}
+		}
+	}
+	repositories {
+		maven {
+			url "https://gitlab.com/api/v4/projects/25949690/packages/maven"
+			credentials(HttpHeaderCredentials) {
+				name = "Job-Token"
+				value = System.getenv("CI_JOB_TOKEN")
+			}
+			authentication {
+				header(HttpHeaderAuthentication)
+			}
+		}
+	}
+}
+

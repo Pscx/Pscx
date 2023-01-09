@@ -13,7 +13,7 @@ using System.Management.Automation;
 using System.Xml;
 using System.Xml.Xsl;
 using Microsoft.PowerShell.Commands;
-using Pscx.IO;
+using Pscx.Core.IO;
 
 namespace Pscx.Commands.Xml
 {

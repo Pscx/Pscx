@@ -6,7 +6,6 @@
 // Creation Date: Dec 24, 2006
 //---------------------------------------------------------------------
 using System;
-using System.IO;
 
 namespace Pscx.Reflection
 {

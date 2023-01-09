@@ -5,12 +5,7 @@ if (!$Pscx:Session['FileSystem_PrependedFormatData'])
 {
     $ScriptDir = Split-Path $MyInvocation.MyCommand.Path -Parent
     Write-Verbose "PSCX prepending format data $ScriptDir\Pscx.FileSystem.Format.ps1xml."
-	if ($PSVersionTable.PSVersion.Major -le 4) {
-		Update-FormatData -PrependPath "$ScriptDir\Pscx.FileSystem.Format.ps1xml"
-	}
-	else {
-		Update-FormatData -PrependPath "$ScriptDir\Pscx.FileSystem.Format.5.0.ps1xml"
-	}
+	Update-FormatData -PrependPath "$ScriptDir\Pscx.FileSystem.Format.ps1xml"
     $Pscx:Session['FileSystem_PrependedFormatData'] = $true
 }
 

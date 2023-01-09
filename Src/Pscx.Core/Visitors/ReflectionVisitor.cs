@@ -5,6 +5,8 @@
 //
 // Creation Date: Dec 23, 2006
 //---------------------------------------------------------------------
+
+using Pscx.Core;
 using System;
 using System.Reflection;
 

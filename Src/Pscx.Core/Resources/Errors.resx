@@ -202,8 +202,8 @@
   <data name="UnknownNonSIUnit" xml:space="preserve">
     <value>Unknown non-SI unit '{0}'.</value>
   </data>
-  <data name="WindowsVistaRequired" xml:space="preserve">
-    <value>Microsoft Windows Vista or later required.</value>
+  <data name="Windows7Required" xml:space="preserve">
+    <value>Microsoft Windows 7 or later required.</value>
   </data>
   <data name="IncompatibleArrayParameters" xml:space="preserve">
     <value>Parameters {0} and {1} are incompatible. {2}</value>

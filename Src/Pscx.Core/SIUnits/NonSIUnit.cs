@@ -1,9 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Globalization;
 using System.Reflection;
-using System.Collections.Generic;
 using System.Threading;
 
 namespace Pscx.SIUnits
@@ -82,6 +81,10 @@ namespace Pscx.SIUnits
         public static readonly NonSIUnit<Pressure> Bar = new NonSIUnit<Pressure>(100000, "bar");
         public static readonly NonSIUnit<Pressure> Psi = new NonSIUnit<Pressure>(6894.757, "psi");
         public static readonly NonSIUnit<Pressure> Torr = new NonSIUnit<Pressure>(133.322, "torr", "mmHg");
+
+        public static readonly NonSIUnit<Area> SquareFoot = new NonSIUnit<Area>(0.092903, "sqft");
+        public static readonly NonSIUnit<Area> SquareMile = new NonSIUnit<Area>(2589988, "sqmi");
+        public static readonly NonSIUnit<Area> Acre = new NonSIUnit<Area>(4046.856, "acres", "acre");
 
         private static IDictionary<String, NonSIUnit> UnitsCache
         {

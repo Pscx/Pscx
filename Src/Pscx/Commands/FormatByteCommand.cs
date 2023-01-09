@@ -5,7 +5,6 @@
 //
 // Creation Date: Dec 24, 2006
 //---------------------------------------------------------------------
-using System;
 using System.Globalization;
 using System.Management.Automation;
 

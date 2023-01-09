@@ -7,18 +7,13 @@
 //
 // Copyright (C) 2006 PowerShell Community Extensions Developers
 //---------------------------------------------------------------------
+using Microsoft.PowerShell.Commands;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Management.Automation;
-using System.Security;
-using System.Text;
 using System.Xml;
 using System.Xml.XPath;
-
-using Microsoft.PowerShell.Commands;
 
 namespace Pscx.Commands.Xml
 {

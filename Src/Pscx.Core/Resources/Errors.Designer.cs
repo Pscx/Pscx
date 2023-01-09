@@ -9,8 +9,7 @@
 //------------------------------------------------------------------------------
 
 namespace Pscx.Resources {
-    using System;
-    
+        
     
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
@@ -19,7 +18,7 @@ namespace Pscx.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Errors {
@@ -286,11 +285,11 @@ namespace Pscx.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Microsoft Windows Vista or later required..
+        ///   Looks up a localized string similar to Microsoft Windows 7 or later required..
         /// </summary>
-        internal static string WindowsVistaRequired {
+        internal static string Windows7Required {
             get {
-                return ResourceManager.GetString("WindowsVistaRequired", resourceCulture);
+                return ResourceManager.GetString("Windows7Required", resourceCulture);
             }
         }
     }

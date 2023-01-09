@@ -1,15 +1,12 @@
+using Pscx.Core.IO;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Management.Automation;
 using System.Net;
-using System.Text;
 using System.Xml;
-using Pscx.IO;
 
 namespace Pscx.Commands.Xml
-{    
+{
     /// <summary>
     /// Abstract class for Xml processing Cmdlets.
     /// <remarks>Derived Cmdlets should be constrained to the FileSystemProvider using a <see cref="ProviderConstraintAttribute"/></remarks>

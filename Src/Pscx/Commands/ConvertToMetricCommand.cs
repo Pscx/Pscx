@@ -6,8 +6,6 @@
 // Creation Date: Jul 27, 2009
 //---------------------------------------------------------------------
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Management.Automation;
 using Pscx.SIUnits;
 

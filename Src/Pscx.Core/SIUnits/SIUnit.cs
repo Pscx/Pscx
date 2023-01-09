@@ -38,6 +38,11 @@ namespace Pscx.SIUnits
             new[] { 3 }
         );
 
+        public static readonly SIUnit SquareMeter = new SIUnit(
+            "m²",
+            new [] {-2, -3},
+            new [] { 3 });
+
         public static readonly SIUnit Gram = new SIUnit(
             "g",
             new[] { -3, -6, -9, -12 },

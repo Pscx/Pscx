@@ -1,0 +1,12 @@
+{
+    "files.exclude": {
+        ".git*": true,
+        "**/.vs": true,
+        "**/*.csproj": true,
+        "**/*.sln": true,
+        "**/bin": true,
+        "**/build": true,
+        "**/obj": true,
+        "**/Output": true
+    }
+}

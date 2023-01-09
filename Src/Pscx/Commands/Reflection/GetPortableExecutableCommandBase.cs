@@ -5,11 +5,11 @@
 //
 // Creation Date: Dec 24, 2006
 //---------------------------------------------------------------------
-using System;
-using System.IO;
-using System.Management.Automation;
-using Pscx.IO;
+
+using Pscx.Core.IO;
 using Pscx.Reflection;
+using System;
+using System.Management.Automation;
 
 namespace Pscx.Commands.Reflection
 {

@@ -1,4 +1,4 @@
-using Pscx.IO;
+using Pscx.Core.IO;
 
 namespace Pscx.Commands
 {

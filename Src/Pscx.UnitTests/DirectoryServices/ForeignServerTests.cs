@@ -14,15 +14,14 @@ using System.Security;
 using System.Text;
 
 using NUnit.Framework;
-
-using Pscx.Providers.DirectoryServices;
-using Pscx.DirectoryServices;
-
-using EntryInfoList = System.Collections.Generic.List<Pscx.Providers.DirectoryServices.DirectoryEntryInfo>;
+using Pscx.Win.Fwk.Providers.DirectoryServices;
+using System.Runtime.Versioning;
+using EntryInfoList = System.Collections.Generic.List<Pscx.Win.Fwk.Providers.DirectoryServices.DirectoryEntryInfo>;
 
 namespace PscxUnitTests.DirectoryServices
 {
     [TestFixture]
+    [SupportedOSPlatform("windows")]
     public class ForeignServerTest : DirectoryServicesTest
     {
         public string ForeignServerPath = "LDAP://157.58.88.156/DC=LitwareInc, DC=com";
@@ -31,7 +30,7 @@ namespace PscxUnitTests.DirectoryServices
         
         private DirectoryServiceDriveInfo foreignDrive;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public override void SetUp()
         {
             base.SetUp();
@@ -39,7 +38,7 @@ namespace PscxUnitTests.DirectoryServices
             foreignDrive = ConnectForeignServer();
         }
 
-        [TestFixtureTearDown]
+        [OneTimeTearDown]
         public override void TearDown()
         {
             RemoveDrive(foreignDrive);

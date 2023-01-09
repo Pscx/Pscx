@@ -29,7 +29,7 @@ namespace Pscx
 
                 if ((os.Platform != PlatformID.Win32NT) || (os.Version.Major < 6))
                 {
-                    cmdlet.ErrorHandler.ThrowPlatformNotSupported(Resources.Errors.WindowsVistaRequired);
+                    cmdlet.ErrorHandler.ThrowPlatformNotSupported(Resources.Errors.Windows7Required);
                 }
             }
         }

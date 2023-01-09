@@ -5,9 +5,6 @@
 //
 // Creation Date: Mar 13, 2007
 //---------------------------------------------------------------------
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Management.Automation.Provider;
 
 namespace Pscx.Providers

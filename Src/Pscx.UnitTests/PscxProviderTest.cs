@@ -12,8 +12,6 @@ using System.Management.Automation.Runspaces;
 
 using NUnit.Framework;
 
-using Pscx.Providers.DirectoryServices;
-
 namespace PscxUnitTests
 {
     public abstract class PscxProviderTest : PscxCmdletTest

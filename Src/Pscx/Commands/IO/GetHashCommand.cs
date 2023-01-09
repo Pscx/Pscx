@@ -13,78 +13,61 @@ using System.Management.Automation;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.PowerShell.Commands;
-using Pscx.IO;
+using Pscx.Core.IO;
 
-namespace Pscx.Commands.IO
-{
+namespace Pscx.Commands.IO {
     [Cmdlet(VerbsCommon.Get, PscxNouns.Hash, DefaultParameterSetName = ParameterSetPath)]
-    [OutputType(new[] {typeof(HashInfo)})]
+    [OutputType(new[] { typeof(HashInfo) })]
     [Description("Gets the hash value for the specified file or byte array via the pipeline.")]
     [DetailedDescription("Gets the hash value for the specified file or byte array via the pipeline.  The default hash algorithm is MD5, although you can specify other algorithms using the -Algorithm parameter (MD5, SHA1, SHA256, SHA384, SHA512 and RIPEMD160).  This cmdlet emits a HashInfo object that has properties for Path, Algorithm, HashString and Hash.")]
     [ProviderConstraint(typeof(FileSystemProvider))]
-    public class GetHashCommand : PscxInputObjectPathCommandBase
-    {
+    public class GetHashCommand : PscxInputObjectPathCommandBase {
         private HashAlgorithm _hashAlgorithm;
         private List<byte> _byteInput;
-        private string _algorithm = "MD5";
+        private string _algorithm = Algorithms.SHA256;
         private Encoding _defaultEncoding = Encoding.Unicode;
         private StringEncodingParameter _encoding;
 
-        private static class Algorithms
-        {
+        private static class Algorithms {
             public const string MD5 = "MD5";
             public const string SHA1 = "SHA1";
             public const string SHA256 = "SHA256";
             public const string SHA512 = "SHA512";
-            public const string RIPEMD160 = "RIPEMD160";
         }
 
-        [Parameter(HelpMessage = "Specifies the hash algorithm to use.  Valid values are MD5 (default), SHA1, SHA256, SHA384, SHA512, RIPEMD160")]
-        [DefaultValue("MD5")]
+        [Parameter(HelpMessage = "Specifies the hash algorithm to use.  Valid values are MD5 (obsoleted), SHA1, SHA256 (default), SHA384, SHA512")]
+        [DefaultValue("SHA256")]
         [ValidateNotNullOrEmpty]
-        [ValidateSet(
-            Algorithms.MD5,
-            Algorithms.SHA1,
-            Algorithms.SHA256,
-            Algorithms.SHA512,
-            Algorithms.RIPEMD160
-        )]
-        public string Algorithm
-        {
+        [ValidateSet(Algorithms.MD5, Algorithms.SHA1, Algorithms.SHA256, Algorithms.SHA512)]
+        public string Algorithm {
             get { return _algorithm; }
             set { _algorithm = value; }
         }
 
-        [Parameter(ParameterSetName = ParameterSetObject,
-                   ValueFromPipelineByPropertyName = true,
+        [Parameter(ParameterSetName = ParameterSetObject, ValueFromPipelineByPropertyName = true,
                    HelpMessage = "The encoding to use for string InputObjects.  Valid values are: ASCII, UTF7, UTF8, UTF32, Unicode, BigEndianUnicode and Default.")]
         [ValidateNotNullOrEmpty]
         [ValidateSet("ascii", "utf7", "utf8", "utf32", "unicode", "bigendianunicode", "default")]
-        public StringEncodingParameter StringEncoding
-        {
+        public StringEncodingParameter StringEncoding {
             get { return _encoding; }
             set { _encoding = value; }
         }
 
-        protected virtual HashAlgorithm GetHashAlgorithm()
-        {
-            switch (_algorithm.ToUpperInvariant())
-            {
-                case Algorithms.MD5:       
+        protected virtual HashAlgorithm GetHashAlgorithm() {
+            switch (_algorithm.ToUpperInvariant()) {
+                case Algorithms.MD5:
                     return MD5.Create();
 
-                case Algorithms.SHA1:      
+                case Algorithms.SHA1:
                     return SHA1.Create();
 
-                case Algorithms.SHA256:    
+                case Algorithms.SHA256:
                     return SHA256.Create();
 
-                case Algorithms.SHA512:    
+                case Algorithms.SHA512:
                     return SHA512.Create();
-
-                case Algorithms.RIPEMD160: 
-                    return RIPEMD160.Create();
             }
+            //TODO: Pull in BouncyCastle.Cryptography package into Pscx.Win project to unleash more crypto/hash capabilities?
 
             // SHOULD NOT GET HERE: PowerShell does not call the 
             // command when the value is not enumerated in the 
@@ -93,33 +76,27 @@ namespace Pscx.Commands.IO
             throw new ArgumentException();
         }
 
-        protected override PscxInputObjectPathSettings InputSettings
-        {
-            get
-            {
+        protected override PscxInputObjectPathSettings InputSettings {
+            get {
                 PscxInputObjectPathSettings settings = base.InputSettings;
                 settings.ProcessDirectoryInfoAsPath = false;
                 return settings;
             }
         }
 
-        protected override void BeginProcessing()
-        {
+        protected override void BeginProcessing() {
             _byteInput = new List<byte>();
             _hashAlgorithm = GetHashAlgorithm();
 
-            RegisterInputType<byte>(delegate(byte b)
-            {
+            RegisterInputType<byte>(delegate (byte b) {
                 _byteInput.Add(b);
             });
 
-            RegisterInputType<IEnumerable<byte>>(delegate(IEnumerable<byte> bytes)
-            {
+            RegisterInputType<IEnumerable<byte>>(delegate (IEnumerable<byte> bytes) {
                 _byteInput.AddRange(bytes);
             });
 
-            RegisterInputType<string>(delegate(string s)
-            {
+            RegisterInputType<string>(delegate (string s) {
                 Encoding encoding = (_encoding.IsPresent ? _encoding.ToEncoding() : _defaultEncoding);
                 _byteInput.AddRange(encoding.GetBytes(s));
             });
@@ -130,33 +107,26 @@ namespace Pscx.Commands.IO
             base.BeginProcessing();
         }
 
-        protected override void ProcessPath(PscxPathInfo pscxPath)
-        {            
-            FileHandler.ProcessRead(pscxPath.ProviderPath, delegate(Stream stream)
-            {
+        protected override void ProcessPath(PscxPathInfo pscxPath) {
+            FileHandler.ProcessRead(pscxPath.ProviderPath, delegate (Stream stream) {
                 WriteHash(_hashAlgorithm.ComputeHash(stream), pscxPath.ProviderPath);
             });
         }
 
-        protected override void EndProcessing()
-        {
-            if (_byteInput.Count > 0)
-            {
+        protected override void EndProcessing() {
+            if (_byteInput.Count > 0) {
                 byte[] hash = _hashAlgorithm.ComputeHash(_byteInput.ToArray());
                 WriteHash(hash);
             }
         }
 
-        private void WriteHash(byte[] hash)
-        {
+        private void WriteHash(byte[] hash) {
             WriteHash(hash, null);
         }
 
-        private void WriteHash(byte[] hash, string path)
-        {
+        private void WriteHash(byte[] hash, string path) {
             StringBuilder strBld = new StringBuilder();
-            foreach (byte b in hash)
-            {
+            foreach (byte b in hash) {
                 strBld.AppendFormat("{0:X2}", b);
             }
 

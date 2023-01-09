@@ -8,6 +8,8 @@
 // Modified: September 12, 2007; Oisin Grehan
 //           * added comments (TODOs) about provider-internal path issues
 //---------------------------------------------------------------------
+
+using Pscx.Core;
 using System;
 using System.Collections;
 using System.Collections.Generic;

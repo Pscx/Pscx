@@ -7,6 +7,8 @@
 //
 // Creation Date: Dec 10, 2006
 //---------------------------------------------------------------------
+
+using Pscx.Core;
 using System;
 using System.Management.Automation;
 

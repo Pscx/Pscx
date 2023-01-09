@@ -1,8 +1,7 @@
-using System;
 using Pscx.Commands;
-using Pscx.IO;
+using System;
 
-namespace Pscx.IO
+namespace Pscx.Core.IO
 {
     /// <summary>
     /// 

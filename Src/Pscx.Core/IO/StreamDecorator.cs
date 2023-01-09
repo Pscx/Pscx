@@ -5,10 +5,11 @@
 //
 // Creation Date: Jan 24, 2007
 //---------------------------------------------------------------------
+
 using System;
 using System.IO;
 
-namespace Pscx.IO
+namespace Pscx.Core.IO
 {
     public abstract class StreamDecorator : Stream
     {

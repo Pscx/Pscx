@@ -8,7 +8,7 @@
 using System;
 using System.Reflection;
 using NUnit.Framework;
-using Pscx.Reflection.DynamicType;
+using Pscx.Win.Reflection.DynamicType;
 using Wintellect.PowerCollections;
 
 namespace PscxUnitTests.Database

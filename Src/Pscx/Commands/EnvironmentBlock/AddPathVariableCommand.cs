@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Management.Automation;
-using System.ComponentModel;
 using Pscx.EnvironmentBlock;
+using System.Management.Automation;
 
 namespace Pscx.Commands.EnvironmentBlock
 {

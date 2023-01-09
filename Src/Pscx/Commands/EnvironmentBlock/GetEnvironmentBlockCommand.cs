@@ -1,6 +1,5 @@
-﻿using System;
+﻿using Pscx.EnvironmentBlock;
 using System.Management.Automation;
-using Pscx.EnvironmentBlock;
 
 namespace Pscx.Commands.EnvironmentBlock
 {

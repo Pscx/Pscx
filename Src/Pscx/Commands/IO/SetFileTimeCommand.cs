@@ -11,7 +11,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Management.Automation;
 using Microsoft.PowerShell.Commands;
-using Pscx.IO;
+using Pscx.Core.IO;
 
 namespace Pscx.Commands.IO
 {
@@ -22,9 +22,9 @@ namespace Pscx.Commands.IO
     public class SetFileTimeCommand : PscxPathCommandBase
     {
         private string _pathToFileWithDesiredDateTime;
-        private const string _setAccessTimeFmt = "Setting last acccess time {0}on file {1}";
-        private const string _setCreateTimeFmt = "Setting creation time {0}on file {1}";
-        private const string _setWriteTimeFmt = "Setting last write time {0}on file {1}";
+        private const string _setAccessTimeFmt = "Setting last acccess time {0} on file {1}";
+        private const string _setCreateTimeFmt = "Setting creation time {0} on file {1}";
+        private const string _setWriteTimeFmt = "Setting last write time {0} on file {1}";
         private string _updateType = String.Empty;
         private DateTime? _time;
         private DateTime _defaultTime;
@@ -38,13 +38,13 @@ namespace Pscx.Commands.IO
         protected override void OnValidatePath(IPscxPathSettings settings)
         {
             settings.PathType = PscxPathType.Leaf;
-            settings.ShouldExist = true;
+            settings.ShouldExist = false;
         }
 
         protected override void OnValidateLiteralPath(IPscxPathSettings settings)
         {
             settings.PathType = PscxPathType.Leaf;
-            settings.ShouldExist = true;
+            settings.ShouldExist = false;
         }
 
         [Parameter(Position = 1, 
@@ -158,6 +158,14 @@ namespace Pscx.Commands.IO
                 SetDateTimeValues(out accessTime, out createTime, out writeTime);
 
                 fileInfo = new FileInfo(filePath);
+                if (!fileInfo.Exists)
+                {
+                    Directory.CreateDirectory(System.IO.Path.GetDirectoryName(filePath));
+                    using (FileStream fs = File.Create(filePath))
+                    {
+                        WriteVerbose($"File {filePath} has been created at {createTime}");
+                    }
+                }
 
                 if (fileInfo.IsReadOnly && _force)
                 {

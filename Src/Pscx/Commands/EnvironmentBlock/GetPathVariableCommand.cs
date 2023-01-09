@@ -6,9 +6,7 @@
 // Creation Date: Feb 10, 2008
 //---------------------------------------------------------------------
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+using System.IO;
 using System.Management.Automation;
 
 namespace Pscx.Commands.EnvironmentBlock
@@ -42,7 +40,7 @@ namespace Pscx.Commands.EnvironmentBlock
                 }
 
                 StringSplitOptions options = this.RemoveEmptyPaths ? StringSplitOptions.RemoveEmptyEntries : StringSplitOptions.None;
-                string[] paths = value.Split(new char[] { ';' }, options);
+                string[] paths = value.Split(Path.PathSeparator, options);
                 if (this.StripQuotes)
                 {
                     for (int i = 0; i < paths.Length; i++)

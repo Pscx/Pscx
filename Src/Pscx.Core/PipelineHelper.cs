@@ -22,16 +22,9 @@
 // Creation Date: December 1, 2007
 //---------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Management.Automation.Runspaces;
-
-using Pscx.Commands;
-using System.Management.Automation;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Collections;
+using System.Management.Automation;
+using System.Management.Automation.Runspaces;
 
 namespace Pscx
 {

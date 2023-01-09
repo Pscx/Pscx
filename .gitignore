@@ -21,7 +21,7 @@ build/
 bld/
 [Bb]in/
 [Oo]bj/
-Src/PscxHelp/Output/
+Output/*/
 
 # Visual Studo 2015 cache/options directory
 .vs/
@@ -195,3 +195,9 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
+
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build

@@ -6,11 +6,9 @@
 //
 // Creation Date: Nov 12, 2006
 //---------------------------------------------------------------------
-using System;
+using Microsoft.PowerShell.Commands;
 using System.ComponentModel;
 using System.Management.Automation;
-
-using Microsoft.PowerShell.Commands;
 
 namespace Pscx.Commands.Text
 {
