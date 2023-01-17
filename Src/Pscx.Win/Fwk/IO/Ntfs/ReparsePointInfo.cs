@@ -8,7 +8,7 @@
 
 using Pscx.Win.Interop;
 
-namespace Pscx.Win.IO.Ntfs {
+namespace Pscx.Win.Fwk.IO.Ntfs {
     public class ReparsePointInfo {
         readonly string path;
         readonly ReparsePointType tag;

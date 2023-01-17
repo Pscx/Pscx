@@ -1,4 +1,4 @@
-using Pscx.Win.IO.ImageMastering;
+using Pscx.Win.Fwk.IO.ImageMastering;
 
 namespace Pscx.Win.Commands.IO.ImageMastering {
     public static class ImapiProfileTypeMappings {

@@ -9,9 +9,10 @@ using System;
 using System.IO;
 using System.Management.Automation;
 using Microsoft.PowerShell.Commands;
+using Pscx.Core;
 using Pscx.Core.IO;
-using SharpCompress.Common;
-using SharpCompress.Readers;
+using SevenZip;
+using System.Linq;
 
 namespace Pscx.Commands.IO.Compression {
 
@@ -19,11 +20,12 @@ namespace Pscx.Commands.IO.Compression {
     /// 
     /// </summary>
     [OutputType(typeof(DirectoryInfo), typeof(FileInfo))]
-    [Cmdlet(VerbsData.Expand, PscxNouns.Archive, DefaultParameterSetName = ParameterSetPath, SupportsShouldProcess = true)]
+    [Cmdlet(VerbsData.Expand, PscxWinNouns.Archive, DefaultParameterSetName = ParameterSetPath, SupportsShouldProcess = true)]
     [ProviderConstraint(typeof(FileSystemProvider))]
     public class ExpandArchiveCommand : PscxInputObjectPathCommandBase {
-
+        
         public ExpandArchiveCommand() {
+            SevenZipBase.SetLibraryPath(System.IO.Path.Join(PscxContext.Instance.AppsDir, "7z.dll"));
         }
 
         [Parameter(ParameterSetName = ParameterSetObject, Position = 0, Mandatory = false),
@@ -70,47 +72,39 @@ namespace Pscx.Commands.IO.Compression {
             return false;
         }
 
-        private void ProcessArchive(FileInfo fileInfo) {
-            WriteDebug("ProcessArchive: " + fileInfo);
+        private void ProcessArchive(FileInfo archive) {
+            WriteDebug("ProcessArchive: " + archive);
+            using (var extractor = new SevenZipExtractor(archive.FullName)) {
+                float totalBytes = extractor.ArchiveFileData.Sum(a => (float)a.Size);
+                float curExtracted = 0f;
 
-            using (Stream stream = File.OpenRead(fileInfo.FullName))
-            using (var reader = ReaderFactory.Open(stream)) {
-                long arcSize = fileInfo.Length;
-                long bytesProcessed = 0;
-                var options = new ExtractionOptions() { ExtractFullPath = true, Overwrite = true };
-                while (reader.MoveToNextEntry()) {
-                    if (reader.Entry.IsEncrypted) {
-                        WriteWarning($"{fileInfo.Name} is password protected - this cmdlet doesn't support encrypted/protected {reader.ArchiveType} archives.");
-                        reader.Cancel();
-                        break;
-                    } 
-                    if (!reader.Entry.IsDirectory) {
-                        if (IsVerbose()) {
-                            Console.WriteLine(reader.Entry.Key);
+                foreach (ArchiveFileInfo afi in extractor.ArchiveFileData) {
+                    extractor.ExtractFiles(OutputPath.ProviderPath, afi.Index);
+                    curExtracted += afi.Size;
+
+                    if (ShowProgress) {
+                        var progress = new ProgressRecord(1, "Expanding archive...", archive.Name) {
+                            RecordType = ProgressRecordType.Processing, CurrentOperation = afi.FileName, PercentComplete = (int)Math.Floor((curExtracted / totalBytes) * 100)
+                        };
+                        this.WriteProgress(progress);
+                        if (this.Stopping) {
+                            //cancel entire extraction - should throw PipelineStoppedException instead?
+                            WriteWarning("Extraction cancelled.");
+                            break;
                         }
-                        if (ShowProgress) {
-                            bytesProcessed += reader.Entry.CompressedSize;
-                            var progress = new ProgressRecord(1, "Expanding archive...", fileInfo.FullName) {
-                                RecordType = ProgressRecordType.Processing, CurrentOperation = reader.Entry.Key, PercentComplete = (int)Math.Floor(((float)bytesProcessed / arcSize) * 100)
-                            };
-                            this.WriteProgress(progress);
-                            if (this.Stopping) {
-                                //cancel entire extraction
-                                reader.Cancel();
-                                WriteWarning("Extraction cancelled.");
-                            }
-                        }
-                        reader.WriteEntryToDirectory(OutputPath.ProviderPath, options);
+                    }
+
+                    if (PassThru) {
+                        WriteObject(new ArchiveEntry(afi, archive.FullName, OutputPath.ProviderPath));
                     }
                 }
 
                 if (ShowProgress) {
-                    var progress = new ProgressRecord(1, "Expanding archive...", fileInfo.FullName) {
+                    var progress = new ProgressRecord(1, "Expanding archive...", archive.Name) {
                         RecordType = ProgressRecordType.Completed, PercentComplete = 100
                     };
                     this.WriteProgress(progress);
                 }
-
             }
         }
     }

@@ -8,7 +8,7 @@
 
 using Microsoft.PowerShell.Commands;
 using Pscx.Core.IO;
-using Pscx.Win.IO.Ntfs;
+using Pscx.Win.Fwk.IO.Ntfs;
 using System;
 using System.ComponentModel;
 using System.IO;

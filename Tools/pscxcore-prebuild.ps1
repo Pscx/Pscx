@@ -12,6 +12,10 @@ Write-Host "In $PWD running script $($MyInvocation.MyCommand) from $PSScriptRoot
 $solDir = $PWD
 
 # cleanup the packing folder
-pushd ..\Output
-rm * -Recurse -Force
-popd
+if (Test-Path ..\Output -PathType Container) {
+    pushd ..\Output
+    rm * -Recurse -Force
+    popd
+} else {
+    mkdir ..\Output
+}

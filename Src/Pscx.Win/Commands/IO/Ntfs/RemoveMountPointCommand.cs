@@ -10,8 +10,8 @@
 using Microsoft.PowerShell.Commands;
 using Pscx.Commands;
 using Pscx.Core.IO;
+using Pscx.Win.Fwk.IO.Ntfs;
 using Pscx.Win.Interop;
-using Pscx.Win.IO.Ntfs;
 using System.ComponentModel;
 using System.Management.Automation;
 

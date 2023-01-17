@@ -9,7 +9,7 @@
 //---------------------------------------------------------------------
 
 using Pscx.Commands;
-using Pscx.Win.IO.Ntfs;
+using Pscx.Win.Fwk.IO.Ntfs;
 using Pscx.Win.Interop;
 using System;
 using System.ComponentModel;

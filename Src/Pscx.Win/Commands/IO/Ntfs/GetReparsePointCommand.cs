@@ -9,7 +9,7 @@
 using Microsoft.PowerShell.Commands;
 using Pscx.Commands;
 using Pscx.Core.IO;
-using Pscx.Win.IO.Ntfs;
+using Pscx.Win.Fwk.IO.Ntfs;
 using System.ComponentModel;
 using System.Management.Automation;
 

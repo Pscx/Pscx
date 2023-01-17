@@ -15,7 +15,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Pscx.Win.IO.Ntfs {
+namespace Pscx.Win.Fwk.IO.Ntfs {
     public static class ReparsePointHelper {
         public static string MakeParsedPath(string unparsed) {
             PscxArgumentException.ThrowIfIsNullOrEmpty(unparsed);

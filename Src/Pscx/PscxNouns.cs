@@ -28,13 +28,6 @@ namespace Pscx
         public const string DriveInfo = "DriveInfo";
         public const string FileTime = "FileTime";
 
-        // Compression
-        public const string BZip2 = "BZip2";
-        public const string GZip = "GZip";
-        public const string Tar = "Tar";
-        public const string Zip = "Zip";
-        public const string Archive = "PscxArchive";
-
         // Formatting
         public const string Byte = "Byte";
         public const string Hex = "Hex";
@@ -42,11 +35,6 @@ namespace Pscx
         // EnvironmentBlock
         public const string EnvironmentBlock = "EnvironmentBlock";
         public const string PathVariable = "PathVariable";
-
-        // Net
-        public const string Host = "Host";
-        public const string SmtpMail = "SmtpMail";
-        public const string HttpResource = "HttpResource";
 
         // Reflection
         public const string Assembly = "Assembly";

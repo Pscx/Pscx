@@ -10,11 +10,15 @@ namespace Pscx
 {
     internal static class PscxWinNouns
     {
-        public const string AlternateDataStream = "AlternateDataStream";
-        public const string Bitmap = "Bitmap";
-        public const string BitmapSize = "BitmapSize";
-        public const string Clipboard = "PscxClipboard";
         public const string Privilege = "Privilege";
+
+        // Compression
+        public const string BZip2 = "BZip2";
+        public const string GZip = "GZip";
+        public const string Tar = "Tar";
+        public const string Zip = "Zip";
+        public const string Archive = "PscxArchive";
+
 
         public const string Junction = "Junction";
         public const string Hardlink = "Hardlink";

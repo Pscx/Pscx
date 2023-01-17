@@ -1,4 +1,4 @@
-﻿namespace Pscx.Win.IO.ImageMastering {
+﻿namespace Pscx.Win.Fwk.IO.ImageMastering {
     public static class ImapiProfileTypes {
         public const int IMAPI_PROFILE_TYPE_INVALID = 0;
         public const int IMAPI_PROFILE_TYPE_NON_REMOVABLE_DISK = 0x1;
