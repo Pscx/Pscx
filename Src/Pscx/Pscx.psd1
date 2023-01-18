@@ -6,7 +6,7 @@
     Description        = 'PowerShell Core Community Extensions (PSCX) base module which implements a general purpose set of Cmdlets.'
     PowerShellVersion  = '7.2'
     CLRVersion         = '6.0'
-    ModuleVersion      ="3.6.4"
+    ModuleVersion      = "3.6.4"
     RequiredAssemblies = 'Pscx.dll' # needed for [pscxmodules] type (does not import cmdlets/providers)
     RootModule         = 'Pscx.psm1'
     NestedModules      = 'Pscx.dll'

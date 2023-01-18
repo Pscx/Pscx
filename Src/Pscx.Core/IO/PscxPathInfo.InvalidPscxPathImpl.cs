@@ -8,22 +8,17 @@
 //---------------------------------------------------------------------
 
 
-namespace Pscx.Core.IO
-{
-    partial class PscxPathInfo
-    {
+namespace Pscx.Core.IO {
+    partial class PscxPathInfo {
         /// <summary>
         /// Represents an invalid path in PowerShell.
         /// </summary>
-        private class InvalidPscxPathImpl : PscxPathInfo
-        {
-            internal InvalidPscxPathImpl(string invalidPath)
-            {
+        private class InvalidPscxPathImpl : PscxPathInfo {
+            internal InvalidPscxPathImpl(string invalidPath) {
                 _sourcePath = invalidPath;
             }
 
-            public override string ToString() 
-            {
+            public override string ToString() {
                 return _sourcePath;
             }
         }

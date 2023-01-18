@@ -25,7 +25,7 @@ namespace Pscx.Commands.IO.Compression {
     public class ExpandArchiveCommand : PscxInputObjectPathCommandBase {
         
         public ExpandArchiveCommand() {
-            SevenZipBase.SetLibraryPath(System.IO.Path.Join(PscxContext.Instance.AppsDir, "7z.dll"));
+            // SevenZipBase.SetLibraryPath(System.IO.Path.Join(PscxContext.Instance.AppsDir, "7z.dll"));
         }
 
         [Parameter(ParameterSetName = ParameterSetObject, Position = 0, Mandatory = false),

@@ -9,18 +9,14 @@
 
 using System.Management.Automation;
 
-namespace Pscx.Core.IO
-{
-    partial class PscxPathInfo
-    {
+namespace Pscx.Core.IO {
+    partial class PscxPathInfo {
         /// <summary>
         /// Represents a resolvable path in PowerShell.
         /// </summary>
-        private class ResolvedPscxPathImpl : PscxPathInfo
-        {
-            internal ResolvedPscxPathImpl(PathInfo resolvedPath)
-            {
-                _pathInfo = resolvedPath;                
+        private class ResolvedPscxPathImpl : PscxPathInfo {
+            internal ResolvedPscxPathImpl(PathInfo resolvedPath) {
+                _pathInfo = resolvedPath;
                 _providerInfo = resolvedPath.Provider;
                 _driveInfo = resolvedPath.Drive;
                 _providerPath = resolvedPath.ProviderPath;
@@ -28,13 +24,11 @@ namespace Pscx.Core.IO
             }
 
             internal ResolvedPscxPathImpl(PathInfo resolvedPath, string sourcePath) :
-                this(resolvedPath)
-            {
+                this(resolvedPath) {
                 _sourcePath = sourcePath; // save original source path, e.g. "*.txt"
             }
 
-            public override string ToString()
-            {
+            public override string ToString() {
                 return _pathInfo.ToString();
             }
         }

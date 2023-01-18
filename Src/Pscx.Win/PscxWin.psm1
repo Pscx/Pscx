@@ -177,6 +177,8 @@ function Resolve-WindowsError {
     }
 }
 
+# set the 7zip library path
+[SevenZip.SevenZipBase]::SetLibraryPath([System.IO.Path]::Join([Pscx.PscxContext]::Instance.AppsDir, "7z.dll"))
 
 # -----------------------------------------------------------------------
 # Cmdlet aliases

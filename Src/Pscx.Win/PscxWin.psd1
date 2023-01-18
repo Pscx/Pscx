@@ -6,7 +6,7 @@
     Description        = 'PowerShell Core Community Extensions (PSCX) module which implements Windows OS specific set of Cmdlets.'
     PowerShellVersion  = '7.2'
     CLRVersion         = '6.0'
-    ModuleVersion      ="3.6.4"
+    ModuleVersion      = "3.6.4"
     RequiredAssemblies = 'Pscx.Win.dll'
     RootModule         = 'PscxWin.psm1'
     NestedModules      = 'Pscx.Win.dll'

@@ -24,7 +24,7 @@ namespace Pscx.Commands.IO.Compression {
     public class WriteArchiveCommand : PscxInputObjectPathCommandBase {
 
         public WriteArchiveCommand() {
-            SevenZipBase.SetLibraryPath(System.IO.Path.Join(PscxContext.Instance.AppsDir, "7z.dll"));
+            // SevenZipBase.SetLibraryPath(System.IO.Path.Join(PscxContext.Instance.AppsDir, "7z.dll"));
         }
 
         /// <summary>
@@ -79,24 +79,17 @@ namespace Pscx.Commands.IO.Compression {
                 return;
             }
 
-            PscxPathType pathType = PscxPathType.None;
-            bool pathExists = PscxPathInfo.Exists(pscxPath, ref pathType);
-            if (pathExists) {
-                switch (pathType) {
-                    case PscxPathType.Leaf:
-                        filesToArchive.Add(getEntryName(pscxPath.ProviderPath, pscxPath), pscxPath.ProviderPath);
-                        break;
-                    case PscxPathType.Container:
-                        filesToArchive.Add(getEntryName(pscxPath.ProviderPath, pscxPath), null);    //add the directory entry - the file full path field is null
-                        foreach (string file in Directory.EnumerateFiles(pscxPath.ProviderPath, "*", SearchOption.AllDirectories)) {
-                            bool isDir = (File.GetAttributes(file) & FileAttributes.Directory) == FileAttributes.Directory;
-                            filesToArchive.Add(getEntryName(file, pscxPath), isDir ? null : file);
-                        }
-                        break;
-                    default:
-                        WriteWarning($"Unsupported path type {pathType} for location {pscxPath.ProviderPath}");
-                        break;
+            if (pscxPath.IsUnresolved) {
+                return;
+            }
+            if (File.GetAttributes(pscxPath.ProviderPath).HasFlag(FileAttributes.Directory)) {
+                filesToArchive.Add(getEntryName(pscxPath.ProviderPath, pscxPath), null); //add the directory entry - the file full path field is null
+                foreach (string file in Directory.EnumerateFiles(pscxPath.ProviderPath, "*", SearchOption.AllDirectories)) {
+                    bool isDir = File.GetAttributes(file).HasFlag(FileAttributes.Directory);
+                    filesToArchive.Add(getEntryName(file, pscxPath), isDir ? null : file);
                 }
+            } else {
+                filesToArchive.Add(getEntryName(pscxPath.ProviderPath, pscxPath), pscxPath.ProviderPath);
             }
         }
 
@@ -126,14 +119,26 @@ namespace Pscx.Commands.IO.Compression {
         }
 
         private string getEntryName(string fullFilePath, PscxPathInfo pscxPath) {
-            if (EntryPathRoot != null && fullFilePath.Contains(EntryPathRoot.ProviderPath)) {
-                return fullFilePath.Substring(fullFilePath.IndexOf(EntryPathRoot.ProviderPath, StringComparison.Ordinal) + EntryPathRoot.ProviderPath.Length);
+            if (EntryPathRoot == null) {
+                if (fullFilePath.Equals(pscxPath.ProviderPath)) {
+                    return System.IO.Path.GetFileName(fullFilePath);
+                }
+
+                if (fullFilePath.Contains(pscxPath.ProviderPath)) {
+                    return fullFilePath.Substring(fullFilePath.IndexOf(pscxPath.ProviderPath, StringComparison.Ordinal) + pscxPath.ProviderPath.Length);
+                }
+                return System.IO.Path.GetFileName(fullFilePath);
+            } 
+
+            if (fullFilePath.Equals(EntryPathRoot.SourcePath)) {
+                return fullFilePath;
             }
 
-            if (fullFilePath.Contains(pscxPath.ProviderPath)) {
-                return fullFilePath.Substring(fullFilePath.IndexOf(pscxPath.ProviderPath, StringComparison.Ordinal) + pscxPath.ProviderPath.Length);
+            if (fullFilePath.Contains(EntryPathRoot.SourcePath)) {
+                return fullFilePath.Substring(fullFilePath.IndexOf(EntryPathRoot.SourcePath, StringComparison.Ordinal) + EntryPathRoot.SourcePath.Length);
             }
-            return pscxPath.SourcePath;
+
+            return System.IO.Path.Join(EntryPathRoot.SourcePath, System.IO.Path.GetFileName(fullFilePath));
         }
     }
 }

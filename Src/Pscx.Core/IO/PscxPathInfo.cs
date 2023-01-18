@@ -11,22 +11,21 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.IO;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-namespace Pscx.Core.IO
-{
+namespace Pscx.Core.IO {
     /// <summary>
     /// Represents a path in PowerShell.
     /// </summary>
-    [XmlInclude(typeof(InvalidPscxPathImpl))]    
+    [XmlInclude(typeof(InvalidPscxPathImpl))]
     [XmlInclude(typeof(ResolvedPscxPathImpl))]
     [XmlInclude(typeof(UnresolvedPscxPathImpl))]
-    public abstract partial class PscxPathInfo : IXmlSerializable
-    {
+    public abstract partial class PscxPathInfo : IXmlSerializable {
         private bool _isUnresolved;
         private string _providerPath;
         private string _sourcePath;
@@ -34,9 +33,8 @@ namespace Pscx.Core.IO
         private PSDriveInfo _driveInfo = null;
         private ProviderInfo _providerInfo = null;
         private PathInfo _pathInfo = null;
-        
-        private PscxPathInfo()
-        {
+
+        private PscxPathInfo() {
         }
 
         #region Factory Methods
@@ -46,8 +44,7 @@ namespace Pscx.Core.IO
         /// </summary>
         /// <param name="pathInfo"></param>
         /// <returns></returns>
-        public static PscxPathInfo FromPathInfo(PathInfo pathInfo)
-        {
+        public static PscxPathInfo FromPathInfo(PathInfo pathInfo) {
             return new ResolvedPscxPathImpl(pathInfo);
         }
 
@@ -58,8 +55,7 @@ namespace Pscx.Core.IO
         /// <param name="paths"></param>
         /// <param name="literalPaths"></param>
         /// <returns></returns>
-        public static PscxPathInfo[] GetPscxPathInfos(SessionState session, string[] paths, bool literalPaths)
-        {
+        public static PscxPathInfo[] GetPscxPathInfos(SessionState session, string[] paths, bool literalPaths) {
             return GetPscxPathInfos(session, paths, literalPaths, false);
         }
 
@@ -71,19 +67,13 @@ namespace Pscx.Core.IO
         /// <param name="literalPaths"></param>
         /// <param name="shouldExist"></param>
         /// <returns></returns>
-        public static PscxPathInfo[] GetPscxPathInfos(SessionState session, string[] paths, bool literalPaths,
-                                                      bool shouldExist)
-        {
+        public static PscxPathInfo[] GetPscxPathInfos(SessionState session, string[] paths, bool literalPaths, bool shouldExist) {
             var pathInfos = new List<PscxPathInfo>();
 
-            if (paths != null && paths.Length > 0)
-            {
-                if (literalPaths)
-                {
+            if (paths is { Length: > 0 }) {
+                if (literalPaths) {
                     ProcessLiteralPaths(session, paths, pathInfos, shouldExist);
-                }
-                else
-                {
+                } else {
                     ProcessResolvablePaths(session, paths, pathInfos, shouldExist);
                 }
             }
@@ -97,8 +87,7 @@ namespace Pscx.Core.IO
         /// <param name="session"></param>
         /// <param name="literalPath"></param>
         /// <returns></returns>
-        public static PscxPathInfo GetPscxPathInfo(SessionState session, string literalPath)
-        {
+        public static PscxPathInfo GetPscxPathInfo(SessionState session, string literalPath) {
             return GetPscxPathInfo(session, literalPath, false);
         }
 
@@ -109,111 +98,80 @@ namespace Pscx.Core.IO
         /// <param name="literalPath"></param>
         /// <param name="shouldExist"></param>
         /// <returns></returns>
-        public static PscxPathInfo GetPscxPathInfo(SessionState session, string literalPath, bool shouldExist)
-        {
-            PscxPathInfo[] pscxPaths = GetPscxPathInfos(session, new string[] {literalPath}, true, shouldExist);
+        public static PscxPathInfo GetPscxPathInfo(SessionState session, string literalPath, bool shouldExist) {
+            PscxPathInfo[] pscxPaths = GetPscxPathInfos(session, new[] { literalPath }, true, shouldExist);
             return pscxPaths[0];
         }
 
-        private static void ProcessResolvablePaths(SessionState session, IEnumerable<string> paths,
-                                                   ICollection<PscxPathInfo> pathInfos)
-        {
+        private static void ProcessResolvablePaths(SessionState session, IEnumerable<string> paths, ICollection<PscxPathInfo> pathInfos) {
             ProcessResolvablePaths(session, paths, pathInfos, false);
         }
 
-        private static void ProcessResolvablePaths(SessionState session, IEnumerable<string> paths,
-                                                   ICollection<PscxPathInfo> pathInfos, bool shouldExist)
-        {
+        private static void ProcessResolvablePaths(SessionState session, IEnumerable<string> paths, ICollection<PscxPathInfo> pathInfos, bool shouldExist) {
             // handle wildcard resolving etc
-            foreach (string path in paths)
-            {
-                try
-                {
+            foreach (string path in paths) {
+                try {
                     Collection<PathInfo> resolvedPaths = session.Path.GetResolvedPSPathFromPSPath(path);
 
-                    foreach (PathInfo resolvedPath in resolvedPaths)
-                    {
+                    foreach (PathInfo resolvedPath in resolvedPaths) {
                         // save resolved path along with original input path
                         var pscxPath = new ResolvedPscxPathImpl(resolvedPath, path);
                         pathInfos.Add(pscxPath);
                     }
-                }
-                catch (ItemNotFoundException ex)
-                {
+                } catch (ItemNotFoundException ex) {
                     PscxPathInfo pscxPath;
 
                     // check if input contains wildcards or should exist = true
-                    if (WildcardPattern.ContainsWildcardCharacters(ex.ItemName) || shouldExist)
-                    {
+                    if (WildcardPattern.ContainsWildcardCharacters(ex.ItemName) || shouldExist) {
                         // save qualifed/resolved failed path as invalid.
                         // must be invalid because an unresolved wildcard
                         // can never be a valid path.
-                        pscxPath = new InvalidPscxPathImpl(ex.ItemName)
-                                       {
-                                           _state = PscxPathState.Unresolved
-                                       };
-                    }
-                    else
-                    {
+                        pscxPath = new InvalidPscxPathImpl(ex.ItemName) {
+                            _state = PscxPathState.Unresolved
+                        };
+                    } else {
                         // path is not wildcard but nonetheless does not exist.
                         // pass back as a literal path.
-                        pscxPath = new UnresolvedPscxPathImpl(ex.ItemName, session)
-                                       {
-                                           _state = PscxPathState.NotExist
-                                       };
+                        pscxPath = new UnresolvedPscxPathImpl(ex.ItemName, session) {
+                            _state = PscxPathState.NotExist
+                        };
                     }
                     pathInfos.Add(pscxPath);
                 }
             }
         }
 
-        private static void ProcessLiteralPaths(SessionState session, IEnumerable<string> paths,
-                                                ICollection<PscxPathInfo> pathInfos)
-        {
+        private static void ProcessLiteralPaths(SessionState session, IEnumerable<string> paths, ICollection<PscxPathInfo> pathInfos) {
             ProcessLiteralPaths(session, paths, pathInfos, false);
         }
 
-        private static void ProcessLiteralPaths(SessionState session, IEnumerable<string> paths,
-                                                ICollection<PscxPathInfo> pathInfos, bool shouldExist)
-        {
+        private static void ProcessLiteralPaths(SessionState session, IEnumerable<string> paths, ICollection<PscxPathInfo> pathInfos, bool shouldExist) {
             // store as unresolved (literal)
-            foreach (string path in paths)
-            {
+            foreach (string path in paths) {
                 PscxPathInfo pscxPath;
 
-                // NOTE: IsValid only checks for syntactical validity, not existance
-                if (session.Path.IsValid(path))
-                {
-                    // is existance required?
-                    if (shouldExist)
-                    {
-                        if (Exists(path, true))
-                        {
+                // NOTE: IsValid only checks for syntactical validity, not existence
+                if (session.Path.IsValid(path)) {
+                    // is existence required?
+                    if (shouldExist) {
+                        if (Exists(path, true)) {
                             // valid
                             pscxPath = new UnresolvedPscxPathImpl(path, session);
-                        }
-                        else
-                        {
+                        } else {
                             // does not exist
-                            pscxPath = new InvalidPscxPathImpl(path)
-                                           {
-                                               _state = PscxPathState.NotExist
-                                           };
+                            pscxPath = new InvalidPscxPathImpl(path) {
+                                _state = PscxPathState.NotExist
+                            };
                         }
-                    }
-                    else
-                    {
+                    } else {
                         // valid
                         pscxPath = new UnresolvedPscxPathImpl(path, session);
                     }
-                }
-                else
-                {
+                } else {
                     // invalid path
-                    pscxPath = new InvalidPscxPathImpl(path)
-                                   {
-                                       _state = PscxPathState.InvalidSyntax
-                                   };
+                    pscxPath = new InvalidPscxPathImpl(path) {
+                        _state = PscxPathState.InvalidSyntax
+                    };
                 }
                 pathInfos.Add(pscxPath);
             }
@@ -224,10 +182,8 @@ namespace Pscx.Core.IO
         /// <summary>
         /// Gets the provider containing this path.
         /// </summary>
-        public ProviderInfo Provider
-        {
-            get
-            {
+        public ProviderInfo Provider {
+            get {
                 EnsureValid();
                 return _providerInfo;
             }
@@ -236,10 +192,8 @@ namespace Pscx.Core.IO
         /// <summary>
         /// Gets the drive containing this path.
         /// </summary>
-        public PSDriveInfo Drive
-        {
-            get
-            {
+        public PSDriveInfo Drive {
+            get {
                 EnsureValid();
                 return _driveInfo;
             }
@@ -250,26 +204,22 @@ namespace Pscx.Core.IO
         /// If this object represents an invalid path, this property returns the errant path.
         /// <seealso cref="IsValid">PscxPathInfo.IsValid</seealso>
         /// </summary>
-        public string ProviderPath
-        {
+        public string ProviderPath {
             get { return _providerPath; }
         }
 
         /// <summary>
         /// Returns true if this instance represents an unresolved (literal) path.
         /// </summary>
-        public bool IsUnresolved
-        {
+        public bool IsUnresolved {
             get { return _isUnresolved; }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public virtual bool IsValid
-        {
-            get
-            {
+        public virtual bool IsValid {
+            get {
                 return (_providerPath != null) && // must have internal path
                        ((_providerInfo != null) || (_driveInfo != null)); // and either one of these
             }
@@ -286,8 +236,7 @@ namespace Pscx.Core.IO
         /// <summary>
         /// The unresolved or literal path that is the source of this PscxPath instance.
         /// </summary>
-        public string SourcePath
-        {
+        public string SourcePath {
             get { return _sourcePath; }
         }
 
@@ -296,11 +245,9 @@ namespace Pscx.Core.IO
         /// </summary>
         /// <returns>A PathInfo object representing an existing path.</returns>
         /// <exception cref="System.InvalidOperationException">An InvalidOperationException is thrown if this instance represents a literal path.</exception>
-        public PathInfo ToPathInfo()
-        {
+        public PathInfo ToPathInfo() {
             EnsureValid();
-            if (_pathInfo == null)
-            {
+            if (_pathInfo == null) {
                 // TODO: localize
                 throw new PSInvalidOperationException(
                     "This object represents a literal (unresolved) path. A PathInfo can only represent a resolved path.");
@@ -312,18 +259,15 @@ namespace Pscx.Core.IO
         /// Returns a fully-qualified string representation of the PowerShell path this object represents.
         /// </summary>
         /// <returns>System.String</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             throw new NotImplementedException();
         }
 
         /// <summary>
         /// 
         /// </summary>
-        protected void EnsureValid()
-        {
-            if (IsValid == false)
-            {
+        protected void EnsureValid() {
+            if (IsValid == false) {
                 throw new PSInvalidOperationException("This operation is not valid for an instance of " + GetType().Name);
             }
         }
@@ -335,22 +279,19 @@ namespace Pscx.Core.IO
         /// </summary>
         /// <param name="pscxPath"></param>
         /// <returns></returns>
-        public static bool Exists(PscxPathInfo pscxPath)
-        {
+        public static bool Exists(PscxPathInfo pscxPath) {
             string qualifiedPath = pscxPath.ToString();
             bool isLiteral = pscxPath.IsUnresolved;
 
             return Exists(qualifiedPath, isLiteral);
         }
 
-        public static bool Exists(string path, bool isLiteral)
-        {
+        public static bool Exists(string path, bool isLiteral) {
             // need to check if we should resolve wildcards
-            var pathArg = new CommandArgument
-                              {
-                                  Name = (isLiteral) ? "LiteralPath" : "Path",
-                                  Value = path
-                              };
+            var pathArg = new CommandArgument {
+                Name = (isLiteral) ? "LiteralPath" : "Path",
+                Value = path
+            };
 
             // best way to check paths in a static context
             return PipelineHelper.ExecuteScalar<bool>(
@@ -364,32 +305,24 @@ namespace Pscx.Core.IO
         /// <param name="pscxPath"></param>
         /// <param name="pathType"></param>
         /// <returns></returns>
-        public static bool Exists(PscxPathInfo pscxPath, ref PscxPathType pathType)
-        {
+        public static bool Exists(PscxPathInfo pscxPath, ref PscxPathType pathType) {
             string qualifiedPath = pscxPath.ToString();
             pathType = PscxPathType.Unknown;
             string pathArg = (pscxPath.IsUnresolved) ? "LiteralPath" : "Path";
 
-            if (Exists(pscxPath))
-            {
+            if (Exists(pscxPath)) {
                 bool isLeaf = PipelineHelper.ExecuteScalar<bool>(
-                    new Command("Test-Path"),
-                    new CommandArgument() {Name = pathArg, Value = qualifiedPath},
-                    new CommandArgument() {Name = "PathType", Value = "Leaf"});
+                    new Command("Test-Path"), new CommandArgument() { Name = pathArg, Value = qualifiedPath },
+                    new CommandArgument() { Name = "PathType", Value = "Leaf" });
 
-                if (isLeaf)
-                {
+                if (isLeaf) {
                     pathType = PscxPathType.Leaf;
-                }
-                else
-                {
+                } else {
                     bool isContainer = PipelineHelper.ExecuteScalar<bool>(
-                        new Command("Test-Path"),
-                        new CommandArgument() {Name = pathArg, Value = qualifiedPath},
-                        new CommandArgument() {Name = "PathType", Value = "Container"});
+                        new Command("Test-Path"), new CommandArgument() { Name = pathArg, Value = qualifiedPath },
+                        new CommandArgument() { Name = "PathType", Value = "Container" });
 
-                    if (isContainer)
-                    {
+                    if (isContainer) {
                         pathType = PscxPathType.Container;
                     }
                 }
@@ -398,8 +331,7 @@ namespace Pscx.Core.IO
             return false;
         }
 
-        protected static string GetDriveQualifiedPath(string path, PSDriveInfo drive)
-        {
+        protected static string GetDriveQualifiedPath(string path, PSDriveInfo drive) {
             PscxArgumentException.ThrowIfIsNullOrEmpty(path);
             PscxArgumentException.ThrowIfIsNull(drive);
 
@@ -407,28 +339,22 @@ namespace Pscx.Core.IO
             bool unqualified = true;
 
             int index = path.IndexOf(':');
-            if (index != -1)
-            {
-                if (string.Equals(path.Substring(0, index), drive.Name, StringComparison.OrdinalIgnoreCase))
-                {
+            if (index != -1) {
+                if (string.Equals(path.Substring(0, index), drive.Name, StringComparison.OrdinalIgnoreCase)) {
                     unqualified = false;
                 }
             }
-            if (unqualified)
-            {
+            if (unqualified) {
                 const char separator = '\\';
                 string format = "{0}:" + separator + "{1}";
 
-                if (path.StartsWith(separator.ToString(), StringComparison.Ordinal))
-                {
+                if (path.StartsWith(separator.ToString(), StringComparison.Ordinal)) {
                     format = "{0}:{1}";
                 }
 
                 // strip root
-                if (!String.IsNullOrEmpty(drive.Root))
-                {
-                    if (path.StartsWith(drive.Root))
-                    {
+                if (!String.IsNullOrEmpty(drive.Root)) {
+                    if (path.StartsWith(drive.Root)) {
                         path = path.Substring(drive.Root.Length + 1); // grab trailing slash
                     }
                 }
@@ -438,24 +364,20 @@ namespace Pscx.Core.IO
             return qualifiedPath;
         }
 
-        protected static string GetProviderQualifiedPath(string path, ProviderInfo provider)
-        {
+        protected static string GetProviderQualifiedPath(string path, ProviderInfo provider) {
             PscxArgumentException.ThrowIfIsNullOrEmpty(path);
             PscxArgumentException.ThrowIfIsNull(provider);
 
             string qualifiedPath = path;
             bool isProviderQualified = false;
             int index = path.IndexOf("::", StringComparison.Ordinal);
-            if (index != -1)
-            {
+            if (index != -1) {
                 string providerName = path.Substring(0, index);
-                if (CompareProviderNames(provider.Name, providerName) == true)
-                {
+                if (CompareProviderNames(provider.Name, providerName) == true) {
                     isProviderQualified = true;
                 }
             }
-            if (!isProviderQualified)
-            {
+            if (!isProviderQualified) {
                 qualifiedPath = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", GetProviderFullName(provider),
                                               "::", path);
             }
@@ -463,31 +385,24 @@ namespace Pscx.Core.IO
         }
 
 
-        protected static bool CompareProviderNames(string firstName, string secondName)
-        {
+        protected static bool CompareProviderNames(string firstName, string secondName) {
             string[] chunks = secondName.Split('\\');
-            if (chunks.Length == 1)
-            {
+            if (chunks.Length == 1) {
                 // not snapin-qualified (shortname)
                 return firstName.Equals(secondName, StringComparison.OrdinalIgnoreCase);
-            }
-            else
-            {
+            } else {
                 // snapin-qualified, e.g. vendor.namespace\provider
                 return firstName.Equals(chunks[1], StringComparison.OrdinalIgnoreCase);
             }
         }
 
-        protected static string GetProviderFullName(ProviderInfo provider)
-        {
+        protected static string GetProviderFullName(ProviderInfo provider) {
             PscxArgumentException.ThrowIfIsNull(provider);
 
             string name = provider.Name;
-            if (provider.PSSnapIn != null)
-            {
+            if (provider.PSSnapIn != null) {
                 string snapInName = provider.PSSnapIn.Name;
-                if (!string.IsNullOrEmpty(snapInName))
-                {
+                if (!string.IsNullOrEmpty(snapInName)) {
                     name = string.Format(CultureInfo.InvariantCulture, @"{0}\{1}", snapInName, provider.Name);
                 }
             }
@@ -504,8 +419,7 @@ namespace Pscx.Core.IO
         /// <returns>
         /// An <see cref="T:System.Xml.Schema.XmlSchema"/> that describes the XML representation of the object that is produced by the <see cref="M:System.Xml.Serialization.IXmlSerializable.WriteXml(System.Xml.XmlWriter)"/> method and consumed by the <see cref="M:System.Xml.Serialization.IXmlSerializable.ReadXml(System.Xml.XmlReader)"/> method.
         /// </returns>
-        XmlSchema IXmlSerializable.GetSchema()
-        {
+        XmlSchema IXmlSerializable.GetSchema() {
             return null;
         }
 
@@ -514,8 +428,7 @@ namespace Pscx.Core.IO
         /// </summary>
         /// <param name="reader">The <see cref="T:System.Xml.XmlReader"/> stream from which the object is deserialized. 
         ///                 </param>
-        void IXmlSerializable.ReadXml(XmlReader reader)
-        {
+        void IXmlSerializable.ReadXml(XmlReader reader) {
             throw new NotImplementedException();
         }
 
@@ -524,8 +437,7 @@ namespace Pscx.Core.IO
         /// </summary>
         /// <param name="writer">The <see cref="T:System.Xml.XmlWriter"/> stream to which the object is serialized. 
         ///                 </param>
-        void IXmlSerializable.WriteXml(XmlWriter writer)
-        {
+        void IXmlSerializable.WriteXml(XmlWriter writer) {
             /*
                     private bool _isUnresolved;
                     private string _providerPath;
@@ -553,8 +465,7 @@ namespace Pscx.Core.IO
     /// </summary>
     [Flags]
     [Serializable]
-    public enum PscxPathType
-    {
+    public enum PscxPathType {
         None = 0,
         /// <summary>
         /// Return only. Do not use as a parameter value.
@@ -570,8 +481,7 @@ namespace Pscx.Core.IO
     /// </summary>
     [Flags]
     [Serializable]
-    public enum PscxPathState
-    {
+    public enum PscxPathState {
         Valid = 0,
         Invalid = 1,
         Resolved = 2,
