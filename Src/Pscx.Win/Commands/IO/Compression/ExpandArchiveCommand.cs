@@ -12,6 +12,7 @@ using Microsoft.PowerShell.Commands;
 using Pscx.Core;
 using Pscx.Core.IO;
 using SevenZip;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Pscx.Commands.IO.Compression {
@@ -20,14 +21,11 @@ namespace Pscx.Commands.IO.Compression {
     /// 
     /// </summary>
     [OutputType(typeof(DirectoryInfo), typeof(FileInfo))]
-    [Cmdlet(VerbsData.Expand, PscxWinNouns.Archive, DefaultParameterSetName = ParameterSetPath, SupportsShouldProcess = true)]
+    [Cmdlet(VerbsData.Expand, PscxWinNouns.Archive, DefaultParameterSetName = ParameterSetPath, SupportsShouldProcess = true), 
+        Description("Extract Archives using 7zip library - supports all types 7zip does")]
     [ProviderConstraint(typeof(FileSystemProvider))]
     public class ExpandArchiveCommand : PscxInputObjectPathCommandBase {
         
-        public ExpandArchiveCommand() {
-            // SevenZipBase.SetLibraryPath(System.IO.Path.Join(PscxContext.Instance.AppsDir, "7z.dll"));
-        }
-
         [Parameter(ParameterSetName = ParameterSetObject, Position = 0, Mandatory = false),
          Parameter(ParameterSetName = ParameterSetPath, Position = 1, Mandatory = false),
          Parameter(ParameterSetName = ParameterSetLiteralPath, Position = 1, Mandatory = false),

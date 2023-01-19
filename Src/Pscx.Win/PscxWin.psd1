@@ -19,7 +19,21 @@
         'Get-TerminalSession',
         'Get-Uptime',
         'Stop-TerminalSession',
-        'Test-UserGroupMembership'
+        'Test-UserGroupMembership',
+        'Remove-ReparsePoint',
+        'Set-Privilege',
+        'Get-Privilege',
+        'Read-PscxArchive',
+        'Write-PscxArchive',
+        'New-Hardlink',
+        'New-Junction',
+        'Get-ReparsePoint',
+        'Expand-PscxArchive',
+        'Get-ShortPath',
+        'Remove-MountPoint',
+        'New-Symlink',
+        'New-Shortcut',
+        'Get-MountPoint'
     )
     FunctionsToExport = @(
         'Invoke-Elevated',
@@ -27,11 +41,14 @@
         'Resolve-WindowsError'
     )
     FormatsToProcess   = @(
-        'FormatData\Pscx.TerminalServices.Format.ps1xml'
+        'FormatData\Pscx.TerminalServices.Format.ps1xml',
+        'FormatData\Pscx.Archive.Format.ps1xml',
+        'FormatData\Pscx.Security.Format.ps1xml'
     )
     TypesToProcess     = @(
         'TypeData\Pscx.TerminalServices.Type.ps1xml',
-        'TypeData\Pscx.Wmi.Type.ps1xml'
+        'TypeData\Pscx.Wmi.Type.ps1xml',
+        'TypeData\Pscx.Archive.Type.ps1xml'
     )
 
     # Private data to pass to the module specified in RootModule/ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.

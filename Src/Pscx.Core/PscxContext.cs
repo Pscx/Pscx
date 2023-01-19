@@ -27,10 +27,17 @@ namespace Pscx.Core {
         private Stack<EnvironmentFrame> _environment;
 
         private PscxContext() {
-            this.Preferences = new Hashtable(StringComparer.OrdinalIgnoreCase);
-            this.Session = new Hashtable(StringComparer.OrdinalIgnoreCase);
-            this.Home = Path.GetDirectoryName(GetType().Assembly.Location);
-            this.AppsDir = Path.Combine(this.Home, "Apps");
+            Preferences = new Hashtable(StringComparer.OrdinalIgnoreCase);
+            Session = new Hashtable(StringComparer.OrdinalIgnoreCase);
+            Home = Path.GetDirectoryName(GetType().Assembly.Location);
+            AppsDir = Path.Combine(this.Home, "Apps");
+            if (System.OperatingSystem.IsWindows()) {
+                AppsDir = Path.Combine(AppsDir, "Win");
+            } else if (System.OperatingSystem.IsLinux()) {
+                AppsDir = Path.Combine(AppsDir, "Linux");
+            } else if (System.OperatingSystem.IsMacOS()) {
+                AppsDir = Path.Combine(AppsDir, "macOS");
+            }
 
             using (var variable = new PathVariable("Path", EnvironmentVariableTarget.Process)) {
                 variable.Append(this.AppsDir);

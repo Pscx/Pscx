@@ -20,9 +20,14 @@ cp ..\CHANGELOG.md $outDir
 # copy the Apps
 pushd $outDir
 if (!(Test-Path "Apps" -PathType Container)) {
-    mkdir "Apps"
+    mkdir "Apps\Win"
+    mkdir "Apps\macOS"
+    mkdir "Apps\Linux"
 }
-cp $solDir\..\Imports\Less-394\*.* .\Apps\
+cp $solDir\..\Imports\Less-553\*.* .\Apps\Win\
+cp $solDir\..\Imports\7zip\win\x64\7z.* .\Apps\Win\
+cp $solDir\..\Imports\7zip\macOS\7zz .\Apps\macOS\
+cp $solDir\..\Imports\7zip\linux\x64\7zz .\Apps\Linux\
 popd
 
 #sign if enabled

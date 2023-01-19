@@ -5,13 +5,15 @@ using Microsoft.PowerShell.Commands;
 using Pscx.Core;
 using Pscx.Core.IO;
 using SevenZip;
+using System.ComponentModel;
 
 namespace Pscx.Commands.IO.Compression {
     /// <summary>
     /// Enumerates archives and writes an object for each distinct entry in the archive.
     /// </summary>
     [OutputType(typeof(ArchiveEntry))]
-    [Cmdlet(VerbsCommunications.Read, PscxWinNouns.Archive, DefaultParameterSetName = ParameterSetPath)]
+    [Cmdlet(VerbsCommunications.Read, PscxWinNouns.Archive, DefaultParameterSetName = ParameterSetPath),
+        Description("List the contents of an archive - all types supported by 7zip")]
     [ProviderConstraint(typeof(FileSystemProvider))]
     public class ReadArchiveCommand : PscxInputObjectPathCommandBase {
         

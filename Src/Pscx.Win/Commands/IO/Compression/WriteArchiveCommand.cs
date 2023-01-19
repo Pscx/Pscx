@@ -13,19 +13,17 @@ using Microsoft.PowerShell.Commands;
 using Pscx.Core;
 using Pscx.Core.IO;
 using SevenZip;
+using System.ComponentModel;
 
 namespace Pscx.Commands.IO.Compression {
     /// <summary>
     /// Class for archive writing
     /// </summary>
     [OutputType(typeof(FileInfo))]
-    [Cmdlet(VerbsCommunications.Write, PscxWinNouns.Archive, DefaultParameterSetName = ParameterSetPath, SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommunications.Write, PscxWinNouns.Archive, DefaultParameterSetName = ParameterSetPath, SupportsShouldProcess = true), 
+        Description("Creates Archives using 7zip library - supports all types 7zip does")]
     [ProviderConstraint(typeof(FileSystemProvider))]
     public class WriteArchiveCommand : PscxInputObjectPathCommandBase {
-
-        public WriteArchiveCommand() {
-            // SevenZipBase.SetLibraryPath(System.IO.Path.Join(PscxContext.Instance.AppsDir, "7z.dll"));
-        }
 
         /// <summary>
         /// Default archive type and compression
@@ -66,7 +64,7 @@ namespace Pscx.Commands.IO.Compression {
 
             try {
                 InArchiveFormat fmt = Formats.FormatByFileName(OutputPath.ProviderPath, true);
-                OutArchiveFormat outFormat = OutArchiveFormat.Zip;
+                OutArchiveFormat outFormat = archiveType;
                 Enum.TryParse(Enum.GetName(typeof(InArchiveFormat), fmt), out outFormat);
                 archiveType = outFormat;
             } catch (Exception ex) {

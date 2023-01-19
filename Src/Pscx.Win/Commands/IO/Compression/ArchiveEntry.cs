@@ -9,7 +9,7 @@ namespace Pscx.Commands.IO.Compression {
     /// </summary>
     [Serializable]
     public class ArchiveEntry {
-
+        #nullable enable
         public ArchiveEntry(ArchiveFileInfo archiveFileInfo, string archivePath, string? outPath = null) {
             Index = (uint) archiveFileInfo.Index;
             Path = System.IO.Path.Join(outPath ?? string.Empty, archiveFileInfo.FileName);

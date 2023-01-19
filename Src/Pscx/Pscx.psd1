@@ -115,13 +115,10 @@
     )
     FormatsToProcess   = @(
         'FormatData\Pscx.Format.ps1xml',
-        'FormatData\Pscx.Archive.Format.ps1xml',
         'FormatData\Pscx.Environment.Format.ps1xml',
-        'FormatData\Pscx.Security.Format.ps1xml',
         'FormatData\Pscx.SIUnits.Format.ps1xml'
     )
     TypesToProcess     = @(
-        'TypeData\Pscx.Archive.Type.ps1xml',
         'TypeData\Pscx.Reflection.Type.ps1xml',
         'TypeData\Pscx.SIUnits.Type.ps1xml'
     )
