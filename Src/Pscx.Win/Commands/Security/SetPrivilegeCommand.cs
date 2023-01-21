@@ -13,8 +13,8 @@ using System.Runtime.Versioning;
 using System.Security.Principal;
 
 namespace Pscx.Win.Commands.Security {
-    [Cmdlet(VerbsCommon.Set, PscxWinNouns.Privilege)]
-    [Description("Adjusts privileges held by the session.")]
+    [Cmdlet(VerbsCommon.Set, PscxWinNouns.Privilege),
+     Description("Adjusts privileges held by the session.")]
     [SupportedOSPlatform("windows")]
     public class SetPrivilegeCommand : WindowsIdentityCommandBase {
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "The privileges to modify.")]

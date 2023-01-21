@@ -16,8 +16,8 @@ using System.Management.Automation;
 
 namespace Pscx.Win.Commands.IO.Ntfs
 {
-    [Cmdlet(VerbsCommon.New, PscxWinNouns.Hardlink, SupportsShouldProcess = true)]
-    [Description("Creates filesystem hard links. The hardlink and the target must reside on the same NTFS volume.")]
+    [Cmdlet(VerbsCommon.New, PscxWinNouns.Hardlink, SupportsShouldProcess = true),
+     Description("Creates filesystem hard links. The hardlink and the target must reside on the same NTFS volume.")]
     [RelatedLink(typeof(NewJunctionCommand)), RelatedLink(typeof(GetMountPointCommand)), 
      RelatedLink(typeof(RemoveMountPointCommand)),RelatedLink(typeof(GetReparsePointCommand)), 
      RelatedLink(typeof(RemoveReparsePointCommand)), RelatedLink(typeof(NewSymlinkCommand))]

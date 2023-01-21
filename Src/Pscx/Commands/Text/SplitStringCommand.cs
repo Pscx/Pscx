@@ -15,8 +15,8 @@ using System.Text.RegularExpressions;
 namespace Pscx.Commands.Text
 {
     [OutputType(typeof(string[]))]
-    [Cmdlet(VerbsCommon.Split, "String", DefaultParameterSetName = "StringSeparator")]
-    [Description("Splits a single string into an array of strings.")]
+    [Cmdlet(VerbsCommon.Split, PscxNouns.String, DefaultParameterSetName = "StringSeparator"),
+     Description("Splits a single string into an array of strings.")]
     [RelatedLink(typeof(JoinStringCommand))]
     public class SplitStringCommand : Cmdlet
     {

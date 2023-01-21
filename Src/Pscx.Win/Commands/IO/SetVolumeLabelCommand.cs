@@ -7,7 +7,7 @@ namespace Pscx.Commands.IO
     /// <summary>
     /// Sets the label for a specific volume.
     /// </summary>
-    [Cmdlet(VerbsCommon.Set, "VolumeLabel"), 
+    [Cmdlet(VerbsCommon.Set, PscxWinNouns.VolumeLabel), 
      Description("Modifies the label shown in Windows Explorer for a particular disk volume.")]
     [OutputType(new[]{typeof(bool)})]
     public class SetVolumeLabel :PSCmdlet

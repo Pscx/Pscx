@@ -12,8 +12,7 @@ using System.Management.Automation;
 
 namespace Pscx.Commands.Database
 {
-    [Cmdlet(PscxWinVerbs.Invoke, PscxWinNouns.OleDbCommand,
-        SupportsShouldProcess=true)]
+    [Cmdlet(PscxWinVerbs.Invoke, PscxWinNouns.OleDbCommand, SupportsShouldProcess=true)]
     public class InvokeOleDbCommand : OleDbCommandBase
     {
         protected override void ProcessRecord()

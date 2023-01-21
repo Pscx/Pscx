@@ -14,8 +14,8 @@ using Pscx.Reflection;
 namespace Pscx.Commands.Reflection
 {
     [OutputType(typeof(bool))]
-    [Description("Tests whether or not the specified file is a .NET assembly.")]
-    [Cmdlet(VerbsDiagnostic.Test, PscxNouns.Assembly, DefaultParameterSetName = ParameterSetPath)]
+    [Cmdlet(VerbsDiagnostic.Test, PscxNouns.Assembly, DefaultParameterSetName = ParameterSetPath),
+     Description("Tests whether or not the specified file is a .NET assembly.")]
     public class TestAssemblyCommand : GetPortableExecutableCommandBase
     {
         protected override void ProcessImage(PortableExecutableInfo info)

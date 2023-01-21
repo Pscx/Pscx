@@ -7,6 +7,7 @@
 //---------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
 using System.Data;
 using System.Data.Common;
 using System.Management.Automation;
@@ -14,7 +15,7 @@ using System.Management.Automation;
 namespace Pscx.Commands.Database.Ado
 {
     [OutputType(typeof(PSObject))]
-    [Cmdlet(VerbsCommon.Get, "AdoDataProvider")]
+    [Cmdlet(VerbsCommon.Get, PscxWinNouns.AdoDataProvider), Description("Get ADO data provider")]
     public class GetAdoDataProviderCommand : PscxCmdlet
     {       
         protected override void EndProcessing()

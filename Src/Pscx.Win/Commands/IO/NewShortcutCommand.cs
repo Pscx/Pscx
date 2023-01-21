@@ -15,9 +15,9 @@ using System.Management.Automation;
 
 namespace Pscx.Win.Commands.IO
 {
-    [Cmdlet(VerbsCommon.New, PscxWinNouns.Shortcut, SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.New, PscxWinNouns.Shortcut, SupportsShouldProcess = true),
+     Description("Creates shell shortcuts.")]
     [OutputType(new[] {typeof(FileInfo)})]
-    [Description("Creates shell shortcuts.")]
     public partial class NewShortcutCommand : NewLinkCommandBase
     {
         protected override void ProcessRecord()

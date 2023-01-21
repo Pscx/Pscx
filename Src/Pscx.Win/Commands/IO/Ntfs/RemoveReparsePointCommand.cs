@@ -17,8 +17,8 @@ using System.Management.Automation;
 
 namespace Pscx.Win.Commands.IO.Ntfs {
     [ProviderConstraint(typeof(FileSystemProvider))]
-    [Cmdlet(VerbsCommon.Remove, PscxWinNouns.ReparsePoint, SupportsShouldProcess = true, DefaultParameterSetName = ParameterSetPath)]
-    [Description("Removes NTFS reparse junctions and symbolic links.")]
+    [Cmdlet(VerbsCommon.Remove, PscxWinNouns.ReparsePoint, SupportsShouldProcess = true, DefaultParameterSetName = ParameterSetPath),
+     Description("Removes NTFS reparse junctions and symbolic links.")]
     [RelatedLink(typeof(NewHardLinkCommand)), RelatedLink(typeof(NewJunctionCommand)),
      RelatedLink(typeof(GetMountPointCommand)), RelatedLink(typeof(RemoveMountPointCommand)),
      RelatedLink(typeof(GetReparsePointCommand)), RelatedLink(typeof(NewSymlinkCommand))]

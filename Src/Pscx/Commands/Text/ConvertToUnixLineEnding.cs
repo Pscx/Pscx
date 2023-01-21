@@ -12,7 +12,7 @@ using System.Management.Automation;
 
 namespace Pscx.Commands.Text
 {
-    [Cmdlet(VerbsData.ConvertTo, "UnixLineEnding", DefaultParameterSetName = "Path", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsData.ConvertTo, PscxNouns.UnixLineEnding, DefaultParameterSetName = "Path", SupportsShouldProcess = true)]
     [Description("Converts the line endings in the specified file to Unix line endings \"\\n\".")]
     [DetailedDescription("Converts the line endings in the specified file to Unix line endings \"\\n\".  " +
                          "You can convert a single file to a new file name.  Or you can convert multiple files and " +

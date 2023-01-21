@@ -2,16 +2,18 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 using System.Runtime.InteropServices;
 
 namespace Pscx.Win.Commands.Com
 {
-    [Cmdlet(VerbsCommon.Get, "RunningObject")]
+    [Cmdlet(VerbsCommon.Get, PscxWinNouns.RunningObject), 
+     Description("Retrieves currently running COM object")]
     public class GetRunningObjectCommand : PSCmdlet
     {
-        private readonly List<object> _runningObjects = new List<object>();
+        private readonly List<object> _runningObjects = new();
 
         [Parameter(Position=0, Mandatory = false, ValueFromPipeline = true)]
         [AcceptsWildcards(true)]

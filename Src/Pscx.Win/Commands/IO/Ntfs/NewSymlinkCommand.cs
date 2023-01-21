@@ -14,8 +14,8 @@ using System.IO;
 using System.Management.Automation;
 
 namespace Pscx.Win.Commands.IO.Ntfs {
-    [Cmdlet(VerbsCommon.New, PscxWinNouns.Symlink, SupportsShouldProcess = true)]
-    [Description("Creates filesystem symbolic links. Requires Microsoft Windows 7 or later.")]
+    [Cmdlet(VerbsCommon.New, PscxWinNouns.Symlink, SupportsShouldProcess = true),
+     Description("Creates filesystem symbolic links. Requires Microsoft Windows 7 or later.")]
     [RelatedLink(typeof(NewHardLinkCommand)), RelatedLink(typeof(NewJunctionCommand)),
      RelatedLink(typeof(GetMountPointCommand)), RelatedLink(typeof(RemoveMountPointCommand)),
      RelatedLink(typeof(GetReparsePointCommand)), RelatedLink(typeof(RemoveReparsePointCommand))]

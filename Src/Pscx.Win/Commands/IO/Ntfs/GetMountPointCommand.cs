@@ -18,8 +18,8 @@ using System.Management.Automation;
 using System.Text;
 
 namespace Pscx.Win.Commands.IO.Ntfs {
-    [Cmdlet(VerbsCommon.Get, PscxWinNouns.MountPoint)]
-    [Description("Returns all mount points defined for a specific root path.")]
+    [Cmdlet(VerbsCommon.Get, PscxWinNouns.MountPoint),
+     Description("Returns all mount points defined for a specific root path.")]
     [RelatedLink(typeof(NewHardLinkCommand)), RelatedLink(typeof(NewJunctionCommand)),
      RelatedLink(typeof(RemoveMountPointCommand)), RelatedLink(typeof(GetReparsePointCommand)), 
      RelatedLink(typeof(RemoveReparsePointCommand)), RelatedLink(typeof(NewSymlinkCommand))]

@@ -17,8 +17,7 @@ namespace Pscx.Win.Commands.Security
     {
         WindowsIdentity userIdentity;
 
-        [Parameter(Mandatory = false, Position = 1, ValueFromPipeline = true,
-                   HelpMessage="The identity to act upon.")]
+        [Parameter(Mandatory = false, Position = 1, ValueFromPipeline = true, HelpMessage="The identity to act upon.")]
         public WindowsIdentity Identity
         {
             get { return userIdentity; }

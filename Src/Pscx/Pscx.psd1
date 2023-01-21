@@ -114,8 +114,8 @@
         'Mount-PscxVHD'
     )
     FormatsToProcess   = @(
-        'FormatData\Pscx.Format.ps1xml',
         'FormatData\Pscx.Environment.Format.ps1xml',
+        'FormatData\Pscx.Format.ps1xml',
         'FormatData\Pscx.SIUnits.Format.ps1xml'
     )
     TypesToProcess     = @(

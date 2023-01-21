@@ -12,7 +12,7 @@ using System.Management.Automation;
 
 namespace Pscx.Commands.Text
 {
-    [Cmdlet(VerbsData.ConvertTo, "MacOs9LineEnding", DefaultParameterSetName = "Path", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsData.ConvertTo, PscxNouns.MacOs9LineEnding, DefaultParameterSetName = "Path", SupportsShouldProcess = true)]
     [Description("Converts the line endings in the specified file to Mac OS9 and earlier style line endings \"\\r\".")]
     [DetailedDescription("Converts the line endings in the specified file to Mac OS9 and earlier style line endings \"\\r\".  " +
                          "You can convert a single file to a new file name.  Or you can convert multiple files and " +

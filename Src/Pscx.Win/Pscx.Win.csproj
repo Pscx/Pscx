@@ -64,7 +64,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.Platforms" Version="6.0.7" />
     <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.2.8" />
-    <PackageReference Include="Squid-Box.SevenZipSharp" Version="1.5.0.366" />
     <PackageReference Include="System.DirectoryServices" Version="6.0.0" />
     <PackageReference Include="System.Reflection.MetadataLoadContext" Version="6.0.0" />
   </ItemGroup>
@@ -77,6 +76,9 @@
 	  <Compile Include="..\AssemblyInfo.Shared.cs">
 		  <Link>Properties\AssemblyInfo.Shared.cs</Link>
 	  </Compile>
+	  <Reference Include="SevenZipSharp">
+	    <HintPath>..\..\Imports\SevenZipSharp\lib\netstandard2.0\SevenZipSharp.dll</HintPath>
+	  </Reference>
     <Compile Update="Properties\Errors.Designer.cs">
       <DependentUpon>Errors.resx</DependentUpon>
       <DesignTime>True</DesignTime>

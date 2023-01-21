@@ -9,12 +9,13 @@
 using Pscx.Win.Reflection.DynamicType;
 using System;
 using System.Collections;
+using System.ComponentModel;
 using System.Data.OleDb;
 using System.Management.Automation;
 
 namespace Pscx.Commands.Database
 {
-    [Cmdlet(VerbsCommon.Get, PscxWinNouns.OleDbData, SupportsShouldProcess=true)]
+    [Cmdlet(VerbsCommon.Get, PscxWinNouns.OleDbData, SupportsShouldProcess=true), Description("Retrieves DB data through an OLE-DB connection")]
     public class GetOleDbData : OleDbCommandBase
     {
         [Parameter]

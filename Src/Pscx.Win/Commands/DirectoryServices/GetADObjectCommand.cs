@@ -16,8 +16,8 @@ using System.Text.RegularExpressions;
 namespace Pscx.Win.Commands.DirectoryServices
 {
     [OutputType(typeof(DirectoryEntry))]
-    [Cmdlet(VerbsCommon.Get, PscxWinNouns.ADObject)]
-    [Description("Search for objects in the Active Directory/Global Catalog.")]
+    [Cmdlet(VerbsCommon.Get, PscxWinNouns.ADObject),
+     Description("Search for objects in the Active Directory/Global Catalog.")]
     public class GetADObjectCommand : DirectoryServicesCommandBase
     {
         public enum ObjectClass

@@ -15,8 +15,8 @@ using System.Security.Principal;
 
 namespace Pscx.Win.Commands.Security {
     [OutputType(typeof(TokenPrivilegeCollection))]
-    [Cmdlet(VerbsCommon.Get, PscxWinNouns.Privilege)]
-    [Description("Lists privileges held by the session and their current status.")]
+    [Cmdlet(VerbsCommon.Get, PscxWinNouns.Privilege),
+     Description("Lists privileges held by the session and their current status.")]
     [SupportedOSPlatform("windows")]
     public class GetPrivilegeCommand : WindowsIdentityCommandBase {
         protected override void ProcessIdentity(WindowsIdentity identity) {

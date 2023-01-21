@@ -12,7 +12,7 @@ using System.Management.Automation;
 
 namespace Pscx.Commands.Text
 {
-    [Cmdlet(VerbsData.ConvertTo, "WindowsLineEnding", DefaultParameterSetName = "Path", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsData.ConvertTo, PscxNouns.WindowsLineEnding, DefaultParameterSetName = "Path", SupportsShouldProcess = true)]
     [Description("Converts the line endings in the specified file to Windows line endings \"\\r\\n\".")]
     [DetailedDescription("Converts the line endings in the specified file to Windows line endings \"\\r\\n\".  " +
                          "You can convert a single file to a new file name.  Or you can convert multiple files and " +

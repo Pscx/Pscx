@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections;
+using System.ComponentModel;
 using System.Data;
 using System.Data.Common;
 using System.Management.Automation;
@@ -16,9 +17,8 @@ using System.Management.Automation;
 namespace Pscx.Commands.Database.Ado
 {
     [OutputType(typeof(DataSet), typeof(DbDataReader))]
-    [Cmdlet(PscxWinVerbs.Invoke, "AdoCommand",
-        DefaultParameterSetName = PARAMSET_STRING,
-        SupportsShouldProcess = true)]
+    [Cmdlet(PscxWinVerbs.Invoke, PscxWinNouns.AdoCommand, DefaultParameterSetName = PARAMSET_STRING, SupportsShouldProcess = true), 
+     Description("Invokes an ADO command")]
     public class InvokeAdoCommandCommand : AdoConnectedCommandBase
     {
         private CommandBehavior _behaviour;        

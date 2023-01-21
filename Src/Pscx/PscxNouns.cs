@@ -23,6 +23,11 @@ namespace Pscx
         public const string TypeName = "TypeName";
         public const string Uptime = "PscxUptime";
         public const string Xml = "Xml";
+        public const string MacOs9LineEnding = "MacOs9LineEnding";
+        public const string UnixLineEnding = "UnixLineEnding";
+        public const string WindowsLineEnding = "WindowsLineEnding";
+        public const string String = "PscxString";
+        public const string ForegroundWindow = "ForegroundWindow";
 
         // FileSystem
         public const string DriveInfo = "DriveInfo";

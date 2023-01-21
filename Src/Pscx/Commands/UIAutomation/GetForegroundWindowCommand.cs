@@ -13,8 +13,8 @@ using System.Management.Automation;
 
 namespace Pscx.Commands.UIAutomation
 {
-    [Cmdlet(VerbsCommon.Get, "ForegroundWindow")]
-    [Description("Returns the hWnd or handle of the window in the foreground on the current desktop. See also Set-ForegroundWindow.")]
+    [Cmdlet(VerbsCommon.Get, PscxNouns.ForegroundWindow), 
+     Description("Returns the hWnd or handle of the window in the foreground on the current desktop. See also Set-ForegroundWindow.")]
     [RelatedLink(typeof(SetForegroundWindowCommand))]
     public class GetForegroundWindowCommand : Cmdlet
     {

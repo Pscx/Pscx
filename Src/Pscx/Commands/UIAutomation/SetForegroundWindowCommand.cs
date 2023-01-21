@@ -14,8 +14,8 @@ using System.Management.Automation;
 
 namespace Pscx.Commands.UIAutomation
 {
-    [Cmdlet(VerbsCommon.Set, "ForegroundWindow")]
-    [Description("Given an hWnd or window handle, brings that window to the foreground. Useful for restoring a window to uppermost after an application which seizes the foreground is invoked. See also Get-ForegroundWindow")]
+    [Cmdlet(VerbsCommon.Set, PscxNouns.ForegroundWindow),
+     Description("Given an hWnd or window handle, brings that window to the foreground. Useful for restoring a window to uppermost after an application which seizes the foreground is invoked. See also Get-ForegroundWindow")]
     [RelatedLink(typeof(GetForegroundWindowCommand))]
     public class SetForegroundWindowCommand : Cmdlet
     {

@@ -17,8 +17,8 @@ using System.Management.Automation;
 
 namespace Pscx.Win.Commands.IO.Ntfs {
     [ProviderConstraint(typeof(FileSystemProvider))]
-    [Cmdlet(VerbsCommon.Remove, PscxWinNouns.MountPoint, DefaultParameterSetName = ParameterSetPath)]
-    [Description("Removes a mount point, dismounting the current media if any. If used against the root of a fixed drive, removes the drive letter assignment.")]
+    [Cmdlet(VerbsCommon.Remove, PscxWinNouns.MountPoint, DefaultParameterSetName = ParameterSetPath),
+     Description("Removes a mount point, dismounting the current media if any. If used against the root of a fixed drive, removes the drive letter assignment.")]
     [RelatedLink(typeof(NewHardLinkCommand)), RelatedLink(typeof(NewJunctionCommand)),
      RelatedLink(typeof(GetMountPointCommand)), RelatedLink(typeof(GetReparsePointCommand)),
      RelatedLink(typeof(RemoveReparsePointCommand)), RelatedLink(typeof(NewSymlinkCommand))]

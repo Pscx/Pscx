@@ -16,8 +16,8 @@ using System.Management.Automation;
 
 namespace Pscx.Win.Commands.IO.Ntfs {
     [ProviderConstraint(typeof(FileSystemProvider))]
-    [Cmdlet(VerbsCommon.New, PscxWinNouns.Junction, SupportsShouldProcess = true)]
-    [Description("Creates NTFS directory junctions.")]
+    [Cmdlet(VerbsCommon.New, PscxWinNouns.Junction, SupportsShouldProcess = true),
+     Description("Creates NTFS directory junctions.")]
     [RelatedLink(typeof(NewHardLinkCommand)), RelatedLink(typeof(GetMountPointCommand)), 
      RelatedLink(typeof(RemoveMountPointCommand)), RelatedLink(typeof(GetReparsePointCommand)), 
      RelatedLink(typeof(RemoveReparsePointCommand)), RelatedLink(typeof(NewSymlinkCommand))]

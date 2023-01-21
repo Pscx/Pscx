@@ -14,8 +14,8 @@ using System.ComponentModel;
 using System.Management.Automation;
 
 namespace Pscx.Win.Commands.IO.Ntfs {
-    [Cmdlet(VerbsCommon.Get, PscxWinNouns.ReparsePoint, DefaultParameterSetName = ParameterSetPath)]
-    [Description("Gets NTFS reparse point data.")]
+    [Cmdlet(VerbsCommon.Get, PscxWinNouns.ReparsePoint, DefaultParameterSetName = ParameterSetPath),
+     Description("Gets NTFS reparse point data.")]
     [RelatedLink(typeof(NewHardLinkCommand)), 
      RelatedLink(typeof(NewJunctionCommand)),
      RelatedLink(typeof(GetMountPointCommand)), 

@@ -8,8 +8,8 @@ using System;
 
 namespace Pscx
 {
-    internal static class PscxWinNouns
-    {
+    internal static class PscxWinNouns {
+        public const string RunningObject = "RunningObject";
         public const string Privilege = "Privilege";
 
         // Compression
@@ -19,7 +19,7 @@ namespace Pscx
         public const string Zip = "Zip";
         public const string Archive = "PscxArchive";
 
-
+        // NTFS
         public const string Junction = "Junction";
         public const string Hardlink = "Hardlink";
         public const string MountPoint = "MountPoint";
@@ -28,6 +28,7 @@ namespace Pscx
         public const string ShortPath = "ShortPath";
         public const string Symlink = "Symlink";
         public const string OpticalDriveInfo = "OpticalDriveInfo";
+        public const string VolumeLabel = "VolumeLabel";
 
         public const string Apartment = "Apartment";
         public const string File = "File";
@@ -40,6 +41,7 @@ namespace Pscx
         public const string ADObject = "ADObject";
         public const string DhcpServer = "DhcpServer";
         public const string DomainController = "DomainController";
+        public const string UserGroupMembership = "UserGroupMembership";
 
         // Database
         public const string SqlData = "SqlData";
@@ -48,5 +50,8 @@ namespace Pscx
         public const string OleDbData = "OleDbData";
         public const string OleDbDataSet = "OleDbDataSet";
         public const string OleDbCommand = "OleDbCommand";
+        public const string AdoConnection = "AdoConnection";
+        public const string AdoDataProvider = "AdoDataProvider";
+        public const string AdoCommand = "AdoCommand";
     }
 }

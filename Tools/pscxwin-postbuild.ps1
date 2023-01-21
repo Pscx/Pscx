@@ -28,7 +28,7 @@ if (!(Test-Path $packDir)) {
 }
 
 pushd $outDir
-cp Pscx.Win.dll,PscxWin.psd1,PscxWin.psm1 $packDir
+cp Pscx.Win.dll,PscxWin.psd1,PscxWin.psm1,SevenZipSharp.* $packDir
 cp FormatData $packDir -Recurse -Force
 cp Modules $packDir -Recurse -Force
 cp TypeData $packDir -Recurse -Force

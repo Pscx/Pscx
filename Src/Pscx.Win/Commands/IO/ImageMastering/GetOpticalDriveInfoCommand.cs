@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Management.Automation;
 using System.Reflection;
 using System.Runtime.Versioning;
@@ -10,7 +11,7 @@ namespace Pscx.Win.Commands.IO.ImageMastering {
     /// <summary>
     /// 
     /// </summary>
-    [Cmdlet(VerbsCommon.Get, PscxWinNouns.OpticalDriveInfo)]
+    [Cmdlet(VerbsCommon.Get, PscxWinNouns.OpticalDriveInfo), Description("Lists Optical drive information")]
     [SupportedOSPlatform("windows")]
     public class GetOpticalDriveInfoCommand : Imapi2CommandBase {
         /// <summary>

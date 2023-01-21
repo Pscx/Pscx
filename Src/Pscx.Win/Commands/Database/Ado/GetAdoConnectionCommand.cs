@@ -1,11 +1,12 @@
-﻿using System.Data.Common;
+﻿using System.ComponentModel;
+using System.Data.Common;
 using System.Management.Automation;
 
 namespace Pscx.Commands.Database.Ado
 {
     [OutputType(typeof(DbConnection))]
-    [Cmdlet(VerbsCommon.Get, "AdoConnection",
-        DefaultParameterSetName = PARAMSET_STRING)]
+    [Cmdlet(VerbsCommon.Get, PscxWinNouns.AdoConnection, DefaultParameterSetName = PARAMSET_STRING),
+     Description("Get an ADO connection")]
     public class GetAdoConnectionCommand : AdoCommandBase
     {
         protected override void EndProcessing()

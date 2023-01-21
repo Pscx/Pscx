@@ -7,13 +7,14 @@
 //---------------------------------------------------------------------
 
 
+using System.ComponentModel;
 using System.Management.Automation;
 using AD = System.DirectoryServices.ActiveDirectory;
 
 namespace Pscx.Win.Commands.DirectoryServices
 {
     [OutputType(typeof(AD.DomainController), typeof(AD.DomainControllerCollection))]
-    [Cmdlet(VerbsCommon.Get, PscxWinNouns.DomainController, DefaultParameterSetName = ParameterSetServer)]
+    [Cmdlet(VerbsCommon.Get, PscxWinNouns.DomainController, DefaultParameterSetName = ParameterSetServer), Description("Finds the domain controller")]
     public class GetDomainControllerCommand : DirectoryContextCommandBase
     {
         protected override void ProcessRecord()

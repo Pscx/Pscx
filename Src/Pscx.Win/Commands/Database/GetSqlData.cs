@@ -8,13 +8,14 @@
 
 using Pscx.Win.Reflection.DynamicType;
 using System;
+using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Management.Automation;
 
 namespace Pscx.Commands.Database
 {
-    [Cmdlet(VerbsCommon.Get, PscxWinNouns.SqlData,
-        DefaultParameterSetName="BuildConnectionString", SupportsShouldProcess=true)]
+    [Cmdlet(VerbsCommon.Get, PscxWinNouns.SqlData, DefaultParameterSetName="BuildConnectionString", SupportsShouldProcess=true),
+     Description("Query and retrieves SQL data")]
     public class GetSqlData : SqlCommandBase
     {
         [Parameter]

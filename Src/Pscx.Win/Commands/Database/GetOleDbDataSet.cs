@@ -6,13 +6,14 @@
 // Creation Date: 2008/3/8
 //---------------------------------------------------------------------
 using System;
+using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
 using System.Management.Automation;
 
 namespace Pscx.Commands.Database
 {
-    [Cmdlet(VerbsCommon.Get, PscxWinNouns.OleDbDataSet, SupportsShouldProcess=true)]
+    [Cmdlet(VerbsCommon.Get, PscxWinNouns.OleDbDataSet, SupportsShouldProcess=true), Description("Retrieve data set through an OLE-DB connection")]
     public class GetOleDbDataSet : OleDbCommandBase
     {
         protected override void ProcessRecord()

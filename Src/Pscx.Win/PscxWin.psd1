@@ -6,49 +6,44 @@
     Description        = 'PowerShell Core Community Extensions (PSCX) module which implements Windows OS specific set of Cmdlets.'
     PowerShellVersion  = '7.2'
     CLRVersion         = '6.0'
-    ModuleVersion      = "3.6.4"
+    ModuleVersion      = '3.6.4'
     RequiredAssemblies = 'Pscx.Win.dll'
     RootModule         = 'PscxWin.psm1'
     NestedModules      = 'Pscx.Win.dll'
     AliasesToExport    = '*'
     CmdletsToExport    = @(
         'Disconnect-TerminalSession',
-        'Get-ADObject',
-        'Get-DhcpServer',
-        'Get-DomainController',
-        'Get-TerminalSession',
-        'Get-Uptime',
-        'Stop-TerminalSession',
-        'Test-UserGroupMembership',
-        'Remove-ReparsePoint',
-        'Set-Privilege',
-        'Get-Privilege',
         'Read-PscxArchive',
         'Write-PscxArchive',
+        'Get-Privilege',
+        'Set-Privilege',
+        'New-Symlink',
+        'Get-MountPoint',
+        'Remove-ReparsePoint',
         'New-Hardlink',
+        'Stop-TerminalSession',
         'New-Junction',
         'Get-ReparsePoint',
+        'Get-ADObject',
+        'Get-DhcpServer',
         'Expand-PscxArchive',
-        'Get-ShortPath',
-        'Remove-MountPoint',
-        'New-Symlink',
         'New-Shortcut',
-        'Get-MountPoint'
+        'Remove-MountPoint',
+        'Get-ShortPath'
     )
     FunctionsToExport = @(
-        'Invoke-Elevated',
-        'Resolve-HResult',
-        'Resolve-WindowsError'
+    'Resolve-HResult',
+    'Resolve-WindowsError'
     )
     FormatsToProcess   = @(
-        'FormatData\Pscx.TerminalServices.Format.ps1xml',
         'FormatData\Pscx.Archive.Format.ps1xml',
-        'FormatData\Pscx.Security.Format.ps1xml'
+        'FormatData\Pscx.Security.Format.ps1xml',
+        'FormatData\Pscx.TerminalServices.Format.ps1xml'
     )
     TypesToProcess     = @(
+        'TypeData\Pscx.Archive.Type.ps1xml',
         'TypeData\Pscx.TerminalServices.Type.ps1xml',
-        'TypeData\Pscx.Wmi.Type.ps1xml',
-        'TypeData\Pscx.Archive.Type.ps1xml'
+        'TypeData\Pscx.Wmi.Type.ps1xml'
     )
 
     # Private data to pass to the module specified in RootModule/ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.

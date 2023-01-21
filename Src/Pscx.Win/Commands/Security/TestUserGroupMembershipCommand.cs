@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Management.Automation;
 using System.Runtime.Versioning;
 using System.Security.Principal;
@@ -6,7 +7,8 @@ using System.Security.Principal;
 namespace Pscx.Win.Commands.Security
 {
     [OutputType(typeof(bool))]
-    [Cmdlet(VerbsDiagnostic.Test, "UserGroupMembership", DefaultParameterSetName = PARAMSET_NAME)]
+    [Cmdlet(VerbsDiagnostic.Test, PscxWinNouns.UserGroupMembership, DefaultParameterSetName = PARAMSET_NAME),
+     Description("Check group membership for the requested user identity")]
     [SupportedOSPlatform("windows")]
     public class TestUserGroupMembershipCommand : WindowsIdentityCommandBase
     {

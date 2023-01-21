@@ -14,8 +14,8 @@ using System.Text.RegularExpressions;
 namespace Pscx.Win.Commands.DirectoryServices
 {
     [OutputType(typeof(DhcpServerInfo))]
-    [Cmdlet(VerbsCommon.Get, PscxWinNouns.DhcpServer)]
-    [Description("Gets a list of authorized DHCP servers.")]
+    [Cmdlet(VerbsCommon.Get, PscxWinNouns.DhcpServer),
+     Description("Gets a list of authorized DHCP servers.")]
     public class GetDhcpServerCommand : DirectoryServicesCommandBase
     {
         protected override void ProcessRecord()

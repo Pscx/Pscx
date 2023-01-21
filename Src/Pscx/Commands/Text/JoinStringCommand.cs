@@ -14,7 +14,7 @@ using System.Management.Automation;
 namespace Pscx.Commands.Text
 {
     [OutputType(typeof(string))]
-    [Cmdlet(VerbsCommon.Join, "PscxString", DefaultParameterSetName = "NewLineSeparator"),
+    [Cmdlet(VerbsCommon.Join, PscxNouns.String, DefaultParameterSetName = "NewLineSeparator"),
      Description("Joins an array of strings into a single string."),
      RelatedLink(typeof(SplitStringCommand))]
     public class JoinStringCommand : Cmdlet
