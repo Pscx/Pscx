@@ -1,50 +1,8 @@
 ﻿Set-StrictMode -Version Latest
 
-Set-Alias e     Pscx\Edit-File              -Description "PSCX alias"
-Set-Alias ehp   Pscx\Edit-HostProfile       -Description "PSCX alias"
-Set-Alias ep    Pscx\Edit-Profile           -Description "PSCX alias"
-Set-Alias gpar  Pscx\Get-Parameter          -Description "PSCX alias"
-Set-Alias su    Pscx\Invoke-Elevated        -Description "PSCX alias"
-Set-Alias igc   Pscx\Invoke-GC              -Description "PSCX alias"
-Set-Alias call  Pscx\Invoke-Method          -Description "PSCX alias"
-Set-Alias nho   Pscx\New-HashObject         -Description "PSCX alias"
-Set-Alias ql    Pscx\QuoteList              -Description "PSCX alias"
-Set-Alias qs    Pscx\QuoteString            -Description "PSCX alias"
-Set-Alias rver  Pscx\Resolve-ErrorRecord    -Description "PSCX alias"
-Set-Alias rvhr  Pscx\Resolve-HResult        -Description "PSCX alias"
-Set-Alias rvwer Pscx\Resolve-WindowsError   -Description "PSCX alias"
-Set-Alias sro   Pscx\Set-ReadOnly           -Description "PSCX alias"
-Set-Alias swr   Pscx\Set-Writable           -Description "PSCX alias"
-
-# Initialize the PSCX RegexLib object.
-& {
-    $RegexLib = new-object psobject
-
-    function AddRegex($name, $regex) {
-      Add-Member -Input $RegexLib NoteProperty $name $regex
-    }
-
-    AddRegex CDQString           '(?<CDQString>"\\.|[^\\"]*")'
-    AddRegex CSQString           "(?<CSQString>'\\.|[^'\\]*')"
-    AddRegex CMultilineComment   '(?<CMultilineComment>/\*[^*]*\*+(?:[^/*][^*]*\*+)*/)'
-    AddRegex CppEndOfLineComment '(?<CppEndOfLineComment>//[^\n]*)'
-    AddRegex CComment            "(?:$($RegexLib.CDQString)|$($RegexLib.CSQString))|(?<CComment>$($RegexLib.CMultilineComment)|$($RegexLib.CppEndOfLineComment))"
-
-    AddRegex PSComment          '(?<PSComment>#[^\n]*)'
-    AddRegex PSNonCommentedLine '(?<PSNonCommentedLine>^(?>\s*)(?!#|$))'
-
-    AddRegex EmailAddress       '(?<EmailAddress>[A-Z0-9._%-]+@(?:[A-Z0-9-]+\.)+[A-Z]{2,4})'
-    AddRegex IPv4               '(?<IPv4>)(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))'
-    AddRegex RepeatedWord       '\b(?<RepeatedWord>(\w+)\s+\1)\b'
-    AddRegex HexDigit           '[0-9a-fA-F]'
-    AddRegex HexNumber          '(?<HexNumber>(0[xX])?[0-9a-fA-F]+)'
-    AddRegex DecimalNumber      '(?<DecimalNumber>[+-]?(?:\d+\.?\d*|\d*\.?\d+))'
-    AddRegex ScientificNotation '(?<ScientificNotation>[+-]?(?<Significand>\d+\.?\d*|\d*\.?\d+)[\x20]?(?<Exponent>[eE][+\-]?\d+)?)'
-
-    $Pscx:RegexLib = $RegexLib
-}
-
-$acceleratorsType = [psobject].Assembly.GetType('System.Management.Automation.TypeAccelerators')
+#######################################
+## Functions
+#######################################
 
 # If these accelerators have already been defined, don't override (and don't error)
 function AddAccelerator($name, $type) {
@@ -52,11 +10,6 @@ function AddAccelerator($name, $type) {
         $acceleratorsType::Add($name, $type)
     }
 }
-
-AddAccelerator "accelerators" $acceleratorsType
-AddAccelerator "hex"  ([Pscx.TypeAccelerators.Hex])
-AddAccelerator "base64"  ([Pscx.TypeAccelerators.Base64])
-AddAccelerator "isodate"  ([Pscx.TypeAccelerators.IsoDateTime])
 
 <#
 .SYNOPSIS
@@ -153,26 +106,19 @@ function PscxHelp
     if ($psTypeNames -Contains 'HelpInfoShort' -Or $psTypeNames -Contains 'AliasHelpInfo') {
         $help
     }
-    elseif ($help -ne $null) {
-        # By default use more on Windows and less on Linux.
-        if ($Pscx:Preferences["PageHelpUsingLess"]) {
-            $pagerCommand = "$Pscx:Home\Apps\less.exe"
-            $pagerArgs = '-Ps"Page %db?B of %D:.\. Press h for help or q to quit\.$"'
-        }
-        else {
-            $pagerCommand = 'more.com'
-            $pagerArgs = $null
+    elseif ($null -ne $help) {
+        # Preference goes to using 'less', if not available then use 'more' if on Windows, otherwise do not use pager
+        $pagerCommand = Get-Command less -Type Application -ErrorAction Ignore
+        $pagerArgs = $null
+        if (!$pagerCommand -and $IsWindows) {
+            $pagerCommand = Get-Command more -Type Application -ErrorAction Ignore
         }
 
         # Respect PAGER environment variable which allows user to specify a custom pager.
         # Ignore a pure whitespace PAGER value as that would cause the tokenizer to return 0 tokens.
         if (![string]::IsNullOrWhitespace($env:PAGER)) {
-            if (Get-Command $env:PAGER -ErrorAction Ignore) {
-                # Entire PAGER value corresponds to a single command.
-                $pagerCommand = $env:PAGER
-                $pagerArgs = $null
-            }
-            else {
+            $pagerCommand = Get-Command $env:PAGER -ErrorAction Ignore
+            if (!$pagerCommand) {
                 # PAGER value is not a valid command, check if PAGER command and arguments have been specified.
                 # Tokenize the specified $env:PAGER value. Ignore tokenizing errors since any errors may be valid
                 # argument syntax for the paging utility.
@@ -180,37 +126,36 @@ function PscxHelp
                 $tokens = [System.Management.Automation.PSParser]::Tokenize($env:PAGER, [ref]$errs)
 
                 $customPagerCommand = $tokens[0].Content
-                if (!(Get-Command $customPagerCommand -ErrorAction Ignore)) {
+                $pagerCommand = Get-Command $customPagerCommand -ErrorAction Ignore
+                if ($pagerCommand) {
+                    # This approach will preserve all the pagers args.
+                    $pagerArgs = if ($tokens.Count -gt 1) {$env:PAGER.Substring($tokens[1].Start)} else {$null}
+                } else {
                     # Custom pager command is invalid, issue a warning.
                     Write-Warning "Custom-paging utility command not found. Ignoring command specified in `$env:PAGER: $env:PAGER"
-                }
-                else {
-                    # This approach will preserve all the pagers args.
-                    $pagerCommand = $customPagerCommand
-                    $pagerArgs = if ($tokens.Count -gt 1) {$env:PAGER.Substring($tokens[1].Start)} else {$null}
                 }
             }
         }
 
-        $pagerCommandInfo = Get-Command -Name $pagerCommand -ErrorAction Ignore
-        if ($pagerCommandInfo -eq $null) {
+        if ($null -eq $pagerCommand) {
             $help
-        }
-        elseif ($pagerCommandInfo.CommandType -eq 'Application') {
+        } elseif ($pagerCommand.CommandType -eq [System.Management.Automation.CommandTypes]::Application) {
+            if ($pagerCommand.Name -match '^less') {
+                # if using less - add the LESS environment variable for custom arguments - see https://man7.org/linux/man-pages/man1/less.1.html#ENVIRONMENT_VARIABLES
+                $env:LESS = "-sPPage %db?B of %D:.\. h for help, q to quit\."
+            }
             # If the pager is an application, format the output width before sending to the app.
-            $consoleWidth = [System.Math]::Max([System.Console]::WindowWidth, 20)
+            #$consoleWidth = [System.Math]::Max([System.Console]::WindowWidth, 20)
+            #$help | Out-String -Stream -Width ($consoleWidth - 1)
 
             if ($pagerArgs) {
                 # Supply pager arguments to an application without any PowerShell parsing of the arguments.
                 # Leave environment variable to help user debug arguments supplied in $env:PAGER.
-                $env:__PSPAGER_ARGS = $pagerArgs
-                $help | Out-String -Stream -Width ($consoleWidth - 1) | & $pagerCommand --% %__PSPAGER_ARGS%
+                $env:PAGER_ARGS = $pagerArgs
             }
-            else {
-                $help | Out-String -Stream -Width ($consoleWidth - 1) | & $pagerCommand
-            }
-        }
-        else {
+
+            $help | & $pagerCommand.Name
+        } else {
             # The pager command is a PowerShell function, script or alias, so pipe directly into it.
             $help | & $pagerCommand $pagerArgs
         }
@@ -265,21 +210,20 @@ function PscxLess
     $resolvedPaths = $null
     if ($LiteralPath) {
         $resolvedPaths = $LiteralPath
-    }
-    elseif ($Path) {
+    } elseif ($Path) {
         $resolvedPaths = @()
         # In the non-literal case we may need to resolve a wildcarded path
         foreach ($apath in $Path) {
             if (Test-Path $apath) {
-                $resolvedPaths += @(Resolve-Path $apath | Foreach { $_.Path })
-            }
-            else {
+                $resolvedPaths += @(Resolve-Path $apath | ForEach-Object { $_.Path })
+            } else {
                 $resolvedPaths += $apath
             }
         }
     }
 
-    $lessPrompt = '-PsPage %db?B of %D:.\. Press h for help or q to quit\.$'
+    $env:LESS = '-PsPage %db?B of %D:.\. Press h for help or q to quit\.$'
+    $lessCmd = (Get-Command less -CommandType Application -ErrorAction Ignore).Path
 
     # Tricky to get this just right.
     # Here are three test cases to verify all works as it should:
@@ -287,10 +231,10 @@ function PscxLess
     # man gcm -full   : Should open help topic in less, press q to quit
     # man gcm -online : Should open help topic in web browser but not open less.exe
     if ($resolvedPaths) {
-        & "$Pscx:Home\Apps\less.exe" $resolvedPaths $lessPrompt
+        & $lessCmd $resolvedPaths
     } elseif ($input.MoveNext()) {
         $input.Reset()
-        $input | & "$Pscx:Home\Apps\less.exe" $lessPrompt
+        $input | & $lessCmd
     }
 }
 
@@ -986,9 +930,9 @@ function Get-ScreenHtml
 
 <#
 .SYNOPSIS
-    Function to call a single method on an incoming stream of piped objects.
+    Calls a single method on an incoming stream of piped objects.
 .DESCRIPTION
-    Function to call a single method on an incoming stream of piped objects. Methods can be static or instance and
+    Utility to call a single method on an incoming stream of piped objects. Methods can be static or instance and
     arguments may be passed as an array or individually.
 .PARAMETER InputObject
     The object to execute the named method on. Accepts pipeline input.
@@ -2125,5 +2069,107 @@ function Get-ExecutionTime {
         }
     }
 }
+
+#######################################
+## Main - Module load
+#######################################
+
+Set-Alias e     Pscx\Edit-File              -Description "PSCX alias"
+Set-Alias ehp   Pscx\Edit-HostProfile       -Description "PSCX alias"
+Set-Alias ep    Pscx\Edit-Profile           -Description "PSCX alias"
+Set-Alias gpar  Pscx\Get-Parameter          -Description "PSCX alias"
+Set-Alias su    Pscx\Invoke-Elevated        -Description "PSCX alias"
+Set-Alias igc   Pscx\Invoke-GC              -Description "PSCX alias"
+Set-Alias call  Pscx\Invoke-Method          -Description "PSCX alias"
+Set-Alias nho   Pscx\New-HashObject         -Description "PSCX alias"
+Set-Alias ql    Pscx\QuoteList              -Description "PSCX alias"
+Set-Alias qs    Pscx\QuoteString            -Description "PSCX alias"
+Set-Alias rver  Pscx\Resolve-ErrorRecord    -Description "PSCX alias"
+Set-Alias rvhr  Pscx\Resolve-HResult        -Description "PSCX alias"
+Set-Alias rvwer Pscx\Resolve-WindowsError   -Description "PSCX alias"
+Set-Alias sro   Pscx\Set-ReadOnly           -Description "PSCX alias"
+Set-Alias swr   Pscx\Set-Writable           -Description "PSCX alias"
+
+# Initialize the PSCX RegexLib object.
+& {
+    $RegexLib = new-object psobject
+
+    function AddRegex($name, $regex) {
+      Add-Member -Input $RegexLib NoteProperty $name $regex
+    }
+
+    AddRegex CDQString           '(?<CDQString>"\\.|[^\\"]*")'
+    AddRegex CSQString           "(?<CSQString>'\\.|[^'\\]*')"
+    AddRegex CMultilineComment   '(?<CMultilineComment>/\*[^*]*\*+(?:[^/*][^*]*\*+)*/)'
+    AddRegex CppEndOfLineComment '(?<CppEndOfLineComment>//[^\n]*)'
+    AddRegex CComment            "(?:$($RegexLib.CDQString)|$($RegexLib.CSQString))|(?<CComment>$($RegexLib.CMultilineComment)|$($RegexLib.CppEndOfLineComment))"
+
+    AddRegex PSComment          '(?<PSComment>#[^\n]*)'
+    AddRegex PSNonCommentedLine '(?<PSNonCommentedLine>^(?>\s*)(?!#|$))'
+
+    AddRegex EmailAddress       '(?<EmailAddress>[A-Z0-9._%-]+@(?:[A-Z0-9-]+\.)+[A-Z]{2,4})'
+    AddRegex IPv4               '(?<IPv4>)(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))'
+    AddRegex RepeatedWord       '\b(?<RepeatedWord>(\w+)\s+\1)\b'
+    AddRegex HexDigit           '[0-9a-fA-F]'
+    AddRegex HexNumber          '(?<HexNumber>(0[xX])?[0-9a-fA-F]+)'
+    AddRegex DecimalNumber      '(?<DecimalNumber>[+-]?(?:\d+\.?\d*|\d*\.?\d+))'
+    AddRegex ScientificNotation '(?<ScientificNotation>[+-]?(?<Significand>\d+\.?\d*|\d*\.?\d+)[\x20]?(?<Exponent>[eE][+\-]?\d+)?)'
+
+    $Pscx:RegexLib = $RegexLib
+}
+
+$acceleratorsType = [psobject].Assembly.GetType('System.Management.Automation.TypeAccelerators')
+
+#add RAR (if present) to the path
+if ($IsWindows) {
+    $regPath = "HKLM:\SOFTWARE\WinRAR"
+    if (Test-Path $regPath) {
+        $rarDir = Split-Path (Get-ItemProperty $regPath).'exe64' -Parent
+        # Add-PathVariable is not available here as the PSCX is not fully loaded - perform the equivalent work
+        $envPath = [System.Environment]::GetEnvironmentVariable("PATH", [EnvironmentVariableTarget]::Process)
+        $envPathElements = [System.Collections.Generic.HashSet[string]]::New()
+        $envPath.Split([System.IO.Path]::PathSeparator, [System.StringSplitOptions]::RemoveEmptyEntries) | ForEach-Object {
+            $envPathElements.Add($_)
+        }
+        $envPathElements.Add($rarDir)
+        [System.Environment]::SetEnvironmentVariable("PATH", ($envPathElements -join [System.IO.Path]::PathSeparator), [System.EnvironmentVariableTarget]::Process)
+    }
+}
+
+#update the PSCX preferences with the most capable file editor:
+# for windows: VSCode, Notepad++, Notepad (in this order)
+# for macOS: VSCode, Text Mate (in this order)
+$betterEditor = Get-Command code -CommandType Application -ErrorAction Ignore
+if ($IsWindows) {
+    if ($betterEditor) {
+        $Pscx:Preferences['TextEditor'] = 'code'
+    } elseif (Test-Path "HKLM:\SOFTWARE\Notepad++") {
+        $Pscx:Preferences['TextEditor'] = Join-Path (Get-ItemProperty "HKLM:\SOFTWARE\Notepad++").'(default)' 'Notepad++.exe'
+    } else {
+        $Pscx:Preferences['TextEditor'] = 'notepad'
+    }
+} elseif ($IsMacOS) {
+    # default text editor is Text Mate (custom package) or TextEdit
+    if ($betterEditor) {
+        $Pscx:Preferences['TextEditor'] = 'code'
+    } elseif (Get-Command mate -CommandType Application -ErrorAction Ignore) {
+        $Pscx:Preferences['TextEditor'] = 'mate'
+    } else {
+        $Pscx:Preferences['TextEditor'] = 'TextEdit'
+    }
+} else {
+    # default Ubuntu text editor is gedit
+    if ($betterEditor) {
+        $Pscx:Preferences['TextEditor'] = 'code'
+    } else {
+        $Pscx:Preferences['TextEditor'] = 'gedit'
+    }
+}
+
+AddAccelerator "accelerators" $acceleratorsType
+AddAccelerator "hex"  ([Pscx.TypeAccelerators.Hex])
+AddAccelerator "base64"  ([Pscx.TypeAccelerators.Base64])
+AddAccelerator "isodate"  ([Pscx.TypeAccelerators.IsoDateTime])
+
 
 Export-ModuleMember -Alias * -Function *

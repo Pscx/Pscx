@@ -1,9 +1,10 @@
 using Pscx.EnvironmentBlock;
+using System.ComponentModel;
 using System.Management.Automation;
 
 namespace Pscx.Commands.EnvironmentBlock
 {
-    [Cmdlet(VerbsCommon.Add, PscxNouns.PathVariable)]
+    [Cmdlet(VerbsCommon.Add, PscxNouns.PathVariable), Description("Adds values to an environment variable of type PATH (default is PATH variable)")]
     [RelatedLink(typeof(GetPathVariableCommand))]
     [RelatedLink(typeof(SetPathVariableCommand))]
     [RelatedLink(typeof(PopEnvironmentBlockCommand))]

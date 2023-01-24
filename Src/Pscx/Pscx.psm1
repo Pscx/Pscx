@@ -152,7 +152,8 @@ if ($Pscx:Preferences["PageHelpUsingLess"]) {
     }
     elseif (!(Test-Path Env:PAGER)) {
         # Only set this env var if someone has not defined it themselves
-        $env:PAGER = 'less "-PsPage %db?B of %D:.\. Press h for help or q to quit\.$"'
+        $env:PAGER = 'less'
+        $env:LESS = "-PsPage %db?B of %D:.\. Press h for help or q to quit\.$"
     }
 }
 

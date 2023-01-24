@@ -38,6 +38,12 @@
     <Content Include="Modules\Wmi\Pscx.Wmi.psd1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Modules\Sudo\Pscx.Sudo.psm1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Sudo\Pscx.Sudo.psd1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="PscxWin.psd1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -92,6 +98,10 @@
       <LastGenOutput>Errors.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Modules\Sudo\" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

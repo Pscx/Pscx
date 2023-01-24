@@ -31,11 +31,11 @@ namespace Pscx.Core {
             Session = new Hashtable(StringComparer.OrdinalIgnoreCase);
             Home = Path.GetDirectoryName(GetType().Assembly.Location);
             AppsDir = Path.Combine(this.Home, "Apps");
-            if (System.OperatingSystem.IsWindows()) {
+            if (OperatingSystem.IsWindows()) {
                 AppsDir = Path.Combine(AppsDir, "Win");
-            } else if (System.OperatingSystem.IsLinux()) {
+            } else if (OperatingSystem.IsLinux()) {
                 AppsDir = Path.Combine(AppsDir, "Linux");
-            } else if (System.OperatingSystem.IsMacOS()) {
+            } else if (OperatingSystem.IsMacOS()) {
                 AppsDir = Path.Combine(AppsDir, "macOS");
             }
 
@@ -55,7 +55,8 @@ namespace Pscx.Core {
             this.Preferences[EditFileBackingFileThreshold] = EditFileBackingFileThresholdDefaultValue;
             this.Preferences["FileSizeInUnits"] = false;
             this.Preferences["PageHelpUsingLess"] = true;
-            this.Preferences["TextEditor"] = "Notepad.exe";
+            this.Preferences["TextEditor"] = OperatingSystem.IsWindows() ? "Notepad.exe" 
+                : (OperatingSystem.IsMacOS() ? "TextEdit" : "gedit");
 
             var modulesToImport = new Hashtable(StringComparer.OrdinalIgnoreCase) {
                 { "CD", true },
@@ -66,7 +67,8 @@ namespace Pscx.Core {
                 { "TranscribeSession", false},
                 { "Utility", true},
                 { "Vhd", false},
-                { "Wmi", false}  //from PscxWin submodule
+                { "Wmi", false},  //from PscxWin submodule
+                { "Sudo", (OperatingSystem.IsWindows())}
             };
             this.Preferences["ModulesToImport"] = modulesToImport;
         }

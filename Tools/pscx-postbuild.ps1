@@ -25,6 +25,7 @@ if (!(Test-Path "Apps" -PathType Container)) {
     mkdir "Apps\Linux"
 }
 cp $solDir\..\Imports\Less-553\*.* .\Apps\Win\
+cp $solDir\..\Imports\gsudo\win\gsudo.exe .\Apps\Win\sudo.exe
 cp $solDir\..\Imports\7zip\win\x64\7z.* .\Apps\Win\
 cp $solDir\..\Imports\7zip\macOS\7zz .\Apps\macOS\
 cp $solDir\..\Imports\7zip\linux\x64\7zz .\Apps\Linux\
