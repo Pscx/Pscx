@@ -5,16 +5,18 @@ param([string]$outputDir = $(throw "You must specify the output path to emit the
       [string]$localizedHelpPath = $(throw "You must specify the path to the localized help dir"),
       [string]$configuration = $(throw "You must specify the build configuration"))
       
+# Disable ANSI colors - same as $env:TERM = xterm-mono
+$PSStyle.OutputRendering = [System.Management.Automation.OutputRendering]::PlainText
+
 $ModuleDir        = Join-Path $PSScriptRoot "..\"
-$PscxPath         = Join-Path $ModuleDir "Pscx"            
-$PscxManifest     = "$PscxPath.psd1"            
-$PscxModule       = "$PscxPath.dll"             
+#$PscxManifest     = "$PscxPath.psd1"            
+$PscxModule       = Join-Path $ModuleDir "Pscx.dll"             
 $outputDir        = Resolve-Path $outputDir
 $ProviderHelpPath = Split-Path $outputDir -parent
 $transformsDir    = Join-Path $ProviderHelpPath Transformations
 
 
-Import-Module $PscxManifest
+# Import-Module $PscxManifest
 
 # Test the XML help files
 gci $localizedHelpPath\*.xml  | Foreach {

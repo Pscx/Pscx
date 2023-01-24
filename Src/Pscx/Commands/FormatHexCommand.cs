@@ -17,8 +17,8 @@ using Pscx.Core.IO;
 
 namespace Pscx.Commands
 {
-    [Cmdlet(PscxVerbs.Format, PscxNouns.Hex, DefaultParameterSetName = ParameterSetPath)]
-    [Description("Displays contents of files for byte streams in hex.")]
+    [Cmdlet(PscxVerbs.Format, PscxNouns.Hex, DefaultParameterSetName = ParameterSetPath),
+     Description("Displays contents of files for byte streams in hex.")]
     [OutputType(typeof(string))]
     [ProviderConstraint(typeof(FileSystemProvider))]
     public class FormatHexCommand : PscxInputObjectPathCommandBase

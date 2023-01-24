@@ -7,11 +7,12 @@
 //---------------------------------------------------------------------
 
 using Pscx.Win.Fwk.TerminalServices;
+using System.ComponentModel;
 using System.Management.Automation;
 
 namespace Pscx.Win.Commands.TerminalServices
 {
-    [Cmdlet(VerbsCommon.Get, PscxWinNouns.TerminalSession)]
+    [Cmdlet(VerbsCommon.Get, PscxWinNouns.TerminalSession), Description("Get the terminal session")]
     public class GetTerminalSessionCommand : TerminalSessionCommandBase
     {
         [Parameter]

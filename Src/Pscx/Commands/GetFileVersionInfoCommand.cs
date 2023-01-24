@@ -7,6 +7,7 @@
 //---------------------------------------------------------------------
 using Microsoft.PowerShell.Commands;
 using Pscx.Core.IO;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Management.Automation;
@@ -14,7 +15,7 @@ using System.Management.Automation;
 
 namespace Pscx.Commands
 {
-    [Cmdlet(VerbsCommon.Get, PscxNouns.FileVersionInfo, DefaultParameterSetName = ParameterSetPath)]
+    [Cmdlet(VerbsCommon.Get, PscxNouns.FileVersionInfo, DefaultParameterSetName = ParameterSetPath), Description("Get the file version information")]
     [OutputType(typeof(FileVersionInfo))]
     [ProviderConstraint(typeof(FileSystemProvider))]
     public class GetFileVersionInfoCommand : PscxPathCommandBase

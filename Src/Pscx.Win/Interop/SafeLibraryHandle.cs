@@ -9,7 +9,6 @@ namespace Pscx.Win.Interop
 
         /// <summary>Release library handle.</summary>
         /// <returns>True if the handle was released.</returns>
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         protected override bool ReleaseHandle()
         {
             return NativeMethods.FreeLibrary(handle);

@@ -6,13 +6,14 @@
 // Creation Date: 2008/3/8
 //---------------------------------------------------------------------
 using System;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Management.Automation;
 
 namespace Pscx.Commands.Database
 {
-    [Cmdlet(PscxWinVerbs.Invoke, PscxWinNouns.SqlCommand, DefaultParameterSetName = "BuildConnectionString", SupportsShouldProcess=true)]
+    [Cmdlet(PscxWinVerbs.Invoke, PscxWinNouns.SqlCommand, DefaultParameterSetName = "BuildConnectionString", SupportsShouldProcess = true), Description("Invokes sql commands on Sql Server database")]
     public class InvokeSqlCommand : SqlCommandBase
     {
         protected override void ProcessRecord()

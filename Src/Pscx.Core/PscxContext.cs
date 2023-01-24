@@ -48,7 +48,7 @@ namespace Pscx.Core {
             InitializePscxPreferences();
         }
 
-        protected void InitializePscxPreferences() {
+        private void InitializePscxPreferences() {
             this.Preferences["ShowModuleLoadDetails"] = false;
             this.Preferences["CD_GetChildItem"] = false;
             this.Preferences["CD_EchoNewLocation"] = false;

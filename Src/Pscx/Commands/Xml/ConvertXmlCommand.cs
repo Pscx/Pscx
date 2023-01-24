@@ -18,7 +18,8 @@ using Pscx.Core.IO;
 namespace Pscx.Commands.Xml
 {
     [OutputType(typeof(string))]
-    [Cmdlet(VerbsData.Convert, PscxNouns.Xml, DefaultParameterSetName = ParameterSetPath)]
+    [Cmdlet(VerbsData.Convert, PscxNouns.Xml, DefaultParameterSetName = ParameterSetPath),
+     Description("Converts XML through a XSL")]
     [RelatedLink(typeof(TestXmlCommand))]
     [RelatedLink(typeof(FormatXmlCommand))]
     [ProviderConstraint(typeof(FileSystemProvider))]

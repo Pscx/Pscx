@@ -4,7 +4,6 @@
     FormatsToProcess = 'Pscx.Utility.Format.ps1xml'
     AliasesToExport = '*'
     FunctionsToExport = @(
-        'AddRegex',
         'AddAccelerator',
         'PscxHelp',
         'PscxLess',
@@ -43,6 +42,7 @@
         'Import-VisualStudioVars',
         'GetSpecifiedVSSetupInstance',
         'FindAndLoadBatchFile',
-        'Get-ExecutionTime'
+        'Get-ExecutionTime',
+        'AddRegex'
     )
 }

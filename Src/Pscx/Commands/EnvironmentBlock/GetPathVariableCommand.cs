@@ -6,12 +6,13 @@
 // Creation Date: Feb 10, 2008
 //---------------------------------------------------------------------
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Management.Automation;
 
 namespace Pscx.Commands.EnvironmentBlock
 {
-    [Cmdlet(VerbsCommon.Get, PscxNouns.PathVariable)]
+    [Cmdlet(VerbsCommon.Get, PscxNouns.PathVariable), Description("Gets the specified path-like environment variable, defaults to PATH")]
     [RelatedLink(typeof(AddPathVariableCommand))]
     [RelatedLink(typeof(SetPathVariableCommand))]
     [RelatedLink(typeof(PopEnvironmentBlockCommand))]

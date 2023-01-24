@@ -9,6 +9,8 @@
 param([string]$outputDir = $(throw "You must specify the output path to emit the generated file"),
       [string]$configuration = $(throw "You must specify the build configuration"))
 
+# Disable ANSI colors - same as $env:TERM = xterm-mono
+$PSStyle.OutputRendering = [System.Management.Automation.OutputRendering]::PlainText
 
 function WrapText($width = 74, $indent = 8) {
 
@@ -94,17 +96,17 @@ filter OutAboutHelpFile {
 #---------------------------------------------------------
 # Script main
 #---------------------------------------------------------
-$ModuleDir         = "$PSScriptRoot\..\..\Pscx\bin\$configuration"      
-$PscxPath          = Join-Path $ModuleDir "Pscx"            
-$PscxManifest      = "$PscxPath.psd1"            
-$PscxModule        = "$PscxPath.dll"             
+$ModuleDir         = Join-Path $PSScriptRoot "..\"
+#$PscxPath          = Join-Path $ModuleDir "Pscx"            
+#$PscxManifest      = "$PscxPath.psd1"            
+#$PscxModule        = Join-Path $ModuleDir "Pscx.dll"             
 $outputDir         = Resolve-Path $outputDir
 $templateDir       = Split-Path $outputDir -parent
 $providerHelpPath  = Split-Path $outputDir -parent
 $AboutPscxHelpPath = Join-Path $outputDir about_Pscx.help.txt
-$MergedHelpPath    = Join-path $outputDir MergedHelp.xml
+$MergedHelpPath    = Join-path $outputDir MergedHelp-Pscx.xml
 
-Import-Module $PscxManifest
+#Import-Module $PscxManifest
 $PscxModule = Get-Module Pscx
 
 #---------------------------------------------------------

@@ -15,13 +15,12 @@ namespace Pscx
         public const string File = "File";
         public const string FileTail = "FileTail";
         public const string FileVersionInfo = "FileVersionInfo";
-        public const string Hash = "Hash";
+        public const string Hash = "PscxHash";
         public const string LoremIpsum = "LoremIpsum";
         public const string Metric = "Metric";
         public const string Object = "Object";
         public const string Script = "Script";
         public const string TypeName = "TypeName";
-        public const string Uptime = "PscxUptime";
         public const string Xml = "Xml";
         public const string MacOs9LineEnding = "MacOs9LineEnding";
         public const string UnixLineEnding = "UnixLineEnding";

@@ -17,22 +17,32 @@ using System.Text.RegularExpressions;
 using Microsoft.PowerShell.Commands;
 using Pscx.Core;
 using Pscx.Core.IO;
+using System.ComponentModel;
 
 namespace Pscx.Commands.IO {
-    [Cmdlet(PscxVerbs.Edit, PscxNouns.File, DefaultParameterSetName = ParameterSetNoFile, SupportsShouldProcess = true)]
+    [Cmdlet(PscxVerbs.Edit, PscxNouns.File, DefaultParameterSetName = ParameterSetNoFile, SupportsShouldProcess = true), 
+     Description("Edit file with configured editor - VSCode, Notepad++/TextMate, default for OS")]
     [ProviderConstraint(typeof(FileSystemProvider))]
     public class EditFileCommand : PscxPathCommandBase {
         private const string ParameterSetPathReplace = "PathReplace";
         private const string ParameterSetLiteralPathReplace = "LiteralPathReplace";
         private const string ParameterSetNoFile = "NoFile";
-        private const string DefaultEditor = "Notepad.exe";
         private const string TextEditorKey = "TextEditor";
 
         private Regex[] _regexes;
-        private string _editor = DefaultEditor;
+        private string _defaultEditor;
+        private string _editor;
         private string _patternArrayAsString;
         private string _replacementArrayAsString;
         private bool _hasBeenInitialized;
+
+        /// <summary>
+        /// Initializes the editor with sensible default for the operating system
+        /// </summary>
+        public EditFileCommand() {
+            _defaultEditor = OperatingSystem.IsWindows() ? "Notepad.exe" : (OperatingSystem.IsMacOS() ? "TextEdit" : "gedit");
+            _editor = _defaultEditor;
+        }
 
         [Parameter( ParameterSetName = ParameterSetPath, Position = 0, Mandatory = true, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true,
             HelpMessage = "Specifies the path to the file to process. Wildcard syntax is allowed."
@@ -133,7 +143,7 @@ namespace Pscx.Commands.IO {
             } else if (PscxContext.Instance.Preferences.ContainsKey(TextEditorKey)) {
                 object textEditorPath = PscxContext.Instance.Preferences[TextEditorKey];
                 if (textEditorPath == null) {
-                    _editor = DefaultEditor;
+                    _editor = _defaultEditor;
                     return;
                 }
 
@@ -150,9 +160,11 @@ namespace Pscx.Commands.IO {
                     _editor = textEditorPath.ToString();
                 }
 
-                if (!File.Exists(_editor)) {
-                    _editor = DefaultEditor;
-                }
+                //the risk here is that the preference setting points to an invalid app, not a full path (and the app is not on the PATH variable) - we'll 
+                //assume that risk considering that the PSCX.Utility module load code will ensure to set the proper value in good faith (full path or just name in conjunction with environment)
+                // if (!File.Exists(_editor)) {
+                    // _editor = _defaultEditor;
+                // }
             }
         }
 

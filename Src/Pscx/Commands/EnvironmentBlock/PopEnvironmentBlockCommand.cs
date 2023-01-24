@@ -1,10 +1,11 @@
 using System;
 using System.Management.Automation;
 using Pscx.EnvironmentBlock;
+using System.ComponentModel;
 
 namespace Pscx.Commands.EnvironmentBlock
 {
-    [Cmdlet(PscxVerbs.Pop, PscxNouns.EnvironmentBlock)]
+    [Cmdlet(PscxVerbs.Pop, PscxNouns.EnvironmentBlock), Description("Pops the environment block frame from the stack")]
     [RelatedLink(typeof(AddPathVariableCommand))]
     [RelatedLink(typeof(GetPathVariableCommand))]
     [RelatedLink(typeof(SetPathVariableCommand))]

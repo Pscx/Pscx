@@ -33,6 +33,7 @@ namespace Pscx.Commands.IO {
             public const string SHA1 = "SHA1";
             public const string SHA256 = "SHA256";
             public const string SHA512 = "SHA512";
+            //TODO: Add other modern algorithms - e.g. BLAKE
         }
 
         [Parameter(HelpMessage = "Specifies the hash algorithm to use.  Valid values are MD5 (obsoleted), SHA1, SHA256 (default), SHA384, SHA512")]

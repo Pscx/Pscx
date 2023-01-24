@@ -71,14 +71,12 @@ namespace Pscx.Win.Interop
         #region advapi32
 
         [DllImport(Dll.Advapi32, EntryPoint = "LookupPrivilegeValueW", CharSet = CharSet.Auto, SetLastError = true)]
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         public static extern bool LookupPrivilegeValue(
             string lpSystemName,
             string lpName,
             ref LUID Luid);
 
         [DllImport(Dll.Advapi32, CharSet = CharSet.Auto, SetLastError = true)]
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         public static extern bool LookupPrivilegeName(
             string lpSystemName,
             ref LUID lpLuid,
@@ -86,14 +84,12 @@ namespace Pscx.Win.Interop
             ref int cbName);
 
         [DllImport(Dll.Advapi32, CharSet = CharSet.Unicode, SetLastError = true)]
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         public static extern bool OpenProcessToken(
             IntPtr hProcess,
             TokenAccessLevels DesiredAccess,
             ref SafeTokenHandle TokenHandle);
 
         [DllImport(Dll.Advapi32, CharSet = CharSet.Unicode, SetLastError = true)]
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         public static extern bool OpenThreadToken(
             IntPtr ThreadToken,
             TokenAccessLevels DesiredAccess,
@@ -101,7 +97,6 @@ namespace Pscx.Win.Interop
             ref SafeTokenHandle TokenHandle);
 
         [DllImport(Dll.Advapi32, CharSet = CharSet.Unicode, SetLastError = true)]
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         public static extern bool LogonUser(
           string principal,
           string authority,
@@ -127,11 +122,9 @@ namespace Pscx.Win.Interop
         #region user32
 
         [DllImport(Dll.User32)]
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         public static extern IntPtr GetOpenClipboardWindow();
 
         [DllImport(Dll.User32, SetLastError = true)]
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         public static extern int GetWindowThreadProcessId(IntPtr hWnd, out int lpdwProcessId);
 
         #endregion
@@ -178,7 +171,6 @@ namespace Pscx.Win.Interop
             [MarshalAs(UnmanagedType.LPStr)] string procName);
 
         [DllImport(Dll.Kernel32, SetLastError = true)]
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         public static extern bool CloseHandle(IntPtr handle);
 
         [DllImport(Dll.Kernel32, CharSet = CharSet.Auto, SetLastError = true)]
@@ -189,22 +181,18 @@ namespace Pscx.Win.Interop
 
 
         [DllImport(Dll.Kernel32, SetLastError = true)]
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         public static extern bool CreateHardLink(
             string lpszHardLinkPath,
             string lpszExistingFileName,
             IntPtr lpSecurityAttributes);
 
         [DllImport(Dll.Kernel32, SetLastError = true, CharSet = CharSet.Unicode)]
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         public static extern bool CreateSymbolicLink(string lpSymlinkFileName, string lpTargetFileName, int dwFlags);
 
         [DllImport(Dll.Kernel32, SetLastError = true, CharSet = CharSet.Unicode)]
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         public static extern bool DeleteFile(string lpFileName);
 
         [DllImport(Dll.Kernel32, SetLastError = true, CharSet = CharSet.Unicode)]
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         public static extern bool RemoveDirectory(string lpPathName);
 
         [DllImport(Dll.Kernel32)]
@@ -221,7 +209,6 @@ namespace Pscx.Win.Interop
         #region kernel32!CreateFile
 
         [DllImport(Dll.Kernel32, SetLastError = true, CharSet = CharSet.Unicode)]
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         public static extern SafeFileHandle CreateFile(
             string lpFileName,
             FileAccess dwDesiredAccess,
@@ -302,7 +289,6 @@ namespace Pscx.Win.Interop
         }
 
         [DllImport(Dll.Kernel32, SetLastError = true, CharSet = CharSet.Unicode)]
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         public static extern SafeFileHandle CreateConsoleScreenBuffer(
             FileAccess dwDesiredAccess,
             FileShare dwShareMode,
@@ -316,7 +302,6 @@ namespace Pscx.Win.Interop
         #region kernel32!SetConsoleActiveScreenBuffer
 
         [DllImport(Dll.Kernel32, SetLastError = true, CharSet = CharSet.Unicode)]
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         public static extern bool SetConsoleActiveScreenBuffer(SafeFileHandle hConsoleOutput);
 
         #endregion
@@ -324,11 +309,9 @@ namespace Pscx.Win.Interop
         #region kernel32!GetConsoleMode
 
         [DllImport(Dll.Kernel32, EntryPoint = "GetConsoleMode", SetLastError = true, CharSet = CharSet.Unicode)]
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         public static extern bool GetConsoleInputMode(SafeFileHandle handle, out ConsoleInputModeFlags flags);
 
         [DllImport(Dll.Kernel32, EntryPoint = "GetConsoleMode", SetLastError = true, CharSet = CharSet.Unicode)]
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         public static extern bool GetConsoleOutputMode(SafeFileHandle handle, out ConsoleOutputModeFlags flags);
 
         [Flags]
@@ -353,7 +336,6 @@ namespace Pscx.Win.Interop
         #region kernel32!ReadConsoleInput
 
         [DllImport(Dll.Kernel32, SetLastError = true, CharSet = CharSet.Unicode)]
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         public static extern bool ReadConsoleInput(
             SafeFileHandle hConsoleInput,
             InputRecord[] lpBuffer,
@@ -366,7 +348,6 @@ namespace Pscx.Win.Interop
         #region kernel32!GetStdHandle
 
         [DllImport(Dll.Kernel32, SetLastError = true, CharSet = CharSet.Unicode)]
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         public static extern SafeFileHandle GetStdHandle(StdHandle nStdHandle);
 
         public enum StdHandle : int

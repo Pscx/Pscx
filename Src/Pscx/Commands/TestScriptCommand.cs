@@ -12,11 +12,12 @@ using System.Management.Automation;
 using System.Text;
 using Microsoft.PowerShell.Commands;
 using Pscx.Core.IO;
+using System.ComponentModel;
 
 namespace Pscx.Commands
 {
     [OutputType(typeof(bool))]
-    [Cmdlet(VerbsDiagnostic.Test, PscxNouns.Script, DefaultParameterSetName = ParameterSetPath)]
+    [Cmdlet(VerbsDiagnostic.Test, PscxNouns.Script, DefaultParameterSetName = ParameterSetPath), Description("Test script for validity")]
     [OutputType(new[]{typeof(bool)})]
     [ProviderConstraint(typeof(FileSystemProvider))]
     public class TestScriptCommand : PscxInputObjectPathCommandBase

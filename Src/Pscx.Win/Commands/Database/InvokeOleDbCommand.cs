@@ -6,13 +6,14 @@
 // Creation Date: 2008/3/8
 //---------------------------------------------------------------------
 using System;
+using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
 using System.Management.Automation;
 
 namespace Pscx.Commands.Database
 {
-    [Cmdlet(PscxWinVerbs.Invoke, PscxWinNouns.OleDbCommand, SupportsShouldProcess=true)]
+    [Cmdlet(PscxWinVerbs.Invoke, PscxWinNouns.OleDbCommand, SupportsShouldProcess=true), Description("Invoke commands on OleDb datasources")]
     public class InvokeOleDbCommand : OleDbCommandBase
     {
         protected override void ProcessRecord()

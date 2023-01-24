@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Management.Automation;
 using System.Text;
 
 namespace Pscx.Commands.Text
 {
     [OutputType(typeof(string[]), typeof(string))]
-    [Cmdlet(VerbsCommon.Get, PscxNouns.LoremIpsum, DefaultParameterSetName = "Paragraph")]
+    [Cmdlet(VerbsCommon.Get, PscxNouns.LoremIpsum, DefaultParameterSetName = "Paragraph"), Description("Generates a lorem-ipsum text of specified length")]
     public class GetLoremIpsumCommand : PscxCmdlet
     {
         private const string ParamSetCharacter = "Character";

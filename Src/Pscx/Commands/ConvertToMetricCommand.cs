@@ -8,10 +8,11 @@
 using System;
 using System.Management.Automation;
 using Pscx.SIUnits;
+using System.ComponentModel;
 
 namespace Pscx.Commands
 {
-    [Cmdlet(VerbsData.ConvertTo, PscxNouns.Metric)]
+    [Cmdlet(VerbsData.ConvertTo, PscxNouns.Metric), Description("Converts to metric system units")]
     [OutputType(new[]{typeof(object)})]
     public class ConvertToMetricCommand : PscxCmdlet
     {

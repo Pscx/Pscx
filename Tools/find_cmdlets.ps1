@@ -79,17 +79,20 @@ function findCmdletInFile([string]$file, [hashtable]$verbs, [hashtable]$nouns, [
     $start=$false
     $done=$false
     $cmdletName = $null
+    $foundNoDesc = $false
     foreach ($line in $content) {
-        if ($line -match '\[Cmdlet\(\w*Verbs\w*\.(\w+),\s+\w*Nouns\w*\.(\w+)') {
+        if ($line -match '\[Cmdlet\(\w*Verbs\w*\.(\w+),\s*\w*Nouns\w*\.(\w+)') {
             $verb = $verbs.ContainsKey($Matches[1]) ? $verbs[$Matches[1]] : $Matches[1]
             $noun = $nouns.ContainsKey($Matches[2]) ? $nouns[$Matches[2]] : $Matches[2]
             $cmdletName = "$verb-$noun"
             $start = $true
+            $foundNoDesc = $true
         }
         if ($start -and !$done) {
             if ($line -match 'Description\("(.+)"\)') {
                 if ($cmdletName) {
                     $result[$cmdletName] = $Matches[1]
+                    $foundNoDesc = $false
                 } else {
                     Write-Warning "Found description in $file before the cmdlet name"
                 }
@@ -99,6 +102,9 @@ function findCmdletInFile([string]$file, [hashtable]$verbs, [hashtable]$nouns, [
         if ($done) {
             break
         }
+    }
+    if ($cmdletName -and $foundNoDesc) {
+        Write-Warning "Cmdlet $cmdletName [$(Split-Path $file -Leaf)] has no description"
     }
 }
 

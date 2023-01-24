@@ -7,12 +7,13 @@
 //---------------------------------------------------------------------
 
 using Pscx.Commands;
+using System.ComponentModel;
 using System.Management;
 using System.Management.Automation;
 
 namespace Pscx.Win.Commands
 {
-    [Cmdlet(VerbsCommon.Get, PscxWinNouns.Uptime)]
+    [Cmdlet(VerbsCommon.Get, PscxWinNouns.Uptime), Description("Get the amount of time the system was up")]
     [OutputType(typeof(LastBootUpTimeInfo))]
     public class GetUptimeCommand : PscxCmdlet
     {

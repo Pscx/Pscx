@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Pscx;
+using Pscx.Core;
 using Pscx.Win.Interop;
 using System.Collections.ObjectModel;
 using System.Globalization;

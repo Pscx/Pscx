@@ -18,8 +18,8 @@ using System.Xml.XPath;
 namespace Pscx.Commands.Xml
 {
     [OutputType(typeof(string))]
-    [Cmdlet(PscxVerbs.Format, PscxNouns.Xml, DefaultParameterSetName = ParameterSetPath)]
-    [Description("Pretty print for XML files and XmlDocument objects.")]    
+    [Cmdlet(PscxVerbs.Format, PscxNouns.Xml, DefaultParameterSetName = ParameterSetPath),
+     Description("Pretty print for XML files and XmlDocument objects.")]    
     [RelatedLink(typeof(ConvertXmlCommand))]
     [RelatedLink(typeof(TestXmlCommand))]
     [ProviderConstraint(typeof(FileSystemProvider))]

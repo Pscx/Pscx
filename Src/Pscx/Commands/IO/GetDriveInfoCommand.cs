@@ -9,10 +9,11 @@ using System;
 using System.IO;
 using System.Management.Automation;
 using Microsoft.PowerShell.Commands;
+using System.ComponentModel;
 
 namespace Pscx.Commands.IO
 {
-    [Cmdlet(VerbsCommon.Get, PscxNouns.DriveInfo)]
+    [Cmdlet(VerbsCommon.Get, PscxNouns.DriveInfo), Description("Get drive information")]
     [OutputType(new[] {typeof(DriveInfo)})]
     [ProviderConstraint(typeof(FileSystemProvider))]
     public class GetDriveInfoCommand : PscxCmdlet

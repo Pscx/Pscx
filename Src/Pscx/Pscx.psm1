@@ -120,10 +120,9 @@ if ($args.Length -gt 0)
 # Cmdlet aliases
 # -----------------------------------------------------------------------
 Set-Alias gtn   Pscx\Get-TypeName      -Description "PSCX alias"
-Set-Alias fhex  Pscx\Format-PscxHex    -Description "PSCX alias"
+Set-Alias fhex  Pscx\Format-Hex        -Description "PSCX alias"
 Set-Alias cvxml Pscx\Convert-Xml       -Description "PSCX alias"
 Set-Alias fxml  Pscx\Format-Xml        -Description "PSCX alias"
-Set-Alias ocb   Pscx\Out-PscxClipboard -Description "PSCX alias"
 Set-Alias lorem Pscx\Get-LoremIpsum    -Description "PSCX alias"
 Set-Alias ln    Pscx\New-HardLink      -Description "PSCX alias"
 Set-Alias touch Pscx\Set-FileTime      -Description "PSCX alias"
@@ -136,7 +135,7 @@ Set-Alias skip  Pscx\Skip-Object       -Description "PSCX alias"
 # -----------------------------------------------------------------------
 # Load the PscxWin companion module if running on Windows
 # -----------------------------------------------------------------------
-if ($PSVersionTable.Platform -eq "Win32NT") {
+if ($IsWindows) {
     $subModuleBasePath = "$PSScriptRoot\PscxWin.psd1"
     try {
         # Don't complain about non-standard verbs with nested imports but we will still have one complaint for the final global scope import

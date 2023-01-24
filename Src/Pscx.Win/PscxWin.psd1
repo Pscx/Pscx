@@ -12,28 +12,45 @@
     NestedModules      = 'Pscx.Win.dll'
     AliasesToExport    = '*'
     CmdletsToExport    = @(
-        'Disconnect-TerminalSession',
-        'Read-PscxArchive',
-        'Write-PscxArchive',
-        'Get-Privilege',
-        'Set-Privilege',
-        'New-Symlink',
-        'Get-MountPoint',
+        'Invoke-OleDbCommand',
         'Remove-ReparsePoint',
-        'New-Hardlink',
-        'Stop-TerminalSession',
-        'New-Junction',
-        'Get-ReparsePoint',
-        'Get-ADObject',
-        'Get-DhcpServer',
+        'Get-RunningObject',
+        'Get-SqlData',
+        'Test-UserGroupMembership',
+        'Get-DomainController',
+        'Get-AdoDataProvider',
+        'Get-OleDbData',
+        'Write-PscxArchive',
+        'Read-PscxArchive',
+        'Get-ShortPath',
         'Expand-PscxArchive',
-        'New-Shortcut',
+        'Get-AdoConnection',
+        'Get-PscxADObject',
+        'Get-Privilege',
         'Remove-MountPoint',
-        'Get-ShortPath'
+        'Get-MountPoint',
+        'Invoke-AdoCommand',
+        'New-Shortcut',
+        'Get-OleDbDataSet',
+        'Set-VolumeLabel',
+        'New-Hardlink',
+        'Get-OpticalDriveInfo',
+        'Get-ReparsePoint',
+        'Set-Privilege',
+        'Invoke-SqlCommand',
+        'New-Symlink',
+        'New-Junction',
+        'Get-PscxUptime',
+        'Get-SqlDataSet',
+        'Invoke-Apartment',
+        'Disconnect-TerminalSession',
+        'Stop-TerminalSession',
+        'Get-TerminalSession',
+        'Get-DhcpServer'
     )
     FunctionsToExport = @(
-    'Resolve-HResult',
-    'Resolve-WindowsError'
+        'Resolve-HResult',
+        'Resolve-WindowsError'
     )
     FormatsToProcess   = @(
         'FormatData\Pscx.Archive.Format.ps1xml',

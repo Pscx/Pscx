@@ -1,3 +1,6 @@
+# Disable ANSI colors - same as $env:TERM = xterm-mono
+$PSStyle.OutputRendering = [System.Management.Automation.OutputRendering]::PlainText
+
 $cmdLets = (Get-Module pscx).ExportedCmdlets.Keys
 $functions = (Get-Module pscx).ExportedFunctions.Keys
 $cmdLetsAndFunctions = $cmdLets + $functions | Select -uniq | Sort-Object

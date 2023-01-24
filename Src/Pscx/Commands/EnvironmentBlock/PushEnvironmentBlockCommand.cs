@@ -1,9 +1,10 @@
 using Pscx.EnvironmentBlock;
+using System.ComponentModel;
 using System.Management.Automation;
 
 namespace Pscx.Commands.EnvironmentBlock
 {
-    [Cmdlet(PscxVerbs.Push, PscxNouns.EnvironmentBlock)]
+    [Cmdlet(PscxVerbs.Push, PscxNouns.EnvironmentBlock), Description("Pushes the current environment frame onto stack")]
     [RelatedLink(typeof(AddPathVariableCommand))]
     [RelatedLink(typeof(GetPathVariableCommand))]
     [RelatedLink(typeof(SetPathVariableCommand))]

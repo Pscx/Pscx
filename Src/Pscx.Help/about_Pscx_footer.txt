@@ -1,6 +1,6 @@
 UTILITY APPLICATIONS
-    Less-394
-        Less-394 is a paging utility that PSCX installs. PSCX further provides
+    Less-553
+        Less-553 is a paging utility that PSCX installs. PSCX further provides
         a replacement "help" function that can uses the installed less.exe to 
         page help output. If you use either the "man" alias (an alias to help) 
         or the help function, the output will be paged using the PSCX "less"

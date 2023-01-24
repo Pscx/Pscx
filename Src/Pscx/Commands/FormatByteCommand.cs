@@ -5,12 +5,14 @@
 //
 // Creation Date: Dec 24, 2006
 //---------------------------------------------------------------------
+
+using System.ComponentModel;
 using System.Globalization;
 using System.Management.Automation;
 
 namespace Pscx.Commands
 {
-    [Cmdlet(PscxVerbs.Format, PscxNouns.Byte)]
+    [Cmdlet(PscxVerbs.Format, PscxNouns.Byte), Description("Format the byte sizes in human readable forms - progressively increasing the unit based on byte size value")]
     [OutputType(typeof(string))]
     public class FormatByteCommand : Cmdlet
     {

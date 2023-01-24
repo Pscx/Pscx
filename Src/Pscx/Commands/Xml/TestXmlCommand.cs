@@ -20,8 +20,8 @@ using Pscx.Core.IO;
 namespace Pscx.Commands.Xml
 {
     [OutputType(typeof(bool))]
-    [Cmdlet(VerbsDiagnostic.Test, PscxNouns.Xml, DefaultParameterSetName = ParameterSetPath)]
-    [Description("Tests for well formedness and optionally validates against XML Schema.")]
+    [Cmdlet(VerbsDiagnostic.Test, PscxNouns.Xml, DefaultParameterSetName = ParameterSetPath),
+     Description("Tests for well formedness and optionally validates against XML Schema.")]
     [DetailedDescription("Tests for well formedness and optionally validates against XML Schema.  It doesn't handle specifying the targetNamespace.  To see validation error messages, specify the -Verbose flag.")]
     [RelatedLink(typeof(ConvertXmlCommand))]
     [RelatedLink(typeof(FormatXmlCommand))]

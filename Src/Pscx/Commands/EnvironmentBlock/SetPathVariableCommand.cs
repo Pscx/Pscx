@@ -1,9 +1,10 @@
 using Pscx.EnvironmentBlock;
+using System.ComponentModel;
 using System.Management.Automation;
 
 namespace Pscx.Commands.EnvironmentBlock
 {
-    [Cmdlet(VerbsCommon.Set, PscxNouns.PathVariable)]
+    [Cmdlet(VerbsCommon.Set, PscxNouns.PathVariable), Description("Sets/overrides a path-like variable (defaults to PATH) to the value specified")]
     [RelatedLink(typeof(AddPathVariableCommand))]
     [RelatedLink(typeof(GetPathVariableCommand))]
     [RelatedLink(typeof(PopEnvironmentBlockCommand))]

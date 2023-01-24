@@ -35,10 +35,10 @@ namespace Pscx
         public const string Object = "Object";
         public const string Script = "Script";
         public const string TerminalSession = "TerminalSession";
-        public const string Uptime = "Uptime";
+        public const string Uptime = "PscxUptime";
 
         // DirectoryServices
-        public const string ADObject = "ADObject";
+        public const string ADObject = "PscxADObject";  
         public const string DhcpServer = "DhcpServer";
         public const string DomainController = "DomainController";
         public const string UserGroupMembership = "UserGroupMembership";

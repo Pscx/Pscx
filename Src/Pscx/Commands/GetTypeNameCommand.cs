@@ -5,11 +5,13 @@
 //
 // Creation Date: Sept 6, 2009
 //---------------------------------------------------------------------
+
+using System.ComponentModel;
 using System.Management.Automation;
 
 namespace Pscx.Commands
 {
-    [Cmdlet(VerbsCommon.Get, PscxNouns.TypeName)]
+    [Cmdlet(VerbsCommon.Get, PscxNouns.TypeName), Description("Get type name as conveniently detailed information")]
     [OutputType(typeof(PSObject))]
     public class GetTypeNameCommand : PscxCmdlet
     {

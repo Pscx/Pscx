@@ -2,6 +2,9 @@ param ([string]$SnapinPath = $(throw "Path to snapin dll is required"),
        [string[]]$cmdletClassName = $(throw "Name of cmdlet classes is required"), 
        $OutputPath)
        
+# Disable ANSI colors - same as $env:TERM = xterm-mono
+$PSStyle.OutputRendering = [System.Management.Automation.OutputRendering]::PlainText
+
 $ScriptDir = Split-Path $MyInvocation.MyCommand.Path -Parent
 if (!$OutputPath)
 {

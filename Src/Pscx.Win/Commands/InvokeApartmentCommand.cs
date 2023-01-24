@@ -1,6 +1,7 @@
 ﻿using Pscx.Commands;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 using System.Runtime.Versioning;
@@ -8,7 +9,7 @@ using System.Threading;
 
 namespace Pscx.Win.Commands
 {
-    [Cmdlet(PscxWinVerbs.Invoke, PscxWinNouns.Apartment)]
+    [Cmdlet(PscxWinVerbs.Invoke, PscxWinNouns.Apartment), Description("Invokes using apartment threading model")]
     [OutputType(new[]{typeof(PSObject[])})]
     [SupportedOSPlatform("windows")]
     public sealed class InvokeApartmentCommand : PscxCmdlet

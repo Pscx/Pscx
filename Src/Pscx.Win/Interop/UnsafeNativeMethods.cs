@@ -30,8 +30,7 @@ namespace Pscx.Win.Interop
         #region kernel32!DeviceIoControl
 
         [DllImport(Dll.Kernel32, SetLastError = true, CharSet = CharSet.Unicode)]
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
-        public static unsafe extern bool DeviceIoControl(
+        public static extern bool DeviceIoControl(
                   SafeHandle hDevice,
                   uint dwIoControlCode,
              [In] void* lpInBuffer,
@@ -46,8 +45,7 @@ namespace Pscx.Win.Interop
         #region advapi32!GetTokenInformation
         
         [DllImport(Dll.Advapi32, CharSet = CharSet.Unicode, SetLastError = true)]
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
-        public unsafe static extern bool GetTokenInformation(
+        public static extern bool GetTokenInformation(
                  SafeTokenHandle TokenHandle,
                  TOKEN_INFORMATION_CLASS TokenInfoClass,
            [Out] void* TokenInformation,
