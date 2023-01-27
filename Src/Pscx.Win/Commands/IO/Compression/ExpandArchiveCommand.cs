@@ -55,6 +55,11 @@ namespace Pscx.Commands.IO.Compression {
                 // todo: localize
                 WriteVerbose("Using FileSystemProvider current location for OutputPath: " + OutputPath);
             }
+
+            // if OutputPath does not exist, create it as folder
+            if (!Directory.Exists(OutputPath.ProviderPath)) {
+                Directory.CreateDirectory(OutputPath.ProviderPath);
+            }
         }
 
         protected override void ProcessPath(PscxPathInfo pscxPath) {

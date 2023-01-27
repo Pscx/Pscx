@@ -40,7 +40,7 @@ namespace Pscx.Commands.IO {
         /// Initializes the editor with sensible default for the operating system
         /// </summary>
         public EditFileCommand() {
-            _defaultEditor = OperatingSystem.IsWindows() ? "Notepad.exe" : (OperatingSystem.IsMacOS() ? "TextEdit" : "gedit");
+            _defaultEditor = PscxContext.DefaultTextEditor;
             _editor = _defaultEditor;
         }
 
@@ -160,7 +160,9 @@ namespace Pscx.Commands.IO {
                     _editor = textEditorPath.ToString();
                 }
 
-                //the risk here is that the preference setting points to an invalid app, not a full path (and the app is not on the PATH variable) - we'll 
+                //we want to allow the TextEditor setting to simply specify the name of the app if the app is on the system PATH, rather than fully qualified app path
+                //for this reason, we can't simply do a File.Exists check - commented out
+                //the risk here is that the preference setting points to an invalid app - we'll 
                 //assume that risk considering that the PSCX.Utility module load code will ensure to set the proper value in good faith (full path or just name in conjunction with environment)
                 // if (!File.Exists(_editor)) {
                     // _editor = _defaultEditor;

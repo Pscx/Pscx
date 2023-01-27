@@ -60,6 +60,12 @@ namespace Pscx.Commands.IO.Compression {
 
             if (PscxPathInfo.Exists(OutputPath) && Force != true) {
                 compressionMode = CompressionMode.Append;
+            } else {
+                // make sure the parent folder exists
+                string parentOutDir = System.IO.Path.GetDirectoryName(OutputPath.ProviderPath);
+                if (!Directory.Exists(parentOutDir) && !string.IsNullOrEmpty(parentOutDir)) {
+                    Directory.CreateDirectory(parentOutDir);
+                }
             }
 
             try {

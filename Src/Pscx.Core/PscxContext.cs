@@ -55,8 +55,7 @@ namespace Pscx.Core {
             this.Preferences[EditFileBackingFileThreshold] = EditFileBackingFileThresholdDefaultValue;
             this.Preferences["FileSizeInUnits"] = false;
             this.Preferences["PageHelpUsingLess"] = true;
-            this.Preferences["TextEditor"] = OperatingSystem.IsWindows() ? "Notepad.exe" 
-                : (OperatingSystem.IsMacOS() ? "TextEdit" : "gedit");
+            this.Preferences["TextEditor"] = DefaultTextEditor;
 
             var modulesToImport = new Hashtable(StringComparer.OrdinalIgnoreCase) {
                 { "CD", true },
@@ -85,6 +84,10 @@ namespace Pscx.Core {
 
         public static PSObject InstanceAsPSObject {
             get { return PSObject.AsPSObject(_instance); }
+        }
+
+        public static string DefaultTextEditor {
+            get { return OperatingSystem.IsWindows() ? "Notepad.exe" : (OperatingSystem.IsMacOS() ? "TextEdit" : "gedit"); }
         }
 
         public Version Version {

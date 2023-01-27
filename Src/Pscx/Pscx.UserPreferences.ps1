@@ -45,6 +45,7 @@
         Net               = $false
         TranscribeSession = $false    # Disabled by default for security and privacy reasons.
         Utility           = $true
+        Vhd               = $false
         Wmi               = $false    # provided by submodule PscxWin only on Windows
     }
 }
