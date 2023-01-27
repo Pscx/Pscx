@@ -122,6 +122,15 @@
     <Compile Remove="Commands\IO\TestPscxPathCommand.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="Modules\Net\Pscx.Net.Format.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Modules\Net\Pscx.Net.psd1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Modules\Net\Pscx.Net.Type.ps1xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Pscx.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

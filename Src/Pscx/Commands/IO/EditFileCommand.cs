@@ -160,13 +160,11 @@ namespace Pscx.Commands.IO {
                     _editor = textEditorPath.ToString();
                 }
 
-                //we want to allow the TextEditor setting to simply specify the name of the app if the app is on the system PATH, rather than fully qualified app path
-                //for this reason, we can't simply do a File.Exists check - commented out
-                //the risk here is that the preference setting points to an invalid app - we'll 
-                //assume that risk considering that the PSCX.Utility module load code will ensure to set the proper value in good faith (full path or just name in conjunction with environment)
-                // if (!File.Exists(_editor)) {
-                    // _editor = _defaultEditor;
-                // }
+                //Process.Start is rather finicky with the location of the process - especially if the process is a batch file (e.g. code.cmd)
+                //enforce externally configured editors to provide full path to the application otherwise use default editor
+                if (!File.Exists(_editor)) {
+                    _editor = _defaultEditor;
+                }
             }
         }
 

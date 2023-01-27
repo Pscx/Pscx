@@ -2140,7 +2140,7 @@ if ($IsWindows) {
 $betterEditor = Get-Command code -CommandType Application -ErrorAction Ignore
 if ($IsWindows) {
     if ($betterEditor) {
-        $Pscx:Preferences['TextEditor'] = 'code'
+        $Pscx:Preferences['TextEditor'] = ($betterEditor | Where-Object {$_.Path -match '\.cmd'}).Path
     } elseif (Test-Path "HKLM:\SOFTWARE\Notepad++") {
         $Pscx:Preferences['TextEditor'] = Join-Path (Get-ItemProperty "HKLM:\SOFTWARE\Notepad++").'(default)' 'Notepad++.exe'
     } else {
