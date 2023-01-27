@@ -33,19 +33,18 @@
                                       # access help inside less.exe and 'q' to exit less.exe.
                                       # Set this setting to $false to use more.com for paging.
 
-    FileSizeInUnits = $false          # Pscx prepends format data for display of file information.
+    FileSizeInUnits = $true          # Pscx prepends format data for display of file information.
                                       # If this value is set to $true, file sizes are displayed in
                                       # using KB,MG,GB and TB units.
 
     ModulesToImport = @{
         CD                = $true
         DirectoryServices = $false    # provided by submodule PscxWin only on Windows
-        FileSystem        = $false
-        GetHelp           = $false    # Disabled by default due to some bugs that have to be resolved.
-        Net               = $false
+        FileSystem        = $false    # not of real value
+        Net               = $true     # register some format types
         TranscribeSession = $false    # Disabled by default for security and privacy reasons.
-        Utility           = $true
-        Vhd               = $false
-        Wmi               = $false    # provided by submodule PscxWin only on Windows
+        Utility           = $true     # really useful
+        Vhd               = $false    # limited need - disabled by default
+        Wmi               = $false    # type accelerators only, from PscxWin only on Windows
     }
 }

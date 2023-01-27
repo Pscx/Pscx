@@ -61,11 +61,10 @@ namespace Pscx.Core {
                 { "CD", true },
                 { "DirectoryServices", false }, //from PscxWin submodule
                 { "FileSystem", false},
-                { "GetHelp", false },
-                { "Net", false},
+                { "Net", true},
                 { "TranscribeSession", false},
                 { "Utility", true},
-                { "Vhd", false},
+                { "Vhd", false},  //from PscxWin submodule
                 { "Wmi", false},  //from PscxWin submodule
                 { "Sudo", (OperatingSystem.IsWindows())}
             };

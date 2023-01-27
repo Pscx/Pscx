@@ -1,6 +1,6 @@
 # PowerShell Community Extensions Light Changelog
 
-## 3.6.0 - December 2022
+## 3.6.4 - December 2022
 
 * Upgraded to .NET 6.0, PowerShell Core 7.2
 * Updates to CD module, jump to top/bottom of stack
