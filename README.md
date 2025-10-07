@@ -15,7 +15,47 @@ Pscx is hosted on the PowerShell Gallery.  You can install Pscx with the followi
 Install-Module Pscx -Scope CurrentUser
 ```
 
-You may be prompted to trust the PSGallery.  Respond with a 'y' (for yes) to proceed with the install.
+You may be prompted to trust the PSGallery.  Respond with a 'y' (for Yes) or 'A' (for All) to proceed with the install.
+
+This extension replaces a number of PowerShell commands that are installed by other extensions.
+If this is the case the command emits this warning:
+
+```powershell
+The following commands are already available on this system:
+'gcb, Expand-Archive, Format-Hex, Get-Hash, help, prompt, Get-Clipboard, Get-Help, Set-Clipboard'. This module 'Pscx'
+may override the existing commands. If you still want to install this module 'Pscx', use -AllowClobber parameter.
+```
+To force the installation use this command:
+
+```powershell
+Install-Module Pscx -AllowClobber -Scope CurrentUser
+```
+
+There may be further issues to overcome.
+Powershell security policy may block the 'Pscx' module from loading:
+
+```powershell
+New-SymLink D:\ parts_library
+New-SymLink : The 'New-SymLink' command was found in the module 'Pscx', but the module could not be loaded. For more
+information, run 'Import-Module Pscx'.
+```
+
+Running the suggested command may provide this feedback:
+
+```powershell
+PS C:\> Import-Module Pscx
+Import-Module : File C:\WindowsPowerShell\Modules\Pscx\3.3.2\Pscx.psm1 cannot be loaded
+because running scripts is disabled on this system. For more information, see 
+[about_Execution_Policies at](https:/go.microsoft.com/fwlink/?LinkID=135170).
+```
+
+Using the information on that page this command is suggested:
+
+```powershell
+PS C:> Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy AllSigned
+```
+
+Which permits the command Import-Module Pscx to run and thus make the Pscx commands available.
 
 If you already have installed Pscx from the PowerShell Gallery, you can update Pscx with the command:
 
@@ -547,7 +587,7 @@ Creates filesystem symbolic links. Requires Microsoft Windows Vista or later.
 
 #### `Write-Tar`
 
-Create Tape Archive (TAR) format files from pipeline or parameter input.
+Create a Tape ARchive (TAR) format file from a pipeline or parameter input.
 
 ### TerminalSession
 
